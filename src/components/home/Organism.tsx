@@ -262,7 +262,7 @@ export default function Organism() {
 
             <motion.div className="heart" style={reduced ? undefined : { scale: heartScale, opacity: heartOpacity }}>
               <span className="heart-glow" />
-              <img src="/images/heart-core.webp" alt="" className="heart-img" decoding="async" />
+              <img src="/logos/novaris-gold-mark.png" alt="" className="core-img" decoding="async" />
             </motion.div>
 
             {ORGANS.map((o, i) => (
