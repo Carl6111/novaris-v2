@@ -7,22 +7,21 @@ type Props = {
   progress: MotionValue<number>;
 };
 
-// scroll-keyed camera path — gentle so the planet stays fully framed and the
-// scene reads as one continuous shot rather than a hard zoom.
+// scroll-keyed camera path through the hero scene
 const POSITIONS = new THREE.CatmullRomCurve3([
-  new THREE.Vector3(0, 0.35, 8.4),
-  new THREE.Vector3(0.7, 0.1, 7.7),
-  new THREE.Vector3(0.1, 0.3, 7.0),
-  new THREE.Vector3(-2.2, 0.6, 6.4),
-  new THREE.Vector3(-0.9, 0.6, 7.6),
+  new THREE.Vector3(0, 0.4, 8),
+  new THREE.Vector3(1.4, -0.5, 5.6),
+  new THREE.Vector3(0.2, 0.2, 3.9),
+  new THREE.Vector3(-3.2, 0.6, 3.3),
+  new THREE.Vector3(-1.2, 0.7, 6.2),
 ]);
 
 const TARGETS = new THREE.CatmullRomCurve3([
-  new THREE.Vector3(0.5, -0.1, -1),
-  new THREE.Vector3(0.9, -0.2, -1.4),
-  new THREE.Vector3(-0.6, 0.2, 0.3),
-  new THREE.Vector3(-1.6, 0.2, 0.7),
-  new THREE.Vector3(0.1, 0.1, -0.4),
+  new THREE.Vector3(0, 0, 0),
+  new THREE.Vector3(2.4, -2.2, -3.4),
+  new THREE.Vector3(-1.6, 0.2, 0.8),
+  new THREE.Vector3(-2, 0.2, 1),
+  new THREE.Vector3(0, 0.2, 0),
 ]);
 
 export default function CameraRig({ progress }: Props) {

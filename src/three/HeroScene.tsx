@@ -31,7 +31,7 @@ export default function HeroScene({ progress, mobile = false }: Props) {
         <Nova />
         <Nebula opacity={0.05} />
         <Planet
-          position={[3, -0.9, -5]}
+          position={[2.8, -2.6, -4]}
           radius={2.2}
           textureSize={mobile ? "1k" : "2k"}
         />
