@@ -1,0 +1,104 @@
+.compare {
+  padding: clamp(4rem, 9vh, 7rem) 0;
+  border-top: 1px solid var(--border);
+}
+
+.compare .section-head h2 {
+  margin-top: 0.8rem;
+  font-size: clamp(1.8rem, 1.1rem + 2.6vw, 2.8rem);
+  font-weight: 740;
+  letter-spacing: -0.02em;
+}
+
+.compare .accent {
+  color: var(--primary);
+}
+
+.compare-lead {
+  margin-top: 0.8rem;
+  color: var(--muted-foreground);
+  font-size: 0.95rem;
+}
+
+.compare-grid {
+  margin-top: 2.4rem;
+  display: grid;
+  grid-template-columns: 8rem 1fr 1fr;
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) * 2);
+  overflow: hidden;
+}
+
+.compare-col {
+  padding: 1rem 1.2rem;
+  background: color-mix(in oklab, var(--card) 60%, transparent);
+  border-bottom: 1px solid var(--border);
+}
+
+.compare-col h3 {
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.compare-col--nova {
+  background: color-mix(in oklab, var(--primary) 12%, transparent);
+}
+
+.compare-col--nova h3 {
+  color: var(--primary);
+}
+
+.compare-row {
+  display: contents;
+}
+
+.compare-row > span {
+  padding: 1rem 1.2rem;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+.compare-rowlabel {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  color: var(--muted-foreground);
+  background: color-mix(in oklab, var(--card) 40%, transparent);
+}
+
+.compare-hire {
+  color: var(--muted-foreground);
+}
+
+.compare-nova {
+  background: color-mix(in oklab, var(--primary) 7%, transparent);
+  color: var(--foreground);
+}
+
+.compare-check {
+  color: var(--primary);
+  font-weight: 700;
+  margin-right: 0.4rem;
+}
+
+.compare-grid > .compare-row:last-child > span {
+  border-bottom: 0;
+}
+
+@media (max-width: 760px) {
+  .compare-grid {
+    grid-template-columns: 1fr;
+  }
+  .compare-col--label {
+    display: none;
+  }
+  .compare-rowlabel {
+    grid-column: 1;
+    background: color-mix(in oklab, var(--primary) 10%, transparent);
+  }
+  .compare-row > span,
+  .compare-col {
+    border-bottom: 1px solid var(--border);
+  }
+}

@@ -1,6 +1,12 @@
 import { Link } from "react-router-dom";
 import "./footer.css";
 
+// [PLATZHALTER] echte Profile eintragen
+const SOCIAL = [
+  { label: "LinkedIn", href: "#" },
+  { label: "X", href: "#" },
+];
+
 export default function Footer() {
   return (
     <footer className="footer">
@@ -12,12 +18,26 @@ export default function Footer() {
             <span>OVARIS</span>
           </Link>
           <p>KI-Systeme, die euren Betrieb täglich entlasten.</p>
+          <div className="footer-social">
+            {SOCIAL.map((s) => (
+              <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer">
+                {s.label}
+              </a>
+            ))}
+          </div>
         </div>
-        <nav className="footer-links" aria-label="Footer">
+        <nav className="footer-links" aria-label="Seiten">
+          <span className="footer-col-title">Seiten</span>
           <Link to="/plattform">Plattform</Link>
           <Link to="/preise">Preise</Link>
           <Link to="/ueber">Über</Link>
           <Link to="/kontakt">Kontakt</Link>
+        </nav>
+        <nav className="footer-links" aria-label="Rechtliches">
+          <span className="footer-col-title">Rechtliches</span>
+          <Link to="/impressum">Impressum</Link>
+          <Link to="/datenschutz">Datenschutz</Link>
+          <Link to="/agb">AGB</Link>
         </nav>
       </div>
       <div className="wrap footer-bottom">

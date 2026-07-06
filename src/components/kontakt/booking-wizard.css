@@ -1,0 +1,217 @@
+.wizard {
+  position: relative;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) * 2.5);
+  padding: 2rem;
+  min-height: 26rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.wizard-progress {
+  display: flex;
+  gap: 0.4rem;
+  margin-bottom: 1.6rem;
+}
+
+.wizard-progress span {
+  flex: 1;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--border);
+  transition: background 0.35s ease;
+}
+
+.wizard-progress span.is-on {
+  background: var(--primary);
+}
+
+.wizard-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.wizard-count {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  color: var(--muted-foreground);
+}
+
+.wizard-q {
+  margin-top: 0.5rem;
+  font-size: clamp(1.3rem, 1rem + 1.2vw, 1.8rem);
+  font-weight: 720;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.wizard-hint {
+  margin-top: 0.5rem;
+  color: var(--muted-foreground);
+  font-size: 0.9rem;
+}
+
+.wizard-options {
+  margin-top: 1.4rem;
+  display: grid;
+  gap: 0.6rem;
+}
+
+.wizard-opt {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--input);
+  background: var(--background);
+  color: var(--foreground);
+  font-size: 0.98rem;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.25s ease, background 0.25s ease, transform 0.2s ease;
+}
+
+.wizard-opt:hover {
+  border-color: color-mix(in oklab, var(--primary) 50%, var(--border));
+  transform: translateX(3px);
+}
+
+.wizard-opt.is-sel {
+  border-color: var(--primary);
+  background: color-mix(in oklab, var(--primary) 12%, var(--background));
+}
+
+.wizard-opt-box {
+  display: grid;
+  place-items: center;
+  width: 1.3rem;
+  height: 1.3rem;
+  flex: none;
+  border-radius: 6px;
+  border: 1px solid var(--input);
+  color: var(--primary-foreground);
+  font-size: 0.8rem;
+  font-weight: 700;
+  background: var(--card);
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.wizard-opt.is-sel .wizard-opt-box {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+.wizard-input {
+  margin-top: 1.4rem;
+  width: 100%;
+  font-family: var(--font-sans);
+  font-size: 1.05rem;
+  color: var(--foreground);
+  background: var(--background);
+  border: 0;
+  border-bottom: 2px solid var(--input);
+  border-radius: 0;
+  padding: 0.7rem 0.2rem;
+  transition: border-color 0.3s ease;
+}
+
+.wizard-input::placeholder {
+  color: color-mix(in oklab, var(--muted-foreground) 60%, transparent);
+}
+
+.wizard-input:focus-visible {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.wizard-nav {
+  margin-top: auto;
+  padding-top: 1.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.wizard-back {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--muted-foreground);
+  background: none;
+  border: 0;
+  cursor: pointer;
+  transition: color 0.25s ease;
+}
+
+.wizard-back:hover {
+  color: var(--foreground);
+}
+
+.wizard-next {
+  margin-left: auto;
+}
+
+.wizard-next.is-disabled {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.wizard-error {
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  color: var(--destructive);
+}
+
+.wizard-error a {
+  color: var(--primary);
+}
+
+/* success */
+.wizard--done {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 0.4rem;
+}
+
+.wizard-check {
+  display: grid;
+  place-items: center;
+  width: 3.4rem;
+  height: 3.4rem;
+  border-radius: 50%;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+  box-shadow: 0 8px 30px color-mix(in oklab, var(--primary) 55%, transparent);
+}
+
+.wizard--done h3 {
+  font-size: 1.5rem;
+  font-weight: 720;
+}
+
+.wizard--done p {
+  color: var(--muted-foreground);
+  max-width: 34ch;
+}
+
+.wizard-book {
+  margin-top: 1.2rem;
+  font-weight: 650;
+  color: var(--primary);
+  text-decoration: none;
+  border-bottom: 1px solid color-mix(in oklab, var(--primary) 50%, transparent);
+  padding-bottom: 2px;
+  transition: color 0.25s ease;
+}
+
+.wizard-book:hover {
+  color: color-mix(in oklab, var(--primary) 80%, white 10%);
+}

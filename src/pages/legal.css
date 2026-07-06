@@ -1,0 +1,45 @@
+.legal {
+  padding: clamp(8rem, 16vh, 11rem) 0 clamp(4rem, 9vh, 7rem);
+}
+
+.legal-inner {
+  max-width: 52rem;
+}
+
+.legal h1 {
+  font-size: clamp(2rem, 1.2rem + 3vw, 3rem);
+  font-weight: 750;
+  letter-spacing: -0.02em;
+}
+
+.legal h2 {
+  margin-top: 2.2rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.legal p,
+.legal li {
+  margin-top: 0.7rem;
+  color: var(--muted-foreground);
+  line-height: 1.7;
+}
+
+.legal ul {
+  margin-top: 0.5rem;
+  padding-left: 1.2rem;
+}
+
+.legal .placeholder {
+  color: var(--primary);
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
+
+.legal-note {
+  margin-top: 2.6rem;
+  padding: 1rem 1.2rem;
+  border: 1px dashed color-mix(in oklab, var(--primary) 45%, var(--border));
+  border-radius: var(--radius);
+  font-size: 0.85rem;
+}

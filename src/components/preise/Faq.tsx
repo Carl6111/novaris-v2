@@ -26,6 +26,10 @@ const FAQS = [
     q: "Kann ich monatlich kündigen?",
     a: "Ja. Alle Pakete laufen monatlich — keine Mindestlaufzeit, keine versteckten Fristen. Ihr bleibt, weil das System liefert, nicht wegen eines Vertrags.",
   },
+  {
+    q: "Was, wenn ich Make oder Zapier schon nutze?",
+    a: "Dann lösen wir das Schritt für Schritt ab — ohne dass etwas stehen bleibt. Eure bestehenden Abläufe werden in echten Code überführt, den ihr besitzt. Kein hartes Umschalten, kein Datenverlust.",
+  },
 ] as const;
 
 export default function Faq() {

@@ -1,0 +1,62 @@
+.nfy {
+  padding: clamp(4rem, 9vh, 7rem) 0;
+}
+
+.nfy .section-head h2 {
+  margin-top: 0.8rem;
+  font-size: clamp(1.8rem, 1.1rem + 2.6vw, 2.8rem);
+  font-weight: 740;
+  letter-spacing: -0.02em;
+}
+
+.nfy .accent {
+  color: var(--primary);
+}
+
+.nfy-list {
+  margin-top: 2.4rem;
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.nfy-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.9rem;
+  padding: 1.2rem 1.3rem;
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) * 2);
+  background: color-mix(in oklab, var(--card) 60%, transparent);
+}
+
+.nfy-x {
+  flex: none;
+  width: 1.4rem;
+  height: 1.4rem;
+  margin-top: 0.1rem;
+}
+
+.nfy-item p {
+  color: var(--foreground);
+  line-height: 1.5;
+  font-size: 0.98rem;
+}
+
+.nfy-foot {
+  margin-top: 1.8rem;
+  font-size: 1.05rem;
+  color: var(--muted-foreground);
+}
+
+.nfy-foot::before {
+  content: "→ ";
+  color: var(--primary);
+}
+
+@media (max-width: 720px) {
+  .nfy-list {
+    grid-template-columns: 1fr;
+  }
+}

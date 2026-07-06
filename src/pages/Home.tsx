@@ -2,8 +2,12 @@ import Hero from "../components/home/Hero";
 import DemoVideo from "../components/home/DemoVideo";
 import Problems from "../components/home/Problems";
 import Payoff from "../components/home/Payoff";
+import SaveCalculator from "../components/home/SaveCalculator";
 import Organism from "../components/home/Organism";
 import Stats from "../components/home/Stats";
+import Compare from "../components/home/Compare";
+import Pilot from "../components/home/Pilot";
+import NotForYou from "../components/home/NotForYou";
 import Integrations from "../components/home/Integrations";
 import Cta from "../components/home/Cta";
 
@@ -14,8 +18,12 @@ export default function Home() {
       <DemoVideo />
       <Problems />
       <Payoff />
+      <SaveCalculator />
       <Organism />
       <Stats />
+      <Compare />
+      <Pilot />
+      <NotForYou />
       <Integrations />
       <Cta />
     </>

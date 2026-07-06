@@ -10,12 +10,14 @@ type Props = {
   type?: "button" | "submit";
   children: ReactNode;
   className?: string;
+  onClick?: () => void;
+  disabled?: boolean;
 };
 
 const MAGNET_RADIUS = 110;
 const MAGNET_STRENGTH = 0.32;
 
-export default function MagneticButton({ to, type, children, className = "" }: Props) {
+export default function MagneticButton({ to, type, children, className = "", onClick, disabled }: Props) {
   const ref = useRef<HTMLSpanElement>(null);
   const [particles, setParticles] = useState<Particle[]>([]);
   const x = useMotionValue(0);
@@ -74,6 +76,11 @@ export default function MagneticButton({ to, type, children, className = "" }: P
 
   const shell = `magbtn-shell ${className}`;
 
+  const handleClick = () => {
+    burst();
+    onClick?.();
+  };
+
   if (to) {
     return (
       <Link
@@ -81,7 +88,7 @@ export default function MagneticButton({ to, type, children, className = "" }: P
         className={shell}
         onPointerMove={handleMove}
         onPointerLeave={handleLeave}
-        onClick={burst}
+        onClick={handleClick}
       >
         {inner}
       </Link>
@@ -91,9 +98,10 @@ export default function MagneticButton({ to, type, children, className = "" }: P
     <button
       type={type ?? "button"}
       className={shell}
+      disabled={disabled}
       onPointerMove={handleMove}
       onPointerLeave={handleLeave}
-      onClick={burst}
+      onClick={handleClick}
     >
       {inner}
     </button>

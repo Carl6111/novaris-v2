@@ -1,29 +1,15 @@
-import { useState } from "react";
 import Reveal from "../ui/Reveal";
-import MagneticButton from "../ui/MagneticButton";
 import ContactSceneMount from "./ContactSceneMount";
+import BookingWizard from "./BookingWizard";
 import "./contact.css";
 
 const STEPS = [
-  { n: "01", t: "Kurzes Gespräch", d: "15 Minuten. Wir hören zu, wo bei euch Zeit verloren geht." },
-  { n: "02", t: "Klarer Vorschlag", d: "Ihr bekommt einen konkreten Plan — kein Verkaufsgerede." },
-  { n: "03", t: "Wir bauen", d: "Schritt für Schritt, ohne euren Betrieb zu stören." },
+  { n: "01", t: "Kurz ausfüllen", d: "Ein paar Fragen — dauert unter einer Minute." },
+  { n: "02", t: "Buchungslink per Mail", d: "Ihr bekommt direkt euren persönlichen Termin-Link." },
+  { n: "03", t: "15 Minuten reden", d: "Wir schauen, wo euer System am meisten Zeit spart." },
 ] as const;
 
-const EMAIL = "[PLATZHALTER-EMAIL]";
-
 export default function Contact() {
-  const [name, setName] = useState("");
-  const [from, setFrom] = useState("");
-  const [msg, setMsg] = useState("");
-
-  const onSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const subject = encodeURIComponent(`Anfrage von ${name || "—"}`);
-    const body = encodeURIComponent(`${msg}\n\nKontakt: ${from}`);
-    window.location.href = `mailto:${EMAIL}?subject=${subject}&body=${body}`;
-  };
-
   return (
     <section className="contact">
       <div className="wrap contact-grid">
@@ -47,47 +33,13 @@ export default function Contact() {
           </div>
         </div>
 
-        <Reveal delay={0.1} className="contact-card">
-          <form onSubmit={onSubmit}>
-            <label className="contact-field">
-              Name
-              <input
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="Vor- und Nachname"
-                required
-              />
-              <span className="contact-corners" aria-hidden="true" />
-            </label>
-            <label className="contact-field">
-              E-Mail oder Telefon
-              <input
-                value={from}
-                onChange={(e) => setFrom(e.target.value)}
-                placeholder="So erreichen wir euch"
-                required
-              />
-              <span className="contact-corners" aria-hidden="true" />
-            </label>
-            <label className="contact-field">
-              Worum geht's?
-              <textarea
-                value={msg}
-                onChange={(e) => setMsg(e.target.value)}
-                rows={4}
-                placeholder="Ein, zwei Sätze reichen."
-              />
-              <span className="contact-corners" aria-hidden="true" />
-            </label>
-            <MagneticButton type="submit" className="contact-submit">
-              Gespräch anfragen
-            </MagneticButton>
-            <ul className="contact-badges">
-              <li>Monatlich kündbar</li>
-              <li>DSGVO-konform</li>
-              <li>Antwort in 24 h</li>
-            </ul>
-          </form>
+        <Reveal delay={0.1}>
+          <BookingWizard />
+          <ul className="contact-badges">
+            <li>Monatlich kündbar</li>
+            <li>DSGVO-konform</li>
+            <li>Antwort in 24 h</li>
+          </ul>
         </Reveal>
       </div>
     </section>
