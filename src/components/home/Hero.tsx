@@ -18,7 +18,6 @@ export default function Hero() {
   const reduced = useReducedMotion();
   const [canvasReady, setCanvasReady] = useState(false);
   const [canvasDead, setCanvasDead] = useState(false);
-  const [videoGone, setVideoGone] = useState(false);
   const [mobile] = useState(isMobile);
 
   const { scrollYProgress } = useScroll({
@@ -42,12 +41,7 @@ export default function Hero() {
   if (reduced) {
     return (
       <section className="hero hero--static">
-        <img
-          src="/media/herovid-poster.avif"
-          alt=""
-          className="hero-media"
-          fetchPriority="high"
-        />
+        <div className="hero-fallback" aria-hidden="true" />
         <div className="hero-overlay">
           <p className="eyebrow">// Growth Engine+</p>
           <h1>
@@ -66,19 +60,8 @@ export default function Hero() {
   return (
     <section ref={ref} className="hero" aria-label="Novaris Intro">
       <div className="hero-sticky">
-        {/* LCP layer: video paints instantly, unmounts after the crossfade to WebGL */}
-        {!videoGone && (
-          <video
-            className={`hero-media hero-video ${showCanvas ? "hero-video--hidden" : ""}`}
-            src="/media/herovid.mp4"
-            poster="/media/herovid-poster.avif"
-            autoPlay
-            muted
-            loop
-            playsInline
-            onTransitionEnd={() => setVideoGone(true)}
-          />
-        )}
+        {/* solid black base paints instantly; the WebGL scene fades in over it */}
+        <div className="hero-fallback" aria-hidden="true" />
 
         {!canvasDead && (
           <Suspense fallback={null}>
@@ -109,7 +92,7 @@ export default function Hero() {
 
         <motion.div className="hero-veil" style={{ opacity: veilOpacity }} aria-hidden="true" />
         <motion.div className="hero-wordmark" style={{ opacity: wmOpacity, scale: wmScale }}>
-          <img src="/logos/novaris-gold-mark.png" alt="" />
+          <img src="/logos/novaris-mark2.png" alt="" />
           <span>ovaris</span>
         </motion.div>
       </div>

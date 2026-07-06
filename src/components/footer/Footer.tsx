@@ -8,7 +8,7 @@ export default function Footer() {
       <div className="wrap footer-inner">
         <div className="footer-brand">
           <Link to="/" className="footer-logo" aria-label="Novaris Startseite">
-            <img src="/logos/novaris-mark.png" alt="" className="footer-mark" />
+            <img src="/logos/novaris-mark2.png" alt="" className="footer-mark" />
             <span>OVARIS</span>
           </Link>
           <p>KI-Systeme, die euren Betrieb täglich entlasten.</p>

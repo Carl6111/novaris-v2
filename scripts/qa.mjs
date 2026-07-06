@@ -35,6 +35,8 @@ const EXPECT = {
     "Gespräch buchen",
     "KI-Systeme, die euren Betrieb täglich entlasten.",
     "Gebaut mit echtem Code & echter KI.",
+    "Monatlich kündbar",
+    "Keine Kreditkarte nötig",
   ],
   "/plattform": [
     "// Die Plattform",
@@ -117,6 +119,7 @@ const EXPECT = {
     "Brauchen wir technisches Wissen?",
     "Warum kein Make oder Zapier?",
     "Was ist mit Datenschutz?",
+    "Kann ich monatlich kündigen?",
   ],
   "/ueber": [
     "// Novaris",
@@ -148,6 +151,7 @@ const EXPECT = {
     "E-Mail oder Telefon",
     "Worum geht's?",
     "Gespräch anfragen",
+    "Antwort in 24 h",
   ],
 };
 

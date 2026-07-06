@@ -27,6 +27,13 @@ export default function Cta() {
             <MagneticButton to="/kontakt">Gespräch buchen</MagneticButton>
           </div>
         </Reveal>
+        <Reveal delay={0.24}>
+          <ul className="cta-badges">
+            <li>Monatlich kündbar</li>
+            <li>DSGVO-konform</li>
+            <li>Keine Kreditkarte nötig</li>
+          </ul>
+        </Reveal>
       </div>
     </section>
   );

@@ -22,6 +22,10 @@ const FAQS = [
     q: "Was ist mit Datenschutz?",
     a: "Eure Daten bleiben eure Daten. Wir richten das System DSGVO-konform ein und hosten dort, wo es für euch passt.",
   },
+  {
+    q: "Kann ich monatlich kündigen?",
+    a: "Ja. Alle Pakete laufen monatlich — keine Mindestlaufzeit, keine versteckten Fristen. Ihr bleibt, weil das System liefert, nicht wegen eines Vertrags.",
+  },
 ] as const;
 
 export default function Faq() {

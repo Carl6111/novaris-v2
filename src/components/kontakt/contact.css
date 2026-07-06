@@ -158,6 +158,30 @@
   justify-self: start;
 }
 
+.contact-badges {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.2rem;
+  margin-top: 0.4rem;
+}
+
+.contact-badges li {
+  position: relative;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--muted-foreground);
+  padding-left: 1rem;
+}
+
+.contact-badges li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--primary);
+  font-weight: 700;
+}
+
 @media (max-width: 860px) {
   .contact-grid {
     grid-template-columns: 1fr;

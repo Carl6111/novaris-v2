@@ -72,3 +72,29 @@
   display: flex;
   justify-content: center;
 }
+
+.cta-badges {
+  margin-top: 1.4rem;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem 1.4rem;
+}
+
+.cta-badges li {
+  position: relative;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  color: var(--muted-foreground);
+  padding-left: 1.1rem;
+}
+
+.cta-badges li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--primary);
+  font-weight: 700;
+}

@@ -82,6 +82,11 @@ export default function Contact() {
             <MagneticButton type="submit" className="contact-submit">
               Gespräch anfragen
             </MagneticButton>
+            <ul className="contact-badges">
+              <li>Monatlich kündbar</li>
+              <li>DSGVO-konform</li>
+              <li>Antwort in 24 h</li>
+            </ul>
           </form>
         </Reveal>
       </div>
