@@ -5,7 +5,6 @@ import Planet from "./Planet";
 import Nebula from "./Nebula";
 import Nova from "./Nova";
 import Astronaut from "./Astronaut";
-import Effects from "./Effects";
 import CameraRig from "./CameraRig";
 
 type Props = {
@@ -42,7 +41,6 @@ export default function HeroScene({ progress, mobile = false }: Props) {
       </Suspense>
 
       <CameraRig progress={progress} />
-      {!mobile && <Effects />}
     </>
   );
 }
