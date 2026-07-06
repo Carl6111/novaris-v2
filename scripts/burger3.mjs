@@ -1,0 +1,17 @@
+import { chromium } from "playwright";
+const b = await chromium.launch();
+const p = await b.newPage({ viewport: { width: 390, height: 844 } });
+await p.goto("http://localhost:5200/", { waitUntil: "networkidle" });
+await p.waitForTimeout(1200);
+await p.click(".nav-burger");
+await p.waitForTimeout(500);
+const links = await p.$$(".nav-overlay-links a");
+const preise = links[1];
+const box = await preise.boundingBox();
+const hit = await p.evaluate(({x,y})=>{const e=document.elementFromPoint(x,y);return e?e.textContent+" ("+e.className+")":"none";},{x:box.x+box.width/2,y:box.y+box.height/2});
+console.log("element at Preise:", hit);
+await preise.click();
+await p.waitForTimeout(900);
+console.log("URL after Preise click:", p.url());
+await p.screenshot({ path: process.env.O + "/burger-nav-preise.png" });
+await b.close();
