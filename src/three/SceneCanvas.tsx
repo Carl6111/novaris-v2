@@ -38,10 +38,10 @@ export default function SceneCanvas({
   return (
     <div ref={hostRef} className={className}>
       <Canvas
-        dpr={[1, 1.75]}
+        dpr={[1, 2]}
         camera={camera}
         frameloop={inView ? frameloop : "never"}
-        gl={{ antialias: false, powerPreference: "high-performance" }}
+        gl={{ antialias: true, powerPreference: "high-performance" }}
         onCreated={({ gl }) => {
           gl.domElement.addEventListener(
             "webglcontextlost",

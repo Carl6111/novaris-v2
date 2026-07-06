@@ -18,6 +18,7 @@ export default function Hero() {
   const reduced = useReducedMotion();
   const [canvasReady, setCanvasReady] = useState(false);
   const [canvasDead, setCanvasDead] = useState(false);
+  const [videoGone, setVideoGone] = useState(false);
   const [mobile] = useState(isMobile);
 
   const { scrollYProgress } = useScroll({
@@ -65,16 +66,19 @@ export default function Hero() {
   return (
     <section ref={ref} className="hero" aria-label="Novaris Intro">
       <div className="hero-sticky">
-        {/* LCP layer: video paints instantly, crossfades out once WebGL is live */}
-        <video
-          className={`hero-media hero-video ${showCanvas ? "hero-video--hidden" : ""}`}
-          src="/media/herovid.mp4"
-          poster="/media/herovid-poster.avif"
-          autoPlay
-          muted
-          loop
-          playsInline
-        />
+        {/* LCP layer: video paints instantly, unmounts after the crossfade to WebGL */}
+        {!videoGone && (
+          <video
+            className={`hero-media hero-video ${showCanvas ? "hero-video--hidden" : ""}`}
+            src="/media/herovid.mp4"
+            poster="/media/herovid-poster.avif"
+            autoPlay
+            muted
+            loop
+            playsInline
+            onTransitionEnd={() => setVideoGone(true)}
+          />
+        )}
 
         {!canvasDead && (
           <Suspense fallback={null}>

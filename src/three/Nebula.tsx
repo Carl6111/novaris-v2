@@ -12,8 +12,8 @@ export default function Nebula({ opacity = 0.16 }: Props) {
   const uniforms = useMemo(
     () => ({
       uTime: { value: 0 },
-      uColorA: { value: new THREE.Color("#2a1218") },
-      uColorB: { value: new THREE.Color("#f5522d") },
+      uColorA: { value: new THREE.Color("#0a0304") },
+      uColorB: { value: new THREE.Color("#c23a1e") },
       uOpacity: { value: opacity },
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps

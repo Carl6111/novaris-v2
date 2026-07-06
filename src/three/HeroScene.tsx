@@ -3,6 +3,7 @@ import type { MotionValue } from "motion/react";
 import Starfield from "./Starfield";
 import Planet from "./Planet";
 import Nebula from "./Nebula";
+import Nova from "./Nova";
 import Astronaut from "./Astronaut";
 import Effects from "./Effects";
 import CameraRig from "./CameraRig";
@@ -15,8 +16,8 @@ type Props = {
 export default function HeroScene({ progress, mobile = false }: Props) {
   return (
     <>
-      <color attach="background" args={["#0a0605"]} />
-      <fog attach="fog" args={["#0a0605", 26, 60]} />
+      <color attach="background" args={["#000000"]} />
+      <fog attach="fog" args={["#000000", 34, 70]} />
 
       {/* coral key light */}
       <directionalLight position={[4, 2, 3]} intensity={2.1} color="#ff7a55" />
@@ -28,7 +29,8 @@ export default function HeroScene({ progress, mobile = false }: Props) {
 
       <Suspense fallback={null}>
         <Starfield />
-        <Nebula opacity={0.15} />
+        <Nova />
+        <Nebula opacity={0.05} />
         <Planet
           position={[2.8, -2.6, -4]}
           radius={2.2}
