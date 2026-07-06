@@ -1,0 +1,74 @@
+.cta {
+  position: relative;
+  padding: clamp(6rem, 14vh, 10rem) 0;
+  overflow: hidden;
+  text-align: center;
+}
+
+.cta-bg {
+  position: absolute;
+  inset: 0;
+  background-image: image-set(
+    url("/images/endframe.avif") type("image/avif"),
+    url("/images/endframe.webp") type("image/webp")
+  );
+  background-size: cover;
+  background-position: center;
+  opacity: 0.35;
+}
+
+.cta-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    var(--background),
+    transparent 30%,
+    transparent 70%,
+    var(--background)
+  );
+}
+
+.cta-glow {
+  position: absolute;
+  left: 50%;
+  bottom: -40%;
+  width: 70rem;
+  height: 30rem;
+  transform: translateX(-50%);
+  background: radial-gradient(
+    ellipse at center,
+    color-mix(in oklab, var(--primary) 22%, transparent),
+    transparent 65%
+  );
+  pointer-events: none;
+}
+
+.cta-inner {
+  position: relative;
+}
+
+.cta-title {
+  margin-top: 1rem;
+  font-size: clamp(2.2rem, 1.2rem + 3.8vw, 4rem);
+  font-weight: 750;
+  letter-spacing: -0.02em;
+}
+
+.cta-title .accent {
+  color: var(--primary);
+}
+
+.cta-sub {
+  margin: 1.2rem auto 0;
+  max-width: 46ch;
+  color: var(--muted-foreground);
+  line-height: 1.6;
+}
+
+.cta-actions {
+  margin-top: 2.4rem;
+  display: flex;
+  justify-content: center;
+}

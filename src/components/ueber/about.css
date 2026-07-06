@@ -1,0 +1,90 @@
+.about {
+  padding: clamp(4rem, 10vh, 8rem) 0;
+  overflow: hidden;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+  gap: clamp(2.5rem, 6vw, 5rem);
+  align-items: center;
+}
+
+.about-lead {
+  font-size: clamp(1.5rem, 1rem + 1.8vw, 2.2rem);
+  font-weight: 680;
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+  max-width: 26ch;
+}
+
+.about-lead .accent {
+  color: var(--primary);
+}
+
+.about-para {
+  margin-top: 1.4rem;
+  color: var(--muted-foreground);
+  line-height: 1.7;
+  max-width: 52ch;
+}
+
+.about-values {
+  margin-top: 2.6rem;
+  display: grid;
+  gap: 1.4rem;
+}
+
+.about-value {
+  border-left: 2px solid color-mix(in oklab, var(--primary) 55%, transparent);
+  padding-left: 1.1rem;
+}
+
+.about-value h3 {
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.about-value p {
+  margin-top: 0.35rem;
+  color: var(--muted-foreground);
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.about-astronaut-wrap {
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+
+.about-astronaut {
+  position: relative;
+  z-index: 1;
+  width: min(320px, 70%);
+  height: auto;
+  animation: astro-drift 7s ease-in-out infinite;
+  filter: drop-shadow(0 30px 50px rgb(0 0 0 / 0.6));
+}
+
+@keyframes astro-drift {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-18px) rotate(2.5deg); }
+}
+
+.about-astronaut-glow {
+  position: absolute;
+  inset: 10% 0;
+  background: radial-gradient(
+    ellipse at center,
+    color-mix(in oklab, var(--primary) 20%, transparent),
+    transparent 65%
+  );
+  filter: blur(10px);
+}
+
+@media (max-width: 860px) {
+  .about-grid {
+    grid-template-columns: 1fr;
+  }
+}

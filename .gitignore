@@ -1,0 +1,45 @@
+# System
+.DS_Store
+Thumbs.db
+
+# Dependencies
+node_modules/
+
+# Environment & Secrets
+.env
+.env.*
+*.env
+secrets.json
+credentials.json
+tokens.json
+service-account.json
+config.secret.*
+*.secret.*
+
+# Certificates & Keys
+*.pem
+*.key
+*.p12
+*.pfx
+*.cert
+*.crt
+id_rsa
+id_ed25519
+
+# Build
+.vercel
+dist/
+build/
+.next/
+out/
+dist-ssr
+*.local
+
+# Logs
+*.log
+npm-debug.log*
+
+# Editor
+.vscode/*
+!.vscode/extensions.json
+.idea

@@ -1,0 +1,83 @@
+.magbtn-shell {
+  display: inline-block;
+  background: none;
+  border: 0;
+  padding: 0.6rem;
+  margin: -0.6rem;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.magbtn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.95rem 2rem;
+  border-radius: 999px;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  font-weight: 650;
+  font-size: 1rem;
+  overflow: visible;
+  isolation: isolate;
+  transition: box-shadow 0.3s ease;
+  box-shadow: 0 4px 18px color-mix(in oklab, var(--primary) 35%, transparent);
+}
+
+.magbtn-shell:hover .magbtn {
+  box-shadow:
+    0 6px 30px color-mix(in oklab, var(--primary) 55%, transparent),
+    0 0 0 1px color-mix(in oklab, var(--primary) 60%, white 10%);
+}
+
+.magbtn-label {
+  position: relative;
+  z-index: 2;
+}
+
+.magbtn-shimmer {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.magbtn-shimmer::before {
+  content: "";
+  position: absolute;
+  top: -20%;
+  bottom: -20%;
+  left: -60%;
+  width: 40%;
+  background: linear-gradient(
+    105deg,
+    transparent,
+    rgb(255 255 255 / 0.35),
+    transparent
+  );
+  transform: skewX(-18deg);
+  transition: left 0s;
+}
+
+.magbtn-shell:hover .magbtn-shimmer::before {
+  left: 130%;
+  transition: left 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.magbtn-particles {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.magbtn-particle {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--primary);
+  box-shadow: 0 0 8px var(--primary);
+}

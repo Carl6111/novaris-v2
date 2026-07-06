@@ -1,0 +1,43 @@
+.pagehero {
+  position: relative;
+  padding: clamp(8rem, 16vh, 11rem) 0 clamp(3rem, 7vh, 5rem);
+  overflow: hidden;
+}
+
+.pagehero::after {
+  content: "";
+  position: absolute;
+  inset: auto -20% -60% -20%;
+  height: 70%;
+  background: radial-gradient(
+    ellipse at center top,
+    color-mix(in oklab, var(--primary) 14%, transparent),
+    transparent 65%
+  );
+  pointer-events: none;
+}
+
+.pagehero-inner {
+  position: relative;
+  max-width: 60rem;
+}
+
+.pagehero-title {
+  margin-top: 1rem;
+  font-size: clamp(2.6rem, 1.4rem + 5vw, 4.6rem);
+  line-height: 1.04;
+  font-weight: 750;
+  letter-spacing: -0.02em;
+}
+
+.pagehero-title .accent {
+  color: var(--primary);
+}
+
+.pagehero-sub {
+  margin-top: 1.4rem;
+  max-width: 46ch;
+  font-size: clamp(1.05rem, 0.95rem + 0.4vw, 1.25rem);
+  color: var(--muted-foreground);
+  line-height: 1.6;
+}

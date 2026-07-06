@@ -1,0 +1,35 @@
+import PageHero from "../components/ui/PageHero";
+import HorizonBackground from "../components/plattform/HorizonBackground";
+import ModuleRows from "../components/plattform/ModuleRows";
+import Statement from "../components/ui/Statement";
+import Examples from "../components/plattform/Examples";
+import Process from "../components/plattform/Process";
+import Cta from "../components/home/Cta";
+
+export default function Plattform() {
+  return (
+    <>
+      <PageHero
+        eyebrow="// Die Plattform"
+        title={
+          <>
+            Euer ganzer Betrieb. <span className="accent">Ein System.</span>
+          </>
+        }
+        subtitle="Fünf Werkzeuge, die sonst getrennt laufen — gebündelt, automatisiert, in eurer Hand."
+        background={<HorizonBackground />}
+      />
+      <ModuleRows />
+      <Statement
+        eyebrow="// Kein Tool-Chaos"
+        subtitle="Keine Klick-Tools wie Make, Zapier oder n8n. Echter Code, echte KI-Agents — und alles gehört euch."
+        underline
+      >
+        Gebaut, nicht <span className="accent">zusammengeklickt.</span>
+      </Statement>
+      <Examples />
+      <Process />
+      <Cta />
+    </>
+  );
+}

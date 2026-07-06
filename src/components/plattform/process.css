@@ -1,0 +1,86 @@
+.process {
+  padding: clamp(4rem, 10vh, 8rem) 0;
+  border-top: 1px solid var(--border);
+}
+
+.process-orbit-wrap {
+  position: relative;
+  margin-top: 3rem;
+}
+
+.process-orbit {
+  position: absolute;
+  top: -1.4rem;
+  left: 0;
+  width: 100%;
+  height: 3.5rem;
+  overflow: visible;
+}
+
+.process-orbit-path {
+  stroke: color-mix(in oklab, var(--primary) 40%, transparent);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-dasharray: 1 10;
+}
+
+.process-track {
+  position: relative;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.6rem;
+}
+
+.process-step {
+  padding-top: 2.4rem;
+  position: relative;
+}
+
+.process-star {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+}
+
+.process-star svg path {
+  fill: var(--primary);
+  filter: drop-shadow(0 0 6px color-mix(in oklab, var(--primary) 70%, transparent));
+}
+
+.process-num {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  color: var(--primary);
+}
+
+.process-step h3 {
+  margin-top: 0.5rem;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.process-step p {
+  margin-top: 0.5rem;
+  color: var(--muted-foreground);
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 860px) {
+  .process-track {
+    grid-template-columns: 1fr 1fr;
+  }
+  .process-orbit {
+    display: none;
+  }
+}
+
+@media (max-width: 520px) {
+  .process-track {
+    grid-template-columns: 1fr;
+  }
+}

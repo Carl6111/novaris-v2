@@ -1,0 +1,398 @@
+.organism-section {
+  position: relative;
+  height: 380vh;
+  background: transparent;
+}
+
+.organism-pin {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.organism-head {
+  position: absolute;
+  top: clamp(26px, 6vh, 78px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(680px, 92vw);
+  text-align: center;
+  z-index: 8;
+  pointer-events: none;
+}
+.eyebrow-light {
+  color: var(--primary);
+}
+.organism-head h2 {
+  font-size: clamp(1.8rem, 1.1rem + 2.6vw, 3rem);
+  font-weight: 750;
+  letter-spacing: -0.02em;
+  margin-top: 10px;
+  color: var(--foreground);
+}
+.organism-accent {
+  font-style: italic;
+  font-weight: 500;
+  background: linear-gradient(100deg, #ffffff, var(--primary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.organism-head p {
+  margin: 12px auto 0;
+  max-width: 44ch;
+  color: var(--muted-foreground);
+}
+
+.organism-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  border: 0;
+  padding: 0;
+  background: rgb(0 0 0 / 0.62);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  opacity: 0;
+  pointer-events: none;
+  cursor: pointer;
+  transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.organism-pin.has-active .organism-backdrop {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.organism-stage {
+  --OR: clamp(140px, 24vw, 300px);
+  position: relative;
+  width: min(900px, 96vw);
+  height: min(640px, 78vh);
+  transform-style: preserve-3d;
+  perspective: 1200px;
+  z-index: 6;
+}
+.organism-world {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* heart core */
+.heart {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: clamp(220px, 31vw, 380px);
+  aspect-ratio: 1;
+  margin-left: calc(clamp(220px, 31vw, 380px) / -2);
+  margin-top: calc(clamp(220px, 31vw, 380px) / -2);
+  z-index: 4;
+  transform: translateZ(40px);
+  transform-style: preserve-3d;
+}
+.heart-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  animation: heart-beat 3.4s ease-in-out infinite;
+  filter: drop-shadow(0 0 30px color-mix(in oklab, var(--primary) 55%, transparent))
+    drop-shadow(0 0 60px color-mix(in oklab, var(--primary) 30%, transparent));
+}
+@keyframes heart-beat {
+  0%, 100% { transform: scale(1); }
+  14% { transform: scale(1.045); }
+  28% { transform: scale(1.005); }
+  42% { transform: scale(1.03); }
+}
+.heart-glow {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 200%;
+  height: 200%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    color-mix(in oklab, var(--primary) 30%, transparent),
+    color-mix(in oklab, var(--primary) 14%, transparent) 42%,
+    transparent 66%
+  );
+  filter: blur(14px);
+  animation: heart-breathe 3.4s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes heart-breathe {
+  0%, 100% { opacity: 0.65; transform: translate(-50%, -50%) scale(1); }
+  40% { opacity: 1; transform: translate(-50%, -50%) scale(1.08); }
+}
+
+/* nerves */
+.nerve {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--OR);
+  height: 30px;
+  margin-top: -15px;
+  transform-origin: 0 50%;
+  transform: rotate(var(--a));
+  z-index: 2;
+}
+.nerve-line {
+  position: absolute;
+  inset: 0;
+  transform-origin: 0 50%;
+}
+.nerve-line svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 0 6px color-mix(in oklab, var(--primary) 50%, transparent));
+  overflow: visible;
+}
+.nerve-pulse {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 9px;
+  height: 9px;
+  margin-top: -4.5px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 0 12px 3px color-mix(in oklab, var(--primary) 80%, transparent);
+  opacity: 0;
+}
+.nerve-pulse-2 {
+  background: #ffd0bd;
+  box-shadow: 0 0 12px 3px color-mix(in oklab, var(--primary) 75%, transparent);
+}
+.organism-pin.lit .nerve-pulse {
+  animation: nerve-flow 2.6s linear infinite;
+  animation-delay: var(--nd, 0s);
+}
+.organism-pin.lit .nerve-pulse-2 {
+  animation: nerve-flow 2.6s linear infinite;
+  animation-delay: calc(var(--nd, 0s) + 1.3s);
+}
+@keyframes nerve-flow {
+  0% { transform: translateX(2px) scale(0.4); opacity: 0; }
+  14% { opacity: 1; }
+  86% { opacity: 1; }
+  100% { transform: translateX(calc(var(--OR) - 8px)) scale(1); opacity: 0; }
+}
+
+/* organs (living cells) */
+.organ {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: clamp(84px, 11vw, 116px);
+  height: clamp(84px, 11vw, 116px);
+  margin-left: calc(clamp(84px, 11vw, 116px) / -2);
+  margin-top: calc(clamp(84px, 11vw, 116px) / -2);
+  transform: translate(var(--hx), var(--hy));
+  z-index: 3;
+  padding: 0;
+  border: 0;
+  background: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+.organ-cell {
+  position: relative;
+  width: clamp(66px, 8.5vw, 92px);
+  height: clamp(66px, 8.5vw, 92px);
+  border-radius: 46% 54% 52% 48% / 52% 46% 54% 48%;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(
+    circle at 38% 30%,
+    color-mix(in oklab, var(--primary) 55%, white 20%),
+    color-mix(in oklab, var(--primary) 38%, transparent) 52%,
+    rgb(30 8 4 / 0.6) 100%
+  );
+  border: 1.5px solid color-mix(in oklab, var(--primary) 75%, white 10%);
+  box-shadow:
+    0 0 30px 0 color-mix(in oklab, var(--primary) 60%, transparent),
+    inset 0 0 22px color-mix(in oklab, var(--primary) 35%, white 10%);
+  backdrop-filter: blur(3px);
+  transition:
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: organ-bob 6s ease-in-out infinite;
+  animation-delay: var(--ob, 0s);
+}
+.organ:nth-child(odd) .organ-cell { animation-delay: 1.4s; }
+@keyframes organ-bob {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -6px; }
+}
+.organ-ic svg {
+  width: clamp(26px, 3.6vw, 34px);
+  height: clamp(26px, 3.6vw, 34px);
+  color: #ffffff;
+  display: block;
+  filter: drop-shadow(0 0 5px color-mix(in oklab, var(--primary) 70%, white 10%));
+}
+.organ-name {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--foreground);
+  white-space: nowrap;
+  text-shadow: 0 1px 8px rgb(0 0 0 / 0.8), 0 0 12px color-mix(in oklab, var(--primary) 40%, transparent);
+}
+.organ:hover .organ-cell,
+.organ:focus-visible .organ-cell {
+  transform: scale(1.12);
+  border-color: color-mix(in oklab, var(--primary) 90%, white 10%);
+  box-shadow:
+    0 0 34px 2px color-mix(in oklab, var(--primary) 75%, transparent),
+    inset 0 0 22px color-mix(in oklab, var(--primary) 30%, transparent);
+}
+.organ:focus-visible { outline: none; }
+.organ.active .organ-cell {
+  border-color: #ffffff;
+  box-shadow:
+    0 0 40px 4px color-mix(in oklab, var(--primary) 70%, white 15%),
+    inset 0 0 22px color-mix(in oklab, var(--primary) 25%, white 10%);
+}
+.organism-pin.has-active .organ:not(.active) {
+  opacity: 0.25;
+  filter: blur(2px);
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* organ info panel */
+.organ-panel {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 30;
+  width: min(360px, 86vw);
+  padding: 26px 26px 20px;
+  border-radius: calc(var(--radius) * 2.5);
+  text-align: center;
+  background: linear-gradient(158deg, color-mix(in oklab, var(--card) 94%, var(--primary) 6%), var(--background));
+  border: 1px solid color-mix(in oklab, var(--primary) 50%, transparent);
+  box-shadow:
+    0 0 40px -6px color-mix(in oklab, var(--primary) 50%, transparent),
+    0 30px 70px -30px rgb(0 0 0 / 0.8);
+  backdrop-filter: blur(10px);
+}
+.organ-panel-ic {
+  display: inline-grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 46% 54% 52% 48% / 52% 46% 54% 48%;
+  background: radial-gradient(
+    circle at 38% 32%,
+    color-mix(in oklab, var(--primary) 40%, white 10%),
+    color-mix(in oklab, var(--primary) 28%, transparent) 60%
+  );
+  border: 1px solid color-mix(in oklab, var(--primary) 60%, transparent);
+  margin-bottom: 12px;
+}
+.organ-panel-ic svg { width: 26px; height: 26px; color: #ffffff; }
+.organ-panel-tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: 8px;
+}
+.organ-panel h3 {
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: var(--foreground);
+}
+.organ-panel p {
+  margin: 8px 0 14px;
+  color: var(--muted-foreground);
+  font-size: 0.98rem;
+  line-height: 1.5;
+}
+.organ-panel ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: left;
+  margin: 0 auto;
+  width: fit-content;
+}
+.organ-panel li {
+  position: relative;
+  padding-left: 18px;
+  font-size: 0.92rem;
+  color: var(--foreground);
+}
+.organ-panel li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: var(--primary);
+}
+.organ-panel-close {
+  margin-top: 18px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  background: none;
+  cursor: pointer;
+  border: 1px solid color-mix(in oklab, var(--primary) 30%, transparent);
+  border-radius: 100px;
+  padding: 7px 16px;
+  transition: color 0.25s, border-color 0.25s;
+}
+.organ-panel-close:hover {
+  color: var(--foreground);
+  border-color: color-mix(in oklab, var(--primary) 70%, transparent);
+}
+
+.organism-tip {
+  position: absolute;
+  bottom: clamp(18px, 5vh, 44px);
+  left: 0;
+  right: 0;
+  text-align: center;
+  z-index: 8;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  opacity: 0;
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+.organism-pin.lit .organism-tip { opacity: 0.9; }
+
+@media (max-width: 720px) {
+  .organism-stage { --OR: clamp(120px, 34vw, 190px); }
+  .organism-head { top: clamp(16px, 4vh, 44px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nerve-line { transform: scaleX(1); }
+  .heart-img, .heart-glow, .organ-cell,
+  .organism-pin.lit .nerve-pulse, .organism-pin.lit .nerve-pulse-2 { animation: none; }
+}

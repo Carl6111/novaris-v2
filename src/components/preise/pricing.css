@@ -1,0 +1,131 @@
+.pricing {
+  padding: clamp(2rem, 6vh, 4rem) 0 clamp(4rem, 9vh, 7rem);
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.4rem;
+  align-items: start;
+}
+
+.price-card {
+  position: relative;
+  padding: 2.2rem 2rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) * 2.5);
+}
+
+/* rotating border beam on the featured card */
+.price-card--featured {
+  border-color: transparent;
+  background:
+    linear-gradient(var(--card), var(--card)) padding-box,
+    conic-gradient(
+        from var(--beam, 0deg),
+        color-mix(in oklab, var(--primary) 90%, white 10%),
+        transparent 25%,
+        transparent 75%,
+        color-mix(in oklab, var(--primary) 90%, white 10%)
+      )
+      border-box;
+  animation: beam-rotate 4.5s linear infinite;
+  box-shadow: 0 0 50px -14px color-mix(in oklab, var(--primary) 45%, transparent);
+}
+
+@property --beam {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes beam-rotate {
+  to {
+    --beam: 360deg;
+  }
+}
+
+.price-badge-wrap {
+  position: absolute;
+  top: -0.9rem;
+  right: 1.6rem;
+  padding: 0.15rem 0.7rem;
+}
+
+.price-badge {
+  position: relative;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--primary);
+  background: var(--background);
+  padding: 0.25rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in oklab, var(--primary) 55%, transparent);
+}
+
+.price-card h3 {
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.price-amount {
+  margin-top: 1rem;
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+}
+
+.price-value {
+  font-size: clamp(2rem, 1.4rem + 1.6vw, 2.7rem);
+  font-weight: 780;
+  letter-spacing: -0.02em;
+  color: var(--primary);
+}
+
+.price-period {
+  color: var(--muted-foreground);
+  font-size: 0.9rem;
+}
+
+.price-desc {
+  margin-top: 0.8rem;
+  color: var(--muted-foreground);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+.price-features {
+  margin-top: 1.4rem;
+  list-style: none;
+  display: grid;
+  gap: 0.6rem;
+}
+
+.price-features li {
+  position: relative;
+  padding-left: 1.5rem;
+  font-size: 0.93rem;
+}
+
+.price-features li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.price-cta {
+  margin-top: 1.8rem;
+}
+
+@media (max-width: 900px) {
+  .pricing-grid {
+    grid-template-columns: 1fr;
+    max-width: 30rem;
+    margin-inline: auto;
+  }
+}

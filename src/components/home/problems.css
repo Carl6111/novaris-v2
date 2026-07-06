@@ -1,0 +1,115 @@
+.problems {
+  position: relative;
+  height: 520vh;
+  background: transparent;
+}
+
+.problems-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+
+.problems-constellation {
+  opacity: 0.4;
+}
+
+.problems-thesis-text {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  font-size: clamp(2rem, 1.2rem + 3vw, 3.4rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+  max-width: 16ch;
+  pointer-events: none;
+}
+
+.problems-thesis-text .accent {
+  color: var(--primary);
+}
+
+.problems-stage {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.problem-line {
+  position: absolute;
+  top: 50%;
+  width: min(42vw, 460px);
+  font-size: clamp(1.5rem, 1.1rem + 1.4vw, 2.3rem);
+  font-weight: 550;
+  line-height: 1.15;
+  color: var(--muted-foreground);
+  will-change: transform, opacity, filter;
+}
+.problem-line--left {
+  left: clamp(1.25rem, 6vw, 8rem);
+  text-align: left;
+  margin-top: -8rem;
+}
+.problem-line--right {
+  right: clamp(1.25rem, 6vw, 8rem);
+  text-align: right;
+  margin-top: 4rem;
+}
+
+.problem-num {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  color: var(--primary);
+  margin-bottom: 0.6rem;
+}
+
+/* reduced-motion list */
+.problems--static {
+  height: auto;
+  padding-block: clamp(4rem, 10vh, 8rem);
+}
+.problems--static .eyebrow {
+  display: block;
+  margin-bottom: 1rem;
+}
+.problems--static .problems-thesis-text {
+  text-align: left;
+  margin-bottom: 2.5rem;
+}
+.problems-list {
+  list-style: none;
+  display: grid;
+  gap: 1.2rem;
+  max-width: 640px;
+}
+.problems-list li {
+  font-size: 1.2rem;
+  color: var(--muted-foreground);
+  border-top: 1px solid var(--border);
+  padding-top: 1rem;
+}
+
+@media (max-width: 720px) {
+  .problem-line {
+    width: 80vw;
+    left: 10vw;
+    right: auto;
+    text-align: left;
+    font-size: clamp(1.4rem, 5vw, 2rem);
+  }
+  .problem-line--right {
+    text-align: right;
+  }
+  .problem-line--left {
+    margin-top: -10rem;
+  }
+  .problem-line--right {
+    margin-top: 7rem;
+  }
+}

@@ -1,0 +1,56 @@
+.faq {
+  padding: clamp(4rem, 9vh, 7rem) 0;
+  border-top: 1px solid var(--border);
+}
+
+.faq-list {
+  margin-top: 2.4rem;
+  max-width: 46rem;
+  display: grid;
+  gap: 0.8rem;
+}
+
+.faq-item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) * 2);
+  overflow: hidden;
+  transition: border-color 0.3s ease;
+}
+
+.faq-item[open] {
+  border-color: color-mix(in oklab, var(--primary) 45%, var(--border));
+}
+
+.faq-item summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.1rem 1.4rem;
+  cursor: pointer;
+  font-weight: 600;
+  list-style: none;
+}
+
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-chevron {
+  flex: none;
+  width: 1.1rem;
+  color: var(--primary);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.faq-item[open] .faq-chevron {
+  transform: rotate(180deg);
+}
+
+.faq-item p {
+  padding: 0 1.4rem 1.2rem;
+  color: var(--muted-foreground);
+  line-height: 1.65;
+  max-width: 60ch;
+}

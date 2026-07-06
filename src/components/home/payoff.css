@@ -1,0 +1,90 @@
+.platform {
+  position: relative;
+  padding: clamp(5rem, 12vh, 9rem) 0;
+}
+
+.platform-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  align-items: center;
+  gap: clamp(2.5rem, 6vw, 5rem);
+}
+
+.platform-title {
+  margin-top: 1rem;
+  font-size: clamp(2.1rem, 1.2rem + 3.2vw, 3.4rem);
+  font-weight: 750;
+  letter-spacing: -0.02em;
+  line-height: 1.08;
+}
+
+.platform-title .accent {
+  color: var(--primary);
+  display: inline-block;
+}
+
+.platform-sub {
+  margin-top: 1.2rem;
+  color: var(--muted-foreground);
+  line-height: 1.65;
+  max-width: 44ch;
+}
+
+.platform-chipwrap {
+  position: relative;
+  display: inline-block;
+  margin-top: 1.6rem;
+  padding: 0.9rem 1.2rem;
+}
+
+.platform-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+}
+
+.platform-chips li {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  padding: 0.35rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: color-mix(in oklab, var(--card) 70%, transparent);
+  color: var(--foreground);
+}
+
+.platform-cta {
+  margin-top: 2rem;
+}
+
+.platform-frame {
+  border-radius: calc(var(--radius) * 2.5);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  transform: perspective(1400px) rotateY(-7deg) rotateX(2deg);
+  box-shadow:
+    0 40px 80px -30px rgb(0 0 0 / 0.7),
+    0 0 60px -20px color-mix(in oklab, var(--primary) 30%, transparent);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.platform-frame:hover {
+  transform: perspective(1400px) rotateY(-2deg) rotateX(1deg);
+}
+
+.platform-dash {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@media (max-width: 900px) {
+  .platform-grid {
+    grid-template-columns: 1fr;
+  }
+  .platform-frame {
+    transform: none;
+  }
+}

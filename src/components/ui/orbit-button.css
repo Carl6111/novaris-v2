@@ -1,0 +1,79 @@
+.orbitbtn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.85rem 1.7rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  color: var(--foreground);
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  overflow: hidden;
+  isolation: isolate;
+  transition: color 0.35s ease, border-color 0.35s ease;
+}
+
+/* orbiting glow dot on the border */
+.orbitbtn-ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.orbitbtn-ring rect {
+  fill: none;
+  stroke: var(--primary);
+  stroke-width: 2;
+  stroke-dasharray: 4 96;
+  stroke-dashoffset: 0;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 4px var(--primary));
+  animation: orbit-dot 3.2s linear infinite;
+  opacity: 0.9;
+}
+
+@keyframes orbit-dot {
+  to {
+    stroke-dashoffset: -100;
+  }
+}
+
+/* liquid fill rising on hover */
+.orbitbtn-fill {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: var(--primary);
+  clip-path: ellipse(120% 100% at 50% 220%);
+  transition: clip-path 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.orbitbtn:hover .orbitbtn-fill {
+  clip-path: ellipse(140% 130% at 50% 60%);
+}
+
+.orbitbtn:hover {
+  color: var(--primary-foreground);
+  border-color: var(--primary);
+}
+
+.orbitbtn-label,
+.orbitbtn-arrow {
+  position: relative;
+  z-index: 2;
+}
+
+.orbitbtn-arrow {
+  display: inline-flex;
+  width: 1.4rem;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.orbitbtn:hover .orbitbtn-arrow {
+  transform: translateX(4px);
+}

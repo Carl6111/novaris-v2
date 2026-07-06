@@ -1,0 +1,17 @@
+.horizon-canvas {
+  position: absolute;
+  inset: 0;
+}
+
+.horizon-canvas::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 55%, var(--background));
+  pointer-events: none;
+}
+
+.horizon-canvas canvas {
+  width: 100% !important;
+  height: 100% !important;
+}

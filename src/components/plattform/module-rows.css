@@ -1,0 +1,151 @@
+.module-rows {
+  padding: clamp(3rem, 8vh, 6rem) 0;
+}
+
+.mrow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  align-items: center;
+  gap: clamp(2rem, 6vw, 5rem);
+  padding: clamp(2.5rem, 7vh, 5rem) 0;
+}
+
+.mrow--flip .mrow-copy {
+  order: 2;
+}
+.mrow--flip .mrow-visual {
+  order: 1;
+}
+
+.mrow-copy {
+  position: relative;
+}
+
+.mrow-num {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  color: var(--muted-foreground);
+}
+
+.mrow-tag {
+  margin-top: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  color: var(--primary);
+}
+
+.mrow-title {
+  margin-top: 0.7rem;
+  font-size: clamp(1.7rem, 1rem + 2.4vw, 2.6rem);
+  font-weight: 730;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.mrow-title .accent {
+  color: var(--primary);
+}
+
+.mrow-desc {
+  margin-top: 1rem;
+  color: var(--muted-foreground);
+  line-height: 1.65;
+  max-width: 42ch;
+}
+
+.mrow-arrow {
+  margin-top: 1.2rem;
+  opacity: 0.9;
+}
+
+.mrow-arrow--flip {
+  transform: scaleX(-1);
+}
+
+.mrow-frame {
+  border-radius: calc(var(--radius) * 2.5);
+  border: 1px solid var(--border);
+  background: var(--card);
+  overflow: hidden;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
+  box-shadow: 0 30px 70px -30px rgb(0 0 0 / 0.7);
+  will-change: transform;
+}
+
+.mrow-frame:hover {
+  box-shadow:
+    0 30px 70px -25px rgb(0 0 0 / 0.75),
+    0 0 50px -14px color-mix(in oklab, var(--primary) 40%, transparent);
+}
+
+.mrow-bar {
+  display: flex;
+  gap: 6px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.mrow-bar span {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--muted);
+}
+
+.mrow-bar span:first-child {
+  background: var(--primary);
+}
+
+.mrow-frame img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.mrow-mock {
+  padding: 2rem;
+  display: grid;
+  gap: 0.9rem;
+}
+
+.mrow-mock-row {
+  height: 12px;
+  border-radius: 6px;
+  background: var(--muted);
+}
+
+.mrow-mock-row.short {
+  width: 55%;
+}
+
+.mrow-mock-amount {
+  font-family: var(--font-mono);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--foreground);
+}
+
+.mrow-mock-cta {
+  justify-self: start;
+  font-size: 0.8rem;
+  font-weight: 650;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--primary) 22%, transparent);
+  color: var(--primary);
+  border: 1px solid color-mix(in oklab, var(--primary) 45%, transparent);
+}
+
+@media (max-width: 860px) {
+  .mrow {
+    grid-template-columns: 1fr;
+  }
+  .mrow--flip .mrow-copy {
+    order: 1;
+  }
+  .mrow--flip .mrow-visual {
+    order: 2;
+  }
+}

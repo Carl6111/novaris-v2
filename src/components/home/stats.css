@@ -1,0 +1,43 @@
+.stats {
+  padding: clamp(4.5rem, 10vh, 8rem) 0;
+  border-block: 1px solid var(--border);
+  background: color-mix(in oklab, var(--background) 90%, black);
+}
+
+.stats-grid {
+  margin-top: 2.5rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+}
+
+.stat-value {
+  font-size: clamp(2.6rem, 1.6rem + 4vw, 4.4rem);
+  font-weight: 780;
+  letter-spacing: -0.03em;
+  color: var(--foreground);
+}
+
+.stat-suffix {
+  color: var(--primary);
+  font-size: 0.55em;
+  font-weight: 700;
+  margin-left: 0.15em;
+}
+
+.stat .doodle-underline {
+  max-width: 9rem;
+}
+
+.stat-label {
+  margin-top: 0.7rem;
+  color: var(--muted-foreground);
+  max-width: 26ch;
+  line-height: 1.55;
+}
+
+@media (max-width: 720px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
