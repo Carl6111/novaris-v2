@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import Lenis from "lenis";
 import { setLenis, scrollTop } from "./lib/lenis";
+import ConstellationField from "./components/background/ConstellationField";
 import Nav from "./components/nav/Nav";
 import Footer from "./components/footer/Footer";
 import Home from "./pages/Home";
@@ -31,6 +32,7 @@ function AnimatedRoutes() {
     <AnimatePresence mode="wait">
       <motion.main
         key={location.pathname}
+        className="app-main"
         {...variants}
         transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
       >
@@ -69,6 +71,7 @@ export default function App() {
 
   return (
     <BrowserRouter>
+      <ConstellationField />
       <div className="grain" aria-hidden="true" />
       <div className="vignette" aria-hidden="true" />
       <Nav />

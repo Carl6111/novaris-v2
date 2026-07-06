@@ -4,51 +4,78 @@ import OrbitButton from "../ui/OrbitButton";
 import { SketchCircle } from "../doodles/Doodles";
 import "./pricing.css";
 
-const TIERS = [
+type Tier = {
+  klasse: string;
+  name: string;
+  img: string;
+  price: string;
+  desc: string;
+  features: string[];
+  featured: boolean;
+};
+
+const TIERS: Tier[] = [
   {
-    name: "Automations",
-    price: "ab 500€",
-    period: "/ Monat",
-    desc: "Einzelne KI-Lösungen für konkrete Probleme.",
+    klasse: "Klasse I · Zündung",
+    name: "Nova",
+    img: "/images/tier-nova.webp",
+    price: "Auf Anfrage",
+    desc: "Eure erste Automatisierung, richtig gebaut.",
     features: [
-      "Lead-Capture & Auto-Reply",
-      "Anbindung an euer CRM",
-      "1 Agent, sauber integriert",
+      "1 Kernprozess end-to-end automatisiert",
+      "Bis zu 3 Tool-Integrationen",
+      "Monitoring + monatliches Tuning",
+      "Async-Support",
     ],
     featured: false,
   },
   {
-    name: "Pipeline",
-    price: "~2.000€",
-    period: "/ Monat",
-    desc: "Lead- und Sales-Pipeline plus Automatisierungen.",
+    klasse: "Klasse II · Rotation",
+    name: "Pulsar",
+    img: "/images/tier-pulsar.webp",
+    price: "Auf Anfrage",
+    desc: "Eine Automatisierungs-Engine über eure Abläufe.",
     features: [
-      "Lead-Qualifizierung",
-      "Sales-Automatisierung",
-      "Mehrere Agents im Verbund",
-      "Monatliche Optimierung",
+      "3–5 Prozesse + 1 individueller KI-Agent",
+      "Bis zu 10 Tool-Integrationen",
+      "Datenpipeline + Reporting-Ebene",
+      "Fester Engineer, wöchentlicher Takt",
     ],
     featured: true,
   },
   {
-    name: "Growth Engine Plus",
-    price: "4.000€",
-    period: "/ Monat",
-    desc: "Die volle Plattform für euren ganzen Betrieb.",
+    klasse: "Klasse III · Leuchtkern",
+    name: "Quasar",
+    img: "/images/tier-quasar.webp",
+    price: "Auf Anfrage",
+    desc: "Eine vollautonome Operations-Ebene.",
     features: [
-      "Website + CRM + AI Docs",
-      "Client Portal + Invoicing",
-      "Support- & Reporting-Agents",
-      "Laufender Betrieb & Support",
+      "Unbegrenzte Prozesse + Agent-Flotte",
+      "Firmenweites Integrations-Netz",
+      "Eigene Modelle auf euren Daten",
+      "Eingebettetes Team, SLA, 24/7-Überwachung",
     ],
     featured: false,
   },
-] as const;
+];
 
 export default function Pricing() {
   return (
     <section id="preise" className="pricing">
       <div className="wrap">
+        <Reveal>
+          <div className="pricing-head">
+            <p className="eyebrow">// Missions-Klassen</p>
+            <h2>
+              Drei Größenordnungen <span className="accent">Schub.</span>
+            </h2>
+            <p className="pricing-lead">
+              Jede Zusammenarbeit ist eine Mission mit eigener Klasse. Startet bei
+              Nova und steigt auf — oder direkt in eine hellere Umlaufbahn.
+            </p>
+          </div>
+        </Reveal>
+
         <div className="pricing-grid">
           {TIERS.map((t, i) => (
             <Reveal
@@ -62,23 +89,34 @@ export default function Pricing() {
                   <span className="price-badge">Beliebt</span>
                 </span>
               )}
-              <h3>{t.name}</h3>
-              <div className="price-amount">
-                <span className="price-value">{t.price}</span>
-                <span className="price-period">{t.period}</span>
+              <div className="price-visual">
+                <img
+                  src={t.img}
+                  alt={`${t.name} — ${t.desc}`}
+                  loading="lazy"
+                  width="1000"
+                  height="750"
+                />
+                <span className="price-klasse">{t.klasse}</span>
               </div>
-              <p className="price-desc">{t.desc}</p>
-              <ul className="price-features">
-                {t.features.map((f) => (
-                  <li key={f}>{f}</li>
-                ))}
-              </ul>
-              <div className="price-cta">
-                {t.featured ? (
-                  <MagneticButton to="/kontakt">Gespräch buchen</MagneticButton>
-                ) : (
-                  <OrbitButton to="/kontakt">Gespräch buchen</OrbitButton>
-                )}
+              <div className="price-body">
+                <h3>{t.name}</h3>
+                <div className="price-amount">
+                  <span className="price-value">{t.price}</span>
+                </div>
+                <p className="price-desc">{t.desc}</p>
+                <ul className="price-features">
+                  {t.features.map((f) => (
+                    <li key={f}>{f}</li>
+                  ))}
+                </ul>
+                <div className="price-cta">
+                  {t.featured ? (
+                    <MagneticButton to="/kontakt">{t.name} starten</MagneticButton>
+                  ) : (
+                    <OrbitButton to="/kontakt">{t.name} starten</OrbitButton>
+                  )}
+                </div>
               </div>
             </Reveal>
           ))}

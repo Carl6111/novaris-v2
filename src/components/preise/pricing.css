@@ -2,6 +2,28 @@
   padding: clamp(2rem, 6vh, 4rem) 0 clamp(4rem, 9vh, 7rem);
 }
 
+.pricing-head {
+  max-width: 44rem;
+  margin-bottom: 3rem;
+}
+
+.pricing-head h2 {
+  margin-top: 0.8rem;
+  font-size: clamp(1.9rem, 1.1rem + 2.8vw, 3rem);
+  font-weight: 740;
+  letter-spacing: -0.02em;
+}
+
+.pricing-head .accent {
+  color: var(--primary);
+}
+
+.pricing-lead {
+  margin-top: 1rem;
+  color: var(--muted-foreground);
+  line-height: 1.6;
+}
+
 .pricing-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -11,10 +33,12 @@
 
 .price-card {
   position: relative;
-  padding: 2.2rem 2rem;
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: calc(var(--radius) * 2.5);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 /* rotating border beam on the featured card */
@@ -31,7 +55,7 @@
       )
       border-box;
   animation: beam-rotate 4.5s linear infinite;
-  box-shadow: 0 0 50px -14px color-mix(in oklab, var(--primary) 45%, transparent);
+  box-shadow: 0 0 60px -16px color-mix(in oklab, var(--primary) 50%, transparent);
 }
 
 @property --beam {
@@ -48,8 +72,9 @@
 
 .price-badge-wrap {
   position: absolute;
-  top: -0.9rem;
-  right: 1.6rem;
+  z-index: 3;
+  top: 0.9rem;
+  right: 1.4rem;
   padding: 0.15rem 0.7rem;
 }
 
@@ -60,34 +85,70 @@
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--primary);
-  background: var(--background);
+  background: color-mix(in oklab, var(--background) 80%, transparent);
   padding: 0.25rem 0.7rem;
   border-radius: 999px;
   border: 1px solid color-mix(in oklab, var(--primary) 55%, transparent);
+  backdrop-filter: blur(6px);
 }
 
-.price-card h3 {
-  font-weight: 700;
-  font-size: 1.2rem;
+.price-visual {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+}
+
+.price-visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.price-card:hover .price-visual img {
+  transform: scale(1.05);
+}
+
+.price-visual::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 45%, var(--card));
+}
+
+.price-klasse {
+  position: absolute;
+  z-index: 1;
+  left: 1.4rem;
+  bottom: 0.9rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  color: var(--muted-foreground);
+}
+
+.price-body {
+  padding: 0 1.6rem 1.8rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.price-body h3 {
+  font-size: 1.9rem;
+  font-weight: 760;
+  letter-spacing: -0.02em;
 }
 
 .price-amount {
-  margin-top: 1rem;
-  display: flex;
-  align-items: baseline;
-  gap: 0.4rem;
+  margin-top: 0.3rem;
 }
 
 .price-value {
-  font-size: clamp(2rem, 1.4rem + 1.6vw, 2.7rem);
-  font-weight: 780;
-  letter-spacing: -0.02em;
+  font-family: var(--font-mono);
+  font-size: 1rem;
   color: var(--primary);
-}
-
-.price-period {
-  color: var(--muted-foreground);
-  font-size: 0.9rem;
+  letter-spacing: 0.02em;
 }
 
 .price-desc {
@@ -102,12 +163,13 @@
   list-style: none;
   display: grid;
   gap: 0.6rem;
+  flex: 1;
 }
 
 .price-features li {
   position: relative;
   padding-left: 1.5rem;
-  font-size: 0.93rem;
+  font-size: 0.92rem;
 }
 
 .price-features li::before {

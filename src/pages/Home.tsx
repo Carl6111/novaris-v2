@@ -1,4 +1,5 @@
 import Hero from "../components/home/Hero";
+import DemoVideo from "../components/home/DemoVideo";
 import Problems from "../components/home/Problems";
 import Payoff from "../components/home/Payoff";
 import Organism from "../components/home/Organism";
@@ -10,6 +11,7 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <DemoVideo />
       <Problems />
       <Payoff />
       <Organism />

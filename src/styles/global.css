@@ -23,6 +23,13 @@ body {
   margin-inline: auto;
 }
 
+/* content sits above the fixed constellation canvas (z-0) */
+.app-main,
+.footer {
+  position: relative;
+  z-index: 1;
+}
+
 /* mono eyebrow labels — "// Growth Engine+" style */
 .eyebrow {
   font-family: var(--font-mono);
