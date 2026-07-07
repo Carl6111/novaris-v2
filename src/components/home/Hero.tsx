@@ -25,18 +25,24 @@ export default function Hero() {
     offset: ["start start", "end end"],
   });
 
-  // beat 1: "Hunderte Probleme. Eine Lösung."
-  const b1Opacity = useTransform(scrollYProgress, [0.08, 0.16, 0.34, 0.42], [0, 1, 1, 0]);
-  const b1Y = useTransform(scrollYProgress, [0.08, 0.16, 0.34, 0.42], [40, 0, 0, -40]);
-  // beat 2: "Hunderte Agenten. Ein System."
-  const b2Opacity = useTransform(scrollYProgress, [0.46, 0.54, 0.72, 0.8], [0, 1, 1, 0]);
-  const b2Y = useTransform(scrollYProgress, [0.46, 0.54, 0.72, 0.8], [40, 0, 0, -40]);
-  // intro layer fades as beats start
-  const introOpacity = useTransform(scrollYProgress, [0, 0.08], [1, 0]);
-  // veil + wordmark at the end
-  const veilOpacity = useTransform(scrollYProgress, [0.82, 0.95], [0, 1]);
-  const wmOpacity = useTransform(scrollYProgress, [0.86, 0.97], [0, 1]);
-  const wmScale = useTransform(scrollYProgress, [0.86, 0.97], [0.92, 1]);
+  // opening headline: "48h weniger Admin pro Woche." — visible at the top, fades on scrub
+  const openOpacity = useTransform(scrollYProgress, [0, 0.07, 0.12, 1], [1, 1, 0, 0]);
+  const openY = useTransform(scrollYProgress, [0, 0.12], [0, -30]);
+  const cueOpacity = useTransform(scrollYProgress, [0, 0.05], [1, 0]);
+
+  // beat A: "Hinter jeder Galaxie steckt Ordnung."
+  const aOpacity = useTransform(scrollYProgress, [0.14, 0.22, 0.34, 0.44], [0, 1, 1, 0]);
+  const aY = useTransform(scrollYProgress, [0.14, 0.22, 0.34, 0.44], [40, 0, 0, -40]);
+  // beat B: "Hinter jedem erfolgreichen Unternehmen auch."
+  const bOpacity = useTransform(scrollYProgress, [0.48, 0.56, 0.66, 0.76], [0, 1, 1, 0]);
+  const bY = useTransform(scrollYProgress, [0.48, 0.56, 0.66, 0.76], [40, 0, 0, -40]);
+
+  // finale: veil rises, Novaris wordmark + tagline
+  // explicit head/tail keyframes so values stay pinned (framer extrapolates 2-point ranges)
+  const veilOpacity = useTransform(scrollYProgress, [0, 0.8, 0.9, 1], [0, 0, 1, 1]);
+  const wmOpacity = useTransform(scrollYProgress, [0, 0.84, 0.93, 1], [0, 0, 1, 1]);
+  const wmScale = useTransform(scrollYProgress, [0, 0.84, 0.93, 1], [0.92, 0.92, 1, 1]);
+  const tagOpacity = useTransform(scrollYProgress, [0, 0.9, 0.98, 1], [0, 0, 1, 1]);
 
   if (reduced) {
     return (
@@ -45,10 +51,12 @@ export default function Hero() {
         <div className="hero-overlay">
           <p className="eyebrow">// Growth Engine+</p>
           <h1>
-            Hunderte Probleme. <span className="accent">Eine Lösung.</span>
+            48h weniger Admin <span className="accent">pro Woche.</span>
           </h1>
-          <p className="hero-static-line">
-            Hunderte Agenten. <span className="accent">Ein System.</span>
+          <p className="hero-static-line">Hinter jeder Galaxie steckt Ordnung.</p>
+          <p className="hero-static-line">Hinter jedem erfolgreichen Unternehmen auch.</p>
+          <p className="hero-static-tag">
+            Novaris — KI-Automatisierungen, die Wachstum planbar machen.
           </p>
         </div>
       </section>
@@ -77,24 +85,40 @@ export default function Hero() {
 
         <div className="hero-shade" aria-hidden="true" />
 
-        <motion.div className="hero-intro" style={{ opacity: introOpacity }}>
+        {/* opening: concrete benefit above the fold */}
+        <motion.div className="hero-open" style={{ opacity: openOpacity, y: openY }}>
           <p className="eyebrow">// Growth Engine+</p>
-          <p className="hero-cue">Scroll ↓</p>
+          <h1 className="hero-open-title">
+            48h weniger Admin <span className="accent">pro Woche.</span>
+          </h1>
+        </motion.div>
+        <motion.p className="hero-cue" style={{ opacity: cueOpacity }}>
+          Scroll ↓
+        </motion.p>
+
+        {/* scrubbed intro lines, one clean beat after another */}
+        <motion.div className="hero-beat" style={{ opacity: aOpacity, y: aY }}>
+          <p>
+            Hinter jeder Galaxie steckt <span className="accent">Ordnung.</span>
+          </p>
+        </motion.div>
+        <motion.div className="hero-beat" style={{ opacity: bOpacity, y: bY }}>
+          <p>
+            Hinter jedem erfolgreichen Unternehmen <span className="accent">auch.</span>
+          </p>
         </motion.div>
 
-        <motion.h1 className="hero-beat" style={{ opacity: b1Opacity, y: b1Y }}>
-          Hunderte Probleme. <span className="accent">Eine Lösung.</span>
-        </motion.h1>
-
-        <motion.h2 className="hero-beat" style={{ opacity: b2Opacity, y: b2Y }}>
-          Hunderte Agenten. <span className="accent">Ein System.</span>
-        </motion.h2>
-
+        {/* finale */}
         <motion.div className="hero-veil" style={{ opacity: veilOpacity }} aria-hidden="true" />
-        <motion.div className="hero-wordmark" style={{ opacity: wmOpacity, scale: wmScale }}>
-          <img src="/logos/novaris-mark2.png" alt="" />
-          <span>ovaris</span>
-        </motion.div>
+        <div className="hero-final">
+          <motion.div className="hero-wordmark" style={{ opacity: wmOpacity, scale: wmScale }}>
+            <img src="/logos/novaris-mark2.png" alt="" />
+            <span>ovaris</span>
+          </motion.div>
+          <motion.p className="hero-tagline" style={{ opacity: tagOpacity }}>
+            KI-Automatisierungen, die Wachstum planbar machen.
+          </motion.p>
+        </div>
       </div>
     </section>
   );

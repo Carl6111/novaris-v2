@@ -7,6 +7,10 @@ const OUTDIR = process.env.OUTDIR || "/tmp";
 const EXPECT = {
   "/": [
     "// Growth Engine+",
+    "48h weniger Admin",
+    "Hinter jeder Galaxie steckt",
+    "erfolgreichen Unternehmen",
+    "Wachstum planbar machen",
     "// Sieh es in Aktion",
     "90 Sekunden.",
     "Ein System bei der Arbeit.",
