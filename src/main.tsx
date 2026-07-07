@@ -2,6 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "@fontsource-variable/inter/index.css";
 import "@fontsource-variable/jetbrains-mono/index.css";
+import "@fontsource-variable/space-grotesk/index.css";
 import "@fontsource/noto-serif-georgian/index.css";
 import "./styles/global.css";
 import App from "./App";

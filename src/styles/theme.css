@@ -145,6 +145,11 @@
   --font-sans: "Inter Variable", ui-sans-serif, sans-serif, system-ui;
   --font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
   --font-serif: "Noto Serif Georgian", ui-serif, serif;
+  --font-display: "Space Grotesk Variable", "Inter Variable", ui-sans-serif, sans-serif;
+}
+
+:root {
+  --font-display: "Space Grotesk Variable", "Inter Variable", ui-sans-serif, sans-serif;
 }
 
 @custom-variant dark (&:where(.dark, .dark *));

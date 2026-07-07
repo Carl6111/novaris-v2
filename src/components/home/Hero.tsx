@@ -40,9 +40,11 @@ export default function Hero() {
   // finale: veil rises, Novaris wordmark + tagline
   // explicit head/tail keyframes so values stay pinned (framer extrapolates 2-point ranges)
   const veilOpacity = useTransform(scrollYProgress, [0, 0.8, 0.9, 1], [0, 0, 1, 1]);
-  const wmOpacity = useTransform(scrollYProgress, [0, 0.84, 0.93, 1], [0, 0, 1, 1]);
-  const wmScale = useTransform(scrollYProgress, [0, 0.84, 0.93, 1], [0.92, 0.92, 1, 1]);
-  const tagOpacity = useTransform(scrollYProgress, [0, 0.9, 0.98, 1], [0, 0, 1, 1]);
+  const markOpacity = useTransform(scrollYProgress, [0, 0.83, 0.9, 1], [0, 0, 1, 1]);
+  const markScale = useTransform(scrollYProgress, [0, 0.83, 0.9, 1], [0.9, 0.9, 1, 1]);
+  const nameOpacity = useTransform(scrollYProgress, [0, 0.88, 0.94, 1], [0, 0, 1, 1]);
+  const nameY = useTransform(scrollYProgress, [0, 0.88, 0.94, 1], [16, 16, 0, 0]);
+  const tagOpacity = useTransform(scrollYProgress, [0, 0.93, 0.99, 1], [0, 0, 1, 1]);
 
   if (reduced) {
     return (
@@ -55,9 +57,13 @@ export default function Hero() {
           </h1>
           <p className="hero-static-line">Hinter jeder Galaxie steckt Ordnung.</p>
           <p className="hero-static-line">Hinter jedem erfolgreichen Unternehmen auch.</p>
-          <p className="hero-static-tag">
-            Novaris — KI-Automatisierungen, die Wachstum planbar machen.
-          </p>
+          <div className="hero-final hero-final--static">
+            <img className="hero-final-mark" src="/logos/novaris-n.png" alt="Novaris" />
+            <span className="hero-final-name">Novaris</span>
+            <p className="hero-tagline">
+              KI-Automatisierungen, die Wachstum planbar machen.
+            </p>
+          </div>
         </div>
       </section>
     );
@@ -111,10 +117,18 @@ export default function Hero() {
         {/* finale */}
         <motion.div className="hero-veil" style={{ opacity: veilOpacity }} aria-hidden="true" />
         <div className="hero-final">
-          <motion.div className="hero-wordmark" style={{ opacity: wmOpacity, scale: wmScale }}>
-            <img src="/logos/novaris-mark2.png" alt="" />
-            <span>ovaris</span>
-          </motion.div>
+          <motion.img
+            className="hero-final-mark"
+            src="/logos/novaris-n.png"
+            alt="Novaris"
+            style={{ opacity: markOpacity, scale: markScale }}
+          />
+          <motion.span
+            className="hero-final-name"
+            style={{ opacity: nameOpacity, y: nameY }}
+          >
+            Novaris
+          </motion.span>
           <motion.p className="hero-tagline" style={{ opacity: tagOpacity }}>
             KI-Automatisierungen, die Wachstum planbar machen.
           </motion.p>
