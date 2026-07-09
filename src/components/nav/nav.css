@@ -103,14 +103,36 @@
   box-shadow: 0 6px 22px color-mix(in oklab, var(--primary) 45%, transparent);
 }
 
+/* burger → animated X */
 .nav-burger {
   display: none;
   flex-direction: column;
-  gap: 6px;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  width: 44px;
+  height: 44px;
   background: none;
   border: 0;
-  padding: 0.4rem;
   cursor: pointer;
+  z-index: 80;
+  position: relative;
+}
+
+.nav-burger::before {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border-radius: 50%;
+  background: color-mix(in oklab, var(--primary) 16%, transparent);
+  opacity: 0;
+  transform: scale(0.6);
+  transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-burger:hover::before {
+  opacity: 1;
+  transform: scale(1);
 }
 
 .nav-burger span {
@@ -118,44 +140,242 @@
   height: 2px;
   background: var(--foreground);
   border-radius: 2px;
+  transition: transform 0.4s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.3s ease,
+    background 0.3s ease;
 }
 
+.nav-burger span:nth-child(2) {
+  width: 15px;
+  align-self: flex-end;
+  margin-right: 11px;
+}
+
+.nav-burger:hover span:nth-child(2) {
+  width: 22px;
+  margin-right: 11px;
+}
+
+.nav-burger.is-open span {
+  background: var(--foreground);
+}
+
+.nav-burger.is-open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.nav-burger.is-open span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.nav-burger.is-open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* overlay */
 .nav-overlay {
   position: fixed;
   inset: 0;
-  background: color-mix(in oklab, var(--background) 92%, transparent);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+  background: color-mix(in oklab, var(--background) 96%, black);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
   justify-content: center;
+  padding: clamp(2rem, 8vw, 6rem);
   z-index: 70;
   pointer-events: auto;
+  overflow: hidden;
 }
 
-.nav-close {
+.nav-overlay .css-stars {
+  opacity: 0.5;
+}
+
+/* animated coral nerve strokes behind the menu */
+.nav-overlay-nerves {
   position: absolute;
-  top: 1.4rem;
-  right: 1.6rem;
-  font-size: 1.4rem;
-  color: var(--foreground);
-  background: none;
-  border: 0;
-  cursor: pointer;
+  inset: 0;
+  pointer-events: none;
+}
+
+.nav-nerve {
+  position: absolute;
+  left: 0;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    color-mix(in oklab, var(--primary) 60%, transparent) 40%,
+    color-mix(in oklab, var(--primary) 75%, transparent)
+  );
+  filter: drop-shadow(0 0 5px color-mix(in oklab, var(--primary) 55%, transparent));
+  opacity: 0.5;
+}
+
+.nav-nerve--right {
+  left: auto;
+  right: 0;
+  background: linear-gradient(
+    to left,
+    transparent,
+    color-mix(in oklab, var(--primary) 60%, transparent) 40%,
+    color-mix(in oklab, var(--primary) 75%, transparent)
+  );
+}
+
+.nav-nerve-pulse {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  margin-top: -4px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 12px 3px color-mix(in oklab, var(--primary) 85%, transparent);
+  animation: nav-flow 3.4s linear infinite;
+  animation-delay: var(--nd, 0s);
+}
+
+.nav-nerve--right .nav-nerve-pulse {
+  left: auto;
+  right: 0;
+  animation-name: nav-flow-right;
+}
+
+@keyframes nav-flow {
+  0% { transform: translateX(0) scale(0.4); opacity: 0; }
+  12% { opacity: 1; }
+  88% { opacity: 1; }
+  100% { transform: translateX(calc(100% - 8px)) scale(1); opacity: 0; }
+}
+
+@keyframes nav-flow-right {
+  0% { transform: translateX(0) scale(0.4); opacity: 0; }
+  12% { opacity: 1; }
+  88% { opacity: 1; }
+  100% { transform: translateX(calc(-100% + 8px)) scale(1); opacity: 0; }
 }
 
 .nav-overlay-links {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
-  gap: 1.6rem;
-  text-align: center;
+  gap: clamp(0.4rem, 1.5vh, 1rem);
+  width: 100%;
+  max-width: 40rem;
+}
+
+.nav-ol-item {
+  will-change: transform, opacity;
 }
 
 .nav-overlay-links a {
-  font-size: 2rem;
-  font-weight: 650;
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.4rem 0;
   color: var(--foreground);
   text-decoration: none;
+}
+
+.nav-ol-num {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--primary);
+  opacity: 0.7;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-ol-label {
+  position: relative;
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 8vw, 4.4rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.05;
+  color: var(--muted-foreground);
+  transition: color 0.3s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-ol-underline {
+  position: absolute;
+  left: 3.2rem;
+  right: 3rem;
+  bottom: 0.3rem;
+  height: 0.7rem;
+  width: auto;
+  color: var(--primary);
+  opacity: 0;
+}
+
+.nav-ol-underline path {
+  stroke-dasharray: 210;
+  stroke-dashoffset: 210;
+  transition: stroke-dashoffset 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-ol-arrow {
+  margin-left: auto;
+  font-size: clamp(1.6rem, 5vw, 2.4rem);
+  color: var(--primary);
+  opacity: 0;
+  transform: translateX(-14px);
+  transition: opacity 0.3s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-overlay-links a:hover .nav-ol-label,
+.nav-overlay-links a.is-active .nav-ol-label {
+  color: var(--foreground);
+  transform: translateX(10px);
+}
+
+.nav-overlay-links a:hover .nav-ol-num {
+  transform: translateX(4px);
+}
+
+.nav-overlay-links a:hover .nav-ol-underline,
+.nav-overlay-links a.is-active .nav-ol-underline {
+  opacity: 1;
+}
+
+.nav-overlay-links a:hover .nav-ol-underline path,
+.nav-overlay-links a.is-active .nav-ol-underline path {
+  stroke-dashoffset: 0;
+}
+
+.nav-overlay-links a:hover .nav-ol-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.nav-overlay-foot {
+  position: relative;
+  z-index: 1;
+  margin-top: clamp(2.5rem, 6vh, 4rem);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.nav-overlay-foot p {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  color: var(--muted-foreground);
+  max-width: 34ch;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-nerve-pulse {
+    animation: none;
+  }
 }
 
 @media (max-width: 820px) {

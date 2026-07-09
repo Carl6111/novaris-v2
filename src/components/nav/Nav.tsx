@@ -1,6 +1,13 @@
-import { useState } from "react";
-import { NavLink, Link } from "react-router-dom";
-import { useScroll, useMotionValueEvent, AnimatePresence, motion } from "motion/react";
+import { useEffect, useState } from "react";
+import { NavLink, Link, useLocation } from "react-router-dom";
+import {
+  useScroll,
+  useMotionValueEvent,
+  AnimatePresence,
+  motion,
+  useReducedMotion,
+} from "motion/react";
+import MagneticButton from "../ui/MagneticButton";
 import "./nav.css";
 
 const LINKS = [
@@ -10,12 +17,38 @@ const LINKS = [
   { to: "/kontakt", label: "Kontakt" },
 ];
 
+const NERVES = [
+  { top: "16%", w: "40%", d: "0s" },
+  { top: "38%", w: "30%", d: "0.8s" },
+  { top: "62%", w: "46%", d: "0.4s" },
+  { top: "84%", w: "34%", d: "1.2s" },
+];
+
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const location = useLocation();
+  const reduced = useReducedMotion();
 
   const { scrollY } = useScroll();
   useMotionValueEvent(scrollY, "change", (v) => setScrolled(v > 80));
+
+  // close on route change + lock scroll while open
+  useEffect(() => setOpen(false), [location.pathname]);
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
+  const reveal = reduced
+    ? { initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0 } }
+    : {
+        initial: { clipPath: "circle(0% at calc(100% - 2.6rem) 2.4rem)" },
+        animate: { clipPath: "circle(150% at calc(100% - 2.6rem) 2.4rem)" },
+        exit: { clipPath: "circle(0% at calc(100% - 2.6rem) 2.4rem)" },
+      };
 
   return (
     <header className={`nav ${scrolled ? "nav--solid" : ""}`}>
@@ -45,11 +78,12 @@ export default function Nav() {
         </Link>
 
         <button
-          className="nav-burger"
-          aria-label="Menü öffnen"
+          className={`nav-burger ${open ? "is-open" : ""}`}
+          aria-label={open ? "Menü schließen" : "Menü öffnen"}
           aria-expanded={open}
-          onClick={() => setOpen(true)}
+          onClick={() => setOpen((o) => !o)}
         >
+          <span />
           <span />
           <span />
         </button>
@@ -59,33 +93,58 @@ export default function Nav() {
         {open && (
           <motion.div
             className="nav-overlay"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            {...reveal}
+            transition={{ duration: 0.55, ease: [0.76, 0, 0.24, 1] }}
           >
             <div className="css-stars" aria-hidden="true" />
-            <button
-              className="nav-close"
-              aria-label="Menü schließen"
-              onClick={() => setOpen(false)}
-            >
-              ✕
-            </button>
-            <nav className="nav-overlay-links">
+            <div className="nav-overlay-nerves" aria-hidden="true">
+              {NERVES.map((n, i) => (
+                <span
+                  key={i}
+                  className={`nav-nerve ${i % 2 ? "nav-nerve--right" : ""}`}
+                  style={{ top: n.top, width: n.w, ["--nd" as string]: n.d }}
+                >
+                  <span className="nav-nerve-pulse" />
+                </span>
+              ))}
+            </div>
+
+            <nav className="nav-overlay-links" aria-label="Menü">
               {LINKS.map((l, i) => (
                 <motion.div
                   key={l.to}
-                  initial={{ opacity: 0, y: 24 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.08 + i * 0.07, ease: [0.16, 1, 0.3, 1] }}
+                  className="nav-ol-item"
+                  initial={reduced ? { opacity: 0 } : { opacity: 0, x: -50, rotate: -3 }}
+                  animate={{ opacity: 1, x: 0, rotate: 0 }}
+                  exit={reduced ? { opacity: 0 } : { opacity: 0, x: -30 }}
+                  transition={{
+                    delay: reduced ? 0 : 0.18 + i * 0.08,
+                    duration: 0.5,
+                    ease: [0.16, 1, 0.3, 1],
+                  }}
                 >
-                  <Link to={l.to} onClick={() => setOpen(false)}>
-                    {l.label}
-                  </Link>
+                  <NavLink to={l.to} onClick={() => setOpen(false)}>
+                    <span className="nav-ol-num">0{i + 1}</span>
+                    <span className="nav-ol-label">{l.label}</span>
+                    <svg className="nav-ol-underline" viewBox="0 0 200 12" preserveAspectRatio="none" aria-hidden="true">
+                      <path d="M4 8 C 50 3, 120 11, 196 5" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" />
+                    </svg>
+                    <span className="nav-ol-arrow" aria-hidden="true">→</span>
+                  </NavLink>
                 </motion.div>
               ))}
             </nav>
+
+            <motion.div
+              className="nav-overlay-foot"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              transition={{ delay: reduced ? 0 : 0.5, duration: 0.5 }}
+            >
+              <MagneticButton to="/kontakt">Gespräch buchen</MagneticButton>
+              <p>KI-Automatisierungen, die Wachstum planbar machen.</p>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
