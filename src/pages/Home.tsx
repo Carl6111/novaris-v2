@@ -3,7 +3,7 @@ import DemoVideo from "../components/home/DemoVideo";
 import Problems from "../components/home/Problems";
 import Payoff from "../components/home/Payoff";
 import SaveCalculator from "../components/home/SaveCalculator";
-import Organism from "../components/home/Organism";
+import Packages from "../components/home/Packages";
 import Stats from "../components/home/Stats";
 import Compare from "../components/home/Compare";
 import Pilot from "../components/home/Pilot";
@@ -19,7 +19,7 @@ export default function Home() {
       <Problems />
       <Payoff />
       <SaveCalculator />
-      <Organism />
+      <Packages />
       <Stats />
       <Compare />
       <Pilot />
