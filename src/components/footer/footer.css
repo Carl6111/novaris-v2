@@ -55,6 +55,12 @@
   color: var(--muted-foreground);
   text-decoration: none;
   transition: color 0.25s ease;
+  /* 44px tap target without shifting the visual layout */
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  min-width: 44px;
+  margin-block: -0.75rem;
 }
 
 .footer-social a:hover {

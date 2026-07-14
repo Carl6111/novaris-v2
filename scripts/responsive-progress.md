@@ -14,19 +14,19 @@ Konvention: clamp-Floor senken > bestehende Query anpassen > neue `@media (max-w
 - [x] home/Hero: Cue-Extrapolations-Bug gefixt, Beat-Scrim @480px, svh-Gap-Background, safe-area Cue, static Fallback entclippt. Typo-Floors @320 verifiziert gut — unverändert. dpr [1,2] ✓
 
 ### Phase 3 — Home
-- [ ] nav: Burger + Overlay @320–430, kurze Viewports
-- [ ] home/DemoVideo
-- [ ] home/Problems (80vw-Card)
-- [ ] home/Payoff
-- [ ] home/SaveCalculator (Slider-Thumb, Result-Card)
-- [ ] home/Packages (Orb-Row)
-- [ ] home/Stats
-- [ ] home/Compare (gestackte Tabelle)
-- [ ] home/Pilot
-- [ ] home/NotForYou
-- [ ] home/Integrations (Marquee whitelisted)
-- [ ] home/Cta (Glow prüfen)
-- [ ] footer
+- [x] nav: Overlay @320/390 sauber; overflow-y auto + flex-start @max-height 480px für Landscape
+- [x] home/DemoVideo — ✓ ohne Änderung
+- [x] home/Problems — static Variante auf Mobile, Cards ok
+- [x] home/Payoff — ✓ (doodle-orbit Overshoot intentional)
+- [x] home/SaveCalculator — ✓ Slider + Result-Card gut @320
+- [x] home/Packages — ✓ Orbs 3-spaltig passt @320
+- [x] home/Stats — ✓
+- [x] home/Compare — ✓ gestackte Tabelle sauber @320
+- [x] home/Pilot — ✓
+- [x] home/NotForYou — ✓
+- [x] home/Integrations — ✓ Marquee whitelisted
+- [x] home/Cta — ✓
+- [x] footer — Social-Links (X 8x19px) auf 44px Tap-Target gefixt
 
 ### Phase 4 — Seiten
 - [ ] kontakt/Contact + BookingWizard (Steps durchklicken @390)

@@ -186,11 +186,21 @@
   padding: clamp(2rem, 8vw, 6rem);
   z-index: 70;
   pointer-events: auto;
-  overflow: hidden;
+  /* short viewports (phone landscape): menu content stays reachable */
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .nav-overlay .css-stars {
   opacity: 0.5;
+}
+
+/* centered flex clips its top when content overflows — align to top on short screens */
+@media (max-height: 480px) {
+  .nav-overlay {
+    justify-content: flex-start;
+    padding-block: 3.5rem;
+  }
 }
 
 /* animated coral nerve strokes behind the menu */
