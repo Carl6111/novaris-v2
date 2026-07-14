@@ -7,11 +7,11 @@ Konvention: clamp-Floor senken > bestehende Query anpassen > neue `@media (max-w
 ## Queue (Iteration = eine Sektion)
 
 ### Phase 1 — Global + Shared UI
-- [ ] global: .wrap / .eyebrow @320–430
-- [ ] ui: MagneticButton / OrbitButton / PageHero / Statement Tap-Targets + Type-Floors
+- [x] global: .wrap / .eyebrow @320–430 — ok, nur Konventions-Kommentar ergänzt
+- [x] ui: MagneticButton (~51px) / OrbitButton (~46px) / PageHero / Statement — alle ok, keine Änderung
 
 ### Phase 2 — Hero (Priorität)
-- [ ] home/Hero: Typo-Floors 320, svh-Gap-Background, Scroll-Cue safe-area, Scrub-Feel, dpr-Cap, static Fallback
+- [x] home/Hero: Cue-Extrapolations-Bug gefixt, Beat-Scrim @480px, svh-Gap-Background, safe-area Cue, static Fallback entclippt. Typo-Floors @320 verifiziert gut — unverändert. dpr [1,2] ✓
 
 ### Phase 3 — Home
 - [ ] nav: Burger + Overlay @320–430, kurze Viewports
@@ -42,3 +42,4 @@ Konvention: clamp-Floor senken > bestehende Query anpassen > neue `@media (max-w
 
 ## Findings log
 - 2026-07-15 Baseline 320/375/390/430 alle Routen: null Overflow-FAILs. Einziger Treffer war .doodle-orbit (Payoff-Chips) — intentionaler Overshoot, gewhitelistet. Verbleibende Arbeit = visueller Polish (Typo-Floors, Spacing, Tap-Targets), nicht Layout-Breakage.
+- 2026-07-15 Hero: (1) cueOpacity 2-Punkt-Range [0,0.05] extrapolierte — "Scroll ↓" blieb den ganzen Hero sichtbar (alle Viewports, auch Desktop). Fix: [0,0.05,1]→[1,0,0]. (2) Beat-Text über hellem Planeten @≤480px kaum lesbar (accent-rot auf rot) → radialer Scrim hinter .hero-beat. (3) hero--static clippte Content @320x568 (100svh+overflow hidden, h1 unter Nav) → height auto + min-height 100svh + relative Overlay mit 6.5rem Top-Padding. (4) .hero background #000 gegen svh/lvh-Gap. (5) Cue + safe-area-inset-bottom.

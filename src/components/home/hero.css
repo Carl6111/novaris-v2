@@ -1,6 +1,8 @@
 .hero {
   position: relative;
   height: 300vh;
+  /* mobile browser chrome collapse: any lvh/svh gap below the sticky frame stays invisible */
+  background: #000000;
 }
 
 .hero-sticky {
@@ -79,7 +81,7 @@
 
 .hero-cue {
   position: absolute;
-  bottom: clamp(2rem, 8vh, 5rem);
+  bottom: calc(clamp(2rem, 8vh, 5rem) + env(safe-area-inset-bottom, 0px));
   left: 50%;
   transform: translateX(-50%);
   z-index: 2;
@@ -120,6 +122,21 @@
 
 .hero-beat .accent {
   color: var(--primary);
+}
+
+/* phones: planet fills the frame behind the beats — scrim keeps text + red accent readable */
+@media (max-width: 480px) {
+  .hero-beat::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 100% 55% at center, rgb(0 0 0 / 0.5), transparent 72%);
+    pointer-events: none;
+  }
+
+  .hero-beat p {
+    position: relative;
+  }
 }
 
 .hero-veil {
@@ -172,15 +189,16 @@
   will-change: opacity;
 }
 
-/* reduced-motion static hero */
+/* reduced-motion static hero — grows with content so nothing clips on small phones */
 .hero--static {
-  height: 100svh;
-  overflow: hidden;
+  height: auto;
+  min-height: 100svh;
+  overflow: visible;
 }
 
 .hero--static .hero-overlay {
-  position: absolute;
-  inset: 0;
+  position: relative;
+  min-height: 100svh;
   z-index: 2;
   display: flex;
   flex-direction: column;
@@ -189,7 +207,8 @@
   gap: 1rem;
   text-align: center;
   background: rgb(0 0 0 / 0.45);
-  padding: 1.5rem;
+  /* top padding clears the fixed nav */
+  padding: 6.5rem 1.5rem 3rem;
 }
 
 .hero--static h1 {

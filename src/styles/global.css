@@ -1,5 +1,12 @@
 @import "./theme.css";
 
+/*
+ * Breakpoint-Konvention:
+ * - Fluid zuerst: clamp()-Floors anpassen statt neue Queries (wirkt nur unterhalb ~415px).
+ * - Neue Queries nur @media (max-width: 480px) [Small-Phone-Polish] und (max-width: 768px) [Tablet].
+ * - Bestehende 720-900px-Queries der Sektionen bleiben unangetastet.
+ */
+
 html {
   scroll-behavior: auto;
 }

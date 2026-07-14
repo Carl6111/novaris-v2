@@ -28,7 +28,7 @@ export default function Hero() {
   // opening headline: "48h weniger Admin pro Woche." — visible at the top, fades on scrub
   const openOpacity = useTransform(scrollYProgress, [0, 0.07, 0.12, 1], [1, 1, 0, 0]);
   const openY = useTransform(scrollYProgress, [0, 0.12], [0, -30]);
-  const cueOpacity = useTransform(scrollYProgress, [0, 0.05], [1, 0]);
+  const cueOpacity = useTransform(scrollYProgress, [0, 0.05, 1], [1, 0, 0]);
 
   // beat A: "Hinter jeder Galaxie steckt Ordnung."
   const aOpacity = useTransform(scrollYProgress, [0.14, 0.22, 0.34, 0.44], [0, 1, 1, 0]);
