@@ -1,5 +1,7 @@
 # Responsive pass — progress
 
+## STATUS: COMPLETE
+
 Server: `npm run dev -- --port 5300 --strictPort`
 Audit: `node scripts/responsive-audit.mjs --route=<r> --widths=320,375,390,430 [--section=.x] [--hero] [--taps]`
 Konvention: clamp-Floor senken > bestehende Query anpassen > neue `@media (max-width: 480px)`. Bestehende 720–900px-Queries nicht anfassen.
@@ -36,9 +38,10 @@ Konvention: clamp-Floor senken > bestehende Query anpassen > neue `@media (max-w
 - [x] legal: Impressum / Datenschutz / AGB — ✓ Overflow-PASS, Prose
 
 ### Phase 5 — Regression
-- [ ] Matrix 768/1024/1440/1920 sauber
-- [ ] qa.mjs grün (normal + reduced-motion)
-- [ ] npm run build + npm run lint grün
+- [x] Matrix 768/1024/1440/1920: alle Routen PASS
+- [x] qa.mjs: ALL PASS (1440+390, normal + reduced-motion, null JS-Errors)
+- [x] npm run build ✓ (chunk-Warning pre-existing) + lint ✓ (nur pre-existing Warnings)
+- [x] Finale Mobile-Matrix 320/375/390/430 × 8 Routen: 32/32 PASS
 
 ## Findings log
 - 2026-07-15 Baseline 320/375/390/430 alle Routen: null Overflow-FAILs. Einziger Treffer war .doodle-orbit (Payoff-Chips) — intentionaler Overshoot, gewhitelistet. Verbleibende Arbeit = visueller Polish (Typo-Floors, Spacing, Tap-Targets), nicht Layout-Breakage.
