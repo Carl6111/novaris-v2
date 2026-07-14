@@ -145,6 +145,9 @@
   border: 0;
   cursor: pointer;
   transition: color 0.25s ease;
+  /* 44px tap target without shifting the visual layout */
+  padding: 0.85rem 0.6rem;
+  margin: -0.85rem -0.6rem;
 }
 
 .wizard-back:hover {
@@ -214,4 +217,11 @@
 
 .wizard-book:hover {
   color: color-mix(in oklab, var(--primary) 80%, white 10%);
+}
+
+/* small phones: more room for inputs inside the card */
+@media (max-width: 480px) {
+  .wizard {
+    padding: 1.4rem 1.25rem;
+  }
 }

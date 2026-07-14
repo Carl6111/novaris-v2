@@ -29,11 +29,11 @@ Konvention: clamp-Floor senken > bestehende Query anpassen > neue `@media (max-w
 - [x] footer — Social-Links (X 8x19px) auf 44px Tap-Target gefixt
 
 ### Phase 4 — Seiten
-- [ ] kontakt/Contact + BookingWizard (Steps durchklicken @390)
-- [ ] plattform: Examples / ModuleRows / Process / Horizon
-- [ ] preise: Pricing / Includes / Faq
-- [ ] ueber: About
-- [ ] legal: Impressum / Datenschutz / AGB
+- [x] kontakt/Contact + BookingWizard: Steps @390 durchgeklickt; .wizard-back 61x19→81x46 Tap-Target; .wizard Padding 1.4/1.25rem @480px
+- [x] plattform: Examples / ModuleRows / Process — ✓ ohne Änderung
+- [x] preise: Pricing / Includes / Faq — ✓ ohne Änderung (Fullpage @320 sauber)
+- [x] ueber: About — ✓ ohne Änderung
+- [x] legal: Impressum / Datenschutz / AGB — ✓ Overflow-PASS, Prose
 
 ### Phase 5 — Regression
 - [ ] Matrix 768/1024/1440/1920 sauber
