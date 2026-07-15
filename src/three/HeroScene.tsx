@@ -35,9 +35,7 @@ export default function HeroScene({ progress, mobile = false }: Props) {
           radius={2.2}
           textureSize={mobile ? "1k" : "2k"}
         />
-        {!mobile && (
-          <Astronaut position={[-2, 0.2, 1]} scale={0.85} rotation={[0.1, 0.5, 0]} />
-        )}
+        <Astronaut position={[-2, 0.2, 1]} scale={0.85} rotation={[0.1, 0.5, 0]} />
       </Suspense>
 
       <CameraRig progress={progress} />

@@ -1,11 +1,17 @@
-import { useMemo, useRef } from "react";
-import { useFrame } from "@react-three/fiber";
+import { useEffect, useMemo, useRef } from "react";
+import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import type { MotionValue } from "motion/react";
 
 type Props = {
   progress: MotionValue<number>;
 };
+
+// base fov from SceneCanvas; narrow (portrait) canvases widen it so the
+// off-center astronaut stays framed — trades a bit of the planet, never the astronaut
+const BASE_FOV = 42;
+const MAX_FOV = 60;
+const WIDE_ASPECT = 1.1; // at/above this, framing is unchanged from before
 
 // scroll-keyed camera path through the hero scene
 const POSITIONS = new THREE.CatmullRomCurve3([
@@ -31,6 +37,21 @@ export default function CameraRig({ progress }: Props) {
   const smoothPos = useRef(new THREE.Vector3(0, 0.4, 8));
   const initialized = useRef(false);
   const up = useMemo(() => new THREE.Vector3(0, 1, 0), []);
+
+  const size = useThree((s) => s.size);
+  const camera = useThree((s) => s.camera);
+
+  // widen fov on narrow viewports so the astronaut never leaves the frame
+  useEffect(() => {
+    if (!(camera instanceof THREE.PerspectiveCamera)) return;
+    const aspect = size.width / size.height;
+    const fov =
+      aspect >= WIDE_ASPECT
+        ? BASE_FOV
+        : Math.min(MAX_FOV, BASE_FOV + (WIDE_ASPECT - aspect) * 25);
+    camera.fov = fov;
+    camera.updateProjectionMatrix();
+  }, [size, camera]);
 
   useFrame((state, delta) => {
     const t = THREE.MathUtils.clamp(progress.get(), 0, 1);
