@@ -7,7 +7,7 @@ import "./stats.css";
 const STATS = [
   { value: 5, suffix: " Min", label: "bis Anfragen beantwortet sind — nicht Stunden." },
   { value: 24, suffix: "/7", label: "läuft euer Betrieb. Auch nachts und am Wochenende." },
-  { value: 1, suffix: " Login", label: "für Website, CRM, Docs, Portal & Rechnungen." },
+  { value: 1, suffix: " System", label: "für Anrufe, Website, CRM, Docs & Portal — ein Login." },
 ] as const;
 
 function Counter({ value, suffix }: { value: number; suffix: string }) {

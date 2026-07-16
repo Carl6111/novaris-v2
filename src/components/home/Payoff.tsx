@@ -3,7 +3,7 @@ import OrbitButton from "../ui/OrbitButton";
 import { OrbitDoodle, ScribbleUnderline } from "../doodles/Doodles";
 import "./payoff.css";
 
-const MODULES = ["Website", "CRM", "AI Docs", "Client Portal", "Invoicing"];
+const MODULES = ["Website", "CRM", "AI Docs", "Client Portal", "Anruf-Agent"];
 
 export default function Payoff() {
   return (
@@ -24,8 +24,9 @@ export default function Payoff() {
           </Reveal>
           <Reveal delay={0.1}>
             <p className="platform-sub">
-              Website, CRM, AI Docs, Client Portal und Invoicing — kein
-              Tool-Chaos mehr. Alles greift ineinander, alles in eurer Hand.
+              Website, CRM, AI Docs, Client Portal und Anruf-Agent — kein
+              Tool-Chaos mehr. Jeder Anruf, jeder Lead, jedes Dokument läuft
+              durch ein System. Alles greift ineinander, alles in eurer Hand.
             </p>
           </Reveal>
           <Reveal delay={0.15}>

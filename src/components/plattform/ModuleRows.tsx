@@ -41,10 +41,10 @@ const MODULES: Module[] = [
     img: "/images/clientportal.webp",
   },
   {
-    tag: "Invoicing",
-    title: "Rechnungen,",
-    accent: "die rausgehen.",
-    desc: "Automatisch erstellt und versendet — niemand muss mehr dran denken.",
+    tag: "Anruf-Agent",
+    title: "Kein Anruf",
+    accent: "geht verloren.",
+    desc: "Nimmt an, zeichnet jedes Gespräch auf und fasst es zusammen — automatisch beim richtigen Lead im CRM. Auch Rechnungen laufen im selben System.",
   },
 ];
 
@@ -110,11 +110,13 @@ function ModuleRow({ m, index }: { m: Module; index: number }) {
             <img src={m.img} alt={`${m.tag} Ansicht`} loading="lazy" width="1280" height="800" />
           ) : (
             <div className="mrow-mock" aria-hidden="true">
+              <div className="mrow-mock-call">
+                <span className="mrow-mock-dot" /> Anruf · 02:14 · aufgezeichnet
+              </div>
               <div className="mrow-mock-row" />
               <div className="mrow-mock-row short" />
-              <div className="mrow-mock-amount">€ 2.480,00</div>
               <div className="mrow-mock-row" />
-              <div className="mrow-mock-cta">Bezahlt</div>
+              <div className="mrow-mock-cta">→ Lead im CRM angelegt</div>
             </div>
           )}
         </TiltFrame>
