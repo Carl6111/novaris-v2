@@ -1,0 +1,50 @@
+.tilt-wrap {
+  perspective: 1200px;
+  height: 100%;
+}
+
+.tilt-card {
+  position: relative;
+  height: 100%;
+  transform-style: preserve-3d;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) * 2);
+  transition:
+    border-color 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+/* Pointer-Spotlight wie .starlit-card — folgt dem Cursor via --mx/--my (%).
+   Kein overflow: hidden auf .tilt-card, damit preserve-3d für translateZ-Kinder erhalten bleibt. */
+.tilt-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    420px circle at var(--mx, 50%) var(--my, 0%),
+    color-mix(in oklab, var(--primary) 10%, transparent),
+    transparent 65%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.tilt-card:hover::before {
+  opacity: 1;
+}
+
+.tilt-card:hover {
+  border-color: color-mix(in oklab, var(--primary) 45%, var(--border));
+  box-shadow: 0 8px 40px color-mix(in oklab, var(--primary) 18%, transparent);
+}
+
+/* Glanzlicht über dem Inhalt, reagiert nicht auf Pointer */
+.tilt-glare {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+}

@@ -29,20 +29,23 @@
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1.4rem;
   align-items: start;
+  /* Perspektive für den rotateX-Einflug der Karten */
+  perspective: 1200px;
 }
 
+/* Wrapper für den Einflug (opacity/rotateX/y) — Surface/Border/Radius liefert die TiltCard */
 .price-card {
   position: relative;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: calc(var(--radius) * 2.5);
-  overflow: hidden;
+}
+
+/* Ehemaliges Card-Layout liegt jetzt auf der TiltCard-Oberfläche */
+.price-card .tilt-card {
   display: flex;
   flex-direction: column;
 }
 
 /* rotating border beam on the featured card */
-.price-card--featured {
+.price-card--featured .tilt-card {
   border-color: transparent;
   background:
     linear-gradient(var(--card), var(--card)) padding-box,
@@ -55,7 +58,13 @@
       )
       border-box;
   animation: beam-rotate 4.5s linear infinite;
-  box-shadow: 0 0 60px -16px color-mix(in oklab, var(--primary) 50%, transparent);
+  /* permanenter dezenter Coral-Glow (sonst nur im Hover der TiltCard) */
+  box-shadow: 0 8px 40px color-mix(in oklab, var(--primary) 18%, transparent);
+}
+
+/* Der Hover-Border der TiltCard darf den Beam nicht überdecken */
+.price-card--featured .tilt-card:hover {
+  border-color: transparent;
 }
 
 @property --beam {
@@ -76,6 +85,8 @@
   top: 0.9rem;
   right: 1.4rem;
   padding: 0.15rem 0.7rem;
+  /* schwebt über dem Card-Inhalt (preserve-3d der TiltCard) */
+  transform: translateZ(40px);
 }
 
 .price-badge {
@@ -96,6 +107,8 @@
   position: relative;
   aspect-ratio: 4 / 3;
   overflow: hidden;
+  /* TiltCard hat bewusst kein overflow: hidden — Ecken am inneren Element runden */
+  border-radius: inherit;
 }
 
 .price-visual img {

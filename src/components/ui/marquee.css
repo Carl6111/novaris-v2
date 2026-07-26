@@ -1,0 +1,52 @@
+.marquee {
+  --marquee-gap: 2.5rem;
+  overflow: hidden;
+  max-width: 100%;
+  perspective: 700px;
+}
+
+.marquee-tilt {
+  transform-style: preserve-3d;
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  gap: var(--marquee-gap);
+  animation: marquee-scroll 32s linear infinite;
+}
+
+/* Hover pausiert den Loop */
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+.marquee-group {
+  display: flex;
+  align-items: center;
+  gap: var(--marquee-gap);
+}
+
+/* Die Animation verschiebt den Track um genau eine Gruppenbreite:
+   Track besteht aus Gruppe + Gap + Gruppe, -50% landet nahtlos am Anfang */
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-50% - var(--marquee-gap) / 2));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  /* Zweite Kopie ist bei deaktivierter Animation überflüssig */
+  .marquee-group[aria-hidden="true"] {
+    display: none;
+  }
+}

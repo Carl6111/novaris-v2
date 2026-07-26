@@ -1,4 +1,6 @@
+import { motion, useReducedMotion } from "motion/react";
 import Reveal from "../ui/Reveal";
+import TiltCard from "../ui/TiltCard";
 import MagneticButton from "../ui/MagneticButton";
 import OrbitButton from "../ui/OrbitButton";
 import { SketchCircle } from "../doodles/Doodles";
@@ -60,6 +62,8 @@ const TIERS: Tier[] = [
 ];
 
 export default function Pricing() {
+  const reduceMotion = useReducedMotion();
+
   return (
     <section id="preise" className="pricing">
       <div className="wrap">
@@ -78,47 +82,58 @@ export default function Pricing() {
 
         <div className="pricing-grid">
           {TIERS.map((t, i) => (
-            <Reveal
+            <motion.div
               key={t.name}
-              delay={i * 0.08}
               className={`price-card ${t.featured ? "price-card--featured" : ""}`}
+              initial={
+                reduceMotion
+                  ? { opacity: 0 }
+                  : { opacity: 0, rotateX: -18, y: 40 }
+              }
+              whileInView={
+                reduceMotion ? { opacity: 1 } : { opacity: 1, rotateX: 0, y: 0 }
+              }
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ delay: i * 0.12, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             >
-              {t.featured && (
-                <span className="price-badge-wrap">
-                  <SketchCircle delay={0.7} />
-                  <span className="price-badge">Beliebt</span>
-                </span>
-              )}
-              <div className="price-visual">
-                <img
-                  src={t.img}
-                  alt={`${t.name} — ${t.desc}`}
-                  loading="lazy"
-                  width="1000"
-                  height="750"
-                />
-                <span className="price-klasse">{t.klasse}</span>
-              </div>
-              <div className="price-body">
-                <h3>{t.name}</h3>
-                <div className="price-amount">
-                  <span className="price-value">{t.price}</span>
+              <TiltCard maxTilt={6}>
+                {t.featured && (
+                  <span className="price-badge-wrap">
+                    <SketchCircle delay={0.7} />
+                    <span className="price-badge">Beliebt</span>
+                  </span>
+                )}
+                <div className="price-visual">
+                  <img
+                    src={t.img}
+                    alt={`${t.name} — ${t.desc}`}
+                    loading="lazy"
+                    width="1000"
+                    height="750"
+                  />
+                  <span className="price-klasse">{t.klasse}</span>
                 </div>
-                <p className="price-desc">{t.desc}</p>
-                <ul className="price-features">
-                  {t.features.map((f) => (
-                    <li key={f}>{f}</li>
-                  ))}
-                </ul>
-                <div className="price-cta">
-                  {t.featured ? (
-                    <MagneticButton to="/kontakt">{t.name} starten</MagneticButton>
-                  ) : (
-                    <OrbitButton to="/kontakt">{t.name} starten</OrbitButton>
-                  )}
+                <div className="price-body">
+                  <h3>{t.name}</h3>
+                  <div className="price-amount">
+                    <span className="price-value">{t.price}</span>
+                  </div>
+                  <p className="price-desc">{t.desc}</p>
+                  <ul className="price-features">
+                    {t.features.map((f) => (
+                      <li key={f}>{f}</li>
+                    ))}
+                  </ul>
+                  <div className="price-cta">
+                    {t.featured ? (
+                      <MagneticButton to="/kontakt">{t.name} starten</MagneticButton>
+                    ) : (
+                      <OrbitButton to="/kontakt">{t.name} starten</OrbitButton>
+                    )}
+                  </div>
                 </div>
-              </div>
-            </Reveal>
+              </TiltCard>
+            </motion.div>
           ))}
         </div>
       </div>

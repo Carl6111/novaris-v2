@@ -1,4 +1,5 @@
 import Reveal from "../ui/Reveal";
+import TiltCard from "../ui/TiltCard";
 import { ScribbleX } from "../doodles/Doodles";
 import "./not-for-you.css";
 
@@ -24,10 +25,12 @@ export default function NotForYou() {
         <ul className="nfy-list">
           {ITEMS.map((t, i) => (
             <Reveal key={t} delay={i * 0.06} className="nfy-item">
-              <span className="nfy-x" aria-hidden="true">
-                <ScribbleX delay={0.2} />
-              </span>
-              <p>{t}</p>
+              <TiltCard maxTilt={3} lift={false}>
+                <span className="nfy-x" aria-hidden="true">
+                  <ScribbleX delay={0.2} />
+                </span>
+                <p>{t}</p>
+              </TiltCard>
             </Reveal>
           ))}
         </ul>

@@ -1,4 +1,5 @@
 import Reveal from "../ui/Reveal";
+import TiltCard from "../ui/TiltCard";
 import OrbitButton from "../ui/OrbitButton";
 import { SketchCircle } from "../doodles/Doodles";
 import "./pilot.css";
@@ -8,7 +9,9 @@ export default function Pilot() {
     <section className="pilot">
       <div className="wrap">
         <Reveal>
-          <div className="pilot-card starlit-card">
+          {/* TiltCard ersetzt die starlit-card: Surface + Spotlight + Tilt kommen
+              aus der Card, das Grid-Layout liegt auf der inneren .tilt-card */}
+          <TiltCard className="pilot-card">
             <div className="pilot-copy">
               <p className="eyebrow">// Pilotphase</p>
               <h2 className="pilot-title">
@@ -37,7 +40,7 @@ export default function Pilot() {
               <span className="pilot-count-num">2</span>
               <span className="pilot-count-label">von 2 frei</span>
             </div>
-          </div>
+          </TiltCard>
         </Reveal>
       </div>
     </section>

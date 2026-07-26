@@ -1,4 +1,5 @@
 import { motion } from "motion/react";
+import Marquee from "../ui/Marquee";
 import "./integrations.css";
 
 const LOGOS = [
@@ -23,36 +24,24 @@ export default function Integrations() {
         >
           Gebaut auf bewährter Technik — keine Klick-Tools.
         </motion.p>
-        <div className="integrations-row">
-          {LOGOS.map((l, i) => (
-            <motion.img
+        {/* Endlos-Loop statt statischer Reihe. Marquee rendert die Kopie
+            für den Loop selbst (aria-hidden) und fällt bei Reduced Motion
+            auf ein Umbruch-Grid zurück — daher hier nur einmal übergeben. */}
+        <Marquee duration={28} className="integrations-marquee">
+          {LOGOS.map((l) => (
+            <img
               key={l.alt}
               src={l.src}
               alt={l.alt}
               className="integrations-logo"
-              initial={{ opacity: 0, y: 18 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.55, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
             />
           ))}
-          {WORDS.map((w, i) => (
-            <motion.span
-              key={w}
-              className="integrations-word"
-              initial={{ opacity: 0, y: 18 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{
-                duration: 0.55,
-                delay: (LOGOS.length + i) * 0.08,
-                ease: [0.16, 1, 0.3, 1],
-              }}
-            >
+          {WORDS.map((w) => (
+            <span key={w} className="integrations-word">
               {w}
-            </motion.span>
+            </span>
           ))}
-        </div>
+        </Marquee>
       </div>
     </section>
   );

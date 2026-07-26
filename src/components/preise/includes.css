@@ -14,6 +14,11 @@
   gap: 1.6rem;
 }
 
+/* Innenabstand der TiltCard-Oberfläche */
+.include .tilt-card {
+  padding: 1.5rem 1.4rem;
+}
+
 .include-check {
   display: inline-grid;
   place-items: center;
@@ -24,6 +29,12 @@
   font-weight: 700;
   border: 1px solid color-mix(in oklab, var(--primary) 45%, transparent);
   background: color-mix(in oklab, var(--primary) 12%, transparent);
+  transition: transform 0.35s ease;
+}
+
+/* Check-Icon schwebt im Hover aus der Card heraus (preserve-3d) */
+.include .tilt-card:hover .include-check {
+  transform: translateZ(24px);
 }
 
 .include h3 {

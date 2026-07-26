@@ -12,13 +12,10 @@
   text-align: center;
 }
 
-.integrations-row {
+/* Marquee übernimmt die Zeile; breiter Gap wie vorher in .integrations-row */
+.integrations-marquee {
   margin-top: 2.2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: clamp(1.8rem, 5vw, 4rem);
-  flex-wrap: wrap;
+  --marquee-gap: clamp(1.8rem, 5vw, 4rem);
 }
 
 .integrations-logo {
@@ -29,8 +26,11 @@
   transition: opacity 0.3s ease, filter 0.3s ease;
 }
 
+/* Coral-Glow beim Hover */
 .integrations-logo:hover {
   opacity: 1;
+  filter: brightness(0) invert(1)
+    drop-shadow(0 0 12px color-mix(in oklab, var(--primary) 65%, transparent));
 }
 
 .integrations-word {
@@ -38,11 +38,17 @@
   font-size: 1.15rem;
   color: var(--foreground);
   opacity: 0.75;
+  transition: opacity 0.3s ease, color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.integrations-word:hover {
+  opacity: 1;
+  color: var(--primary);
+  text-shadow: 0 0 14px color-mix(in oklab, var(--primary) 55%, transparent);
 }
 
 /* periodic shooting star */
-.shooting-star {
-  position: absolute;
+.shooting-star {  position: absolute;
   top: 18%;
   left: -6%;
   width: 130px;
@@ -59,4 +65,12 @@
   4% { opacity: 0.9; }
   12% { transform: translateX(60vw) rotate(9deg); opacity: 0; }
   100% { transform: translateX(60vw) rotate(9deg); opacity: 0; }
+}
+
+/* Reduced Motion: Marquee wird Umbruch-Grid — Gruppe zentrieren */
+@media (prefers-reduced-motion: reduce) {
+  .integrations-marquee .marquee-group {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
 }

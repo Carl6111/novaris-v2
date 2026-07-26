@@ -1,0 +1,173 @@
+/* Entry bulletin — sits above everything including nav (z 50) and grain (z 60). */
+
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  padding: clamp(1rem, 3vw, 2.5rem);
+  /* The site has to stay readable behind this. A heavy scrim plus a strong blur
+     turns it into a black wall, which defeats the point of a lightbox — you
+     should still see what you are about to enter. */
+  background: rgb(0 0 0 / 0.55);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  overflow-y: auto;
+}
+
+/* No card. The film sits on the darkened site, nothing framing it but its own
+   edge — a lightbox, not a panel that fills the field. */
+.intro-block {
+  position: relative;
+  width: min(900px, 100%);
+  margin-block: auto;
+  text-align: center;
+}
+
+.intro-close {
+  position: fixed;
+  top: clamp(0.75rem, 2vw, 1.5rem);
+  right: clamp(0.75rem, 2vw, 1.5rem);
+  z-index: 2;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: color-mix(in oklab, var(--foreground) 60%, transparent);
+  cursor: pointer;
+  transition: color 180ms ease-out, background-color 180ms ease-out;
+}
+
+.intro-close svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+}
+
+.intro-close:hover,
+.intro-close:focus-visible {
+  color: var(--foreground);
+  background: color-mix(in oklab, var(--foreground) 9%, transparent);
+}
+
+.intro-title {
+  margin: 0 0 0.4rem;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.9rem, 4.4vw, 3.2rem);
+  line-height: 1.1;
+  letter-spacing: -0.035em;
+  color: var(--foreground);
+  text-shadow: 0 2px 24px rgb(0 0 0 / 0.6);
+}
+
+/* only the brand name carries the accent */
+.intro-brand {
+  color: var(--primary);
+}
+
+/* The instruction, subordinate to the announcement above it. */
+.intro-sub {
+  margin: 0 0 clamp(1.1rem, 2.2vw, 1.6rem);
+  font-family: var(--font-sans);
+  font-size: clamp(0.95rem, 1.3vw, 1.1rem);
+  font-weight: 400;
+  letter-spacing: 0;
+  color: color-mix(in oklab, var(--foreground) 74%, transparent);
+  text-shadow: 0 2px 18px rgb(0 0 0 / 0.6);
+}
+
+.intro-stage {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  /* The film's own paper tone. With object-fit: contain the letterbox bars are
+     the same cream as the frame, so capping the height reads as no crop at all. */
+  background: #f6f1e7;
+  border: 1px solid color-mix(in oklab, var(--foreground) 12%, transparent);
+  /* Neutral, not red — red belongs to the action, not to decoration. */
+  box-shadow: 0 30px 70px -34px rgb(0 0 0 / 0.75);
+  /* Full card width — the stage width is what the card is sized around. */
+  aspect-ratio: 16 / 9;
+}
+
+.intro-video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Plain neutral play affordance — the red is the brand's action colour and this
+   is a media control, not a call to action. */
+.intro-play {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 76px;
+  height: 76px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  background: rgb(255 255 255 / 0.92);
+  color: #101014;
+  box-shadow: 0 10px 30px -8px rgb(0 0 0 / 0.45);
+  transition: background-color 160ms ease-out, scale 160ms ease-out;
+}
+
+.intro-play svg {
+  width: 30px;
+  height: 30px;
+  fill: currentColor;
+  stroke: none;
+}
+
+.intro-play:hover,
+.intro-play:focus-visible {
+  background: #fff;
+  scale: 1.04;
+}
+
+.intro :focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+}
+
+/* The dialog only takes focus to seat screen readers — it is not a control,
+   so it must not wear a focus ring when it is focused programmatically. */
+.intro-block:focus,
+.intro-block:focus-visible {
+  outline: none;
+}
+
+@media (max-width: 768px) {
+  .intro {
+    place-items: center;
+  }
+
+  .intro-play {
+    width: 62px;
+    height: 62px;
+  }
+
+  .intro-play svg {
+    width: 25px;
+    height: 25px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro-play:hover,
+  .intro-play:focus-visible {
+    scale: 1;
+  }
+}

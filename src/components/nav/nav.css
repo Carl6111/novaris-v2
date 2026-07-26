@@ -10,6 +10,24 @@
   pointer-events: none;
 }
 
+.nav::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 140px;
+  background: linear-gradient(to bottom, rgb(0 0 0 / 0.6), transparent);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.nav--solid::before {
+  opacity: 1;
+}
+
 .nav-pill {
   pointer-events: auto;
   display: flex;
@@ -19,14 +37,6 @@
   border-radius: 999px;
   border: 1px solid transparent;
   transition: background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
-}
-
-.nav--solid .nav-pill {
-  background: color-mix(in oklab, var(--card) 62%, transparent);
-  border-color: var(--border);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  box-shadow: 0 8px 32px rgb(0 0 0 / 0.35);
 }
 
 .nav-logo {

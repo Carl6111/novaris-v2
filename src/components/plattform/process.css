@@ -17,11 +17,21 @@
   overflow: visible;
 }
 
+/* Rail-Version: gedimmt, damit die mitzeichnende Kopie hervorsticht */
 .process-orbit-path {
   stroke: color-mix(in oklab, var(--primary) 40%, transparent);
   stroke-width: 1.6;
   stroke-linecap: round;
   stroke-dasharray: 1 10;
+  opacity: 0.2;
+}
+
+/* Scroll-getrieben gezeichneter Pfad (pathLength via motion) */
+.process-orbit-draw {
+  stroke: var(--primary);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 5px color-mix(in oklab, var(--primary) 60%, transparent));
 }
 
 .process-track {

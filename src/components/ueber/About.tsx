@@ -1,4 +1,5 @@
 import Reveal from "../ui/Reveal";
+import TiltCard from "../ui/TiltCard";
 import "./about.css";
 
 const VALUES = [
@@ -30,8 +31,10 @@ export default function About() {
           <div className="about-values">
             {VALUES.map((v, i) => (
               <Reveal key={v.t} delay={0.12 + i * 0.08} className="about-value">
-                <h3>{v.t}</h3>
-                <p>{v.d}</p>
+                <TiltCard maxTilt={3} lift={false}>
+                  <h3>{v.t}</h3>
+                  <p>{v.d}</p>
+                </TiltCard>
               </Reveal>
             ))}
           </div>

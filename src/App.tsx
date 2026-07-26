@@ -4,6 +4,7 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import Lenis from "lenis";
 import { setLenis, scrollTop } from "./lib/lenis";
 import ConstellationField from "./components/background/ConstellationField";
+import IntroOverlay from "./components/intro/IntroOverlay";
 import Nav from "./components/nav/Nav";
 import Footer from "./components/footer/Footer";
 import Home from "./pages/Home";
@@ -83,6 +84,7 @@ export default function App() {
       <Nav />
       <AnimatedRoutes />
       <Footer />
+      <IntroOverlay />
     </BrowserRouter>
   );
 }

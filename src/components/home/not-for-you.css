@@ -21,13 +21,12 @@
   gap: 1rem;
 }
 
-.nfy-item {
+/* Karten-Optik liegt auf der inneren .tilt-card (Reveal = äußerer Wrapper) */
+.nfy-item .tilt-card {
   display: flex;
   align-items: flex-start;
   gap: 0.9rem;
   padding: 1.2rem 1.3rem;
-  border: 1px solid var(--border);
-  border-radius: calc(var(--radius) * 2);
   background: color-mix(in oklab, var(--card) 60%, transparent);
 }
 

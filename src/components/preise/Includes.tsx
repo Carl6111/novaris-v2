@@ -1,4 +1,5 @@
 import Reveal from "../ui/Reveal";
+import TiltCard from "../ui/TiltCard";
 import "./includes.css";
 
 const ITEMS = [
@@ -23,9 +24,11 @@ export default function Includes() {
         <div className="includes-grid">
           {ITEMS.map((it, i) => (
             <Reveal key={it.t} delay={i * 0.07} className="include">
-              <span className="include-check" aria-hidden="true">✓</span>
-              <h3>{it.t}</h3>
-              <p>{it.d}</p>
+              <TiltCard>
+                <span className="include-check" aria-hidden="true">✓</span>
+                <h3>{it.t}</h3>
+                <p>{it.d}</p>
+              </TiltCard>
             </Reveal>
           ))}
         </div>

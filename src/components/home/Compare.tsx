@@ -1,4 +1,5 @@
 import Reveal from "../ui/Reveal";
+import TiltCard from "../ui/TiltCard";
 import "./compare.css";
 
 const ROWS = [
@@ -39,10 +40,12 @@ export default function Compare() {
               <div key={r.label} className="compare-row">
                 <span className="compare-rowlabel">{r.label}</span>
                 <span className="compare-hire">{r.hire}</span>
-                <span className="compare-nova">
+                {/* Nur die Novaris-Zelle ist eine Tilt-Card — ganze Zeilen würden
+                    das Grid über display:contents sprengen (Wrapper = Grid-Item) */}
+                <TiltCard maxTilt={3} lift={false} className="compare-nova">
                   <span className="compare-check" aria-hidden="true">✓</span>
                   {r.nova}
-                </span>
+                </TiltCard>
               </div>
             ))}
           </div>

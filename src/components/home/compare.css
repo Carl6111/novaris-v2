@@ -71,9 +71,26 @@
   color: var(--muted-foreground);
 }
 
-.compare-nova {
+/* Novaris-Zelle als TiltCard: Klasse sitzt auf .tilt-wrap (Grid-Item),
+   die eigentliche Zellen-Optik auf der inneren .tilt-card.
+   Rahmen/Radius der Card werden neutralisiert, damit das Raster fugenlos bleibt. */
+.compare-nova .tilt-card {
+  padding: 1rem 1.2rem;
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  border-radius: 0;
   background: color-mix(in oklab, var(--primary) 7%, transparent);
+  font-size: 0.92rem;
+  line-height: 1.45;
   color: var(--foreground);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* Coral-Akzent beim Hover über einer Novaris-Zelle */
+.compare-nova .tilt-card:hover {
+  background: color-mix(in oklab, var(--primary) 14%, transparent);
+  color: var(--primary);
+  box-shadow: none;
 }
 
 .compare-check {
@@ -82,7 +99,8 @@
   margin-right: 0.4rem;
 }
 
-.compare-grid > .compare-row:last-child > span {
+.compare-grid > .compare-row:last-child > span,
+.compare-grid > .compare-row:last-child .compare-nova .tilt-card {
   border-bottom: 0;
 }
 
