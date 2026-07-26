@@ -11,7 +11,7 @@ export default function Kontakt() {
             Lass uns <span className="accent">reden.</span>
           </>
         }
-        subtitle="Wir schauen gemeinsam, wo euer System am meisten Zeit spart — unverbindlich."
+        subtitle="Sechs Fragen, dann bekommt ihr einen Termin-Link. Kein Vertrieb dazwischen."
       />
       <Contact />
     </>

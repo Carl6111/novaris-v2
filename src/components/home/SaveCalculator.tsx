@@ -68,7 +68,7 @@ export default function SaveCalculator() {
                 ≈ {savedEuro.toLocaleString("de-DE")} €
               </p>
               <p className="calc-note">
-                Schätzung — angenommen, ~40 % der Admin-Zeit sind automatisierbar.
+                Schätzung auf Basis von rund 40 % automatisierbarer Admin-Zeit.
               </p>
               <MagneticButton to="/kontakt" className="calc-cta">
                 Potenzial prüfen

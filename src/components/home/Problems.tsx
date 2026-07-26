@@ -12,11 +12,11 @@ import "./problems.css";
 
 const PROBLEMS = [
   "Anfragen bleiben Stunden liegen.",
-  "Angebote schreibst du abends. Von Hand.",
-  "Rechnungen gehen zu spät raus.",
+  "Angebote schreibt ihr abends. Von Hand.",
+  "Der Anruf um 18:40 Uhr landet auf der Mailbox.",
   "Niemand weiß, wo ein Lead gerade steht.",
-  "Das Team ertrinkt im Kleinkram.",
-  "Wachstum hieße bisher: neu einstellen.",
+  "Kunden fragen nach, weil sie den Stand nicht sehen.",
+  "Mehr Aufträge hieße bisher: neu einstellen.",
 ] as const;
 
 function clampRange(
@@ -77,7 +77,7 @@ export default function Problems() {
         <div className="wrap">
           <p className="eyebrow">// Der ganz normale Tag</p>
           <h2 className="problems-thesis-text">
-            Erkennen Sie sich <span className="accent">wieder?</span>
+            Kommt euch das <span className="accent">bekannt vor?</span>
           </h2>
           <ul className="problems-list">
             {PROBLEMS.map((t, i) => (
@@ -109,7 +109,7 @@ export default function Problems() {
           className="problems-constellation"
         />
         <h2 className="problems-thesis-text">
-          Erkennen Sie sich <span className="accent">wieder?</span>
+          Kommt euch das <span className="accent">bekannt vor?</span>
         </h2>
         <div className="problems-stage">
           {PROBLEMS.map((t, i) => (

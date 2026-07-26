@@ -14,7 +14,7 @@ export default function Preise() {
             Klein anfangen. <span className="accent">Groß wachsen.</span>
           </>
         }
-        subtitle="Alle Preise sind Richtwerte. Wir schnüren das Paket auf euren echten Prozess."
+        subtitle="Klickt an, was euch am meisten Zeit kostet. Den Richtwert dazu seht ihr sofort."
       />
       <Pricing />
       <Includes />

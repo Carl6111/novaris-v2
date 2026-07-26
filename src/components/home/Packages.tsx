@@ -1,12 +1,10 @@
+import { useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import Reveal from "../ui/Reveal";
 import MagneticButton from "../ui/MagneticButton";
+import OrbitButton from "../ui/OrbitButton";
+import { TIERS, TIERS_BY_ID, type TierId } from "../../data/setups";
 import "./packages.css";
-
-const TIERS = [
-  { name: "Nova", klasse: "Klasse I", img: "/images/tier-nova.webp" },
-  { name: "Pulsar", klasse: "Klasse II", img: "/images/tier-pulsar.webp" },
-  { name: "Quasar", klasse: "Klasse III", img: "/images/tier-quasar.webp" },
-];
 
 // coral nerve lines with traveling pulses — same aesthetic as the old organism
 const NERVES = [
@@ -18,6 +16,10 @@ const NERVES = [
 ];
 
 export default function Packages() {
+  const reduced = useReducedMotion();
+  const [active, setActive] = useState<TierId | null>(null);
+  const tier = active ? TIERS_BY_ID.get(active) : undefined;
+
   return (
     <section className="pkg" id="pakete">
       <div className="pkg-nerves" aria-hidden="true">
@@ -43,32 +45,64 @@ export default function Packages() {
         </Reveal>
         <Reveal delay={0.12}>
           <p className="pkg-sub">
-            Von der ersten Automatisierung bis zur vollautonomen Operations-Ebene —
-            ein Paket, das mit euch aufsteigt.
+            Die Klassen unterscheiden sich darin, wie viel gleichzeitig läuft:
+            ein Prozess, ein Prozess mit allem was daran hängt, oder der ganze
+            Betrieb.
           </p>
         </Reveal>
 
         <Reveal delay={0.18}>
           <ul className="pkg-tiers">
             {TIERS.map((t, i) => (
-              <li
-                key={t.name}
-                className="pkg-tier"
-                style={{ ["--i" as string]: String(i) }}
-              >
-                <span className="pkg-tier-orb">
-                  <img src={t.img} alt="" loading="lazy" width="120" height="120" />
-                </span>
-                <span className="pkg-tier-name">{t.name}</span>
-                <span className="pkg-tier-klasse">{t.klasse}</span>
+              <li key={t.id} style={{ ["--i" as string]: String(i) }}>
+                <button
+                  type="button"
+                  className={`pkg-tier${active === t.id ? " pkg-tier--active" : ""}`}
+                  aria-expanded={active === t.id}
+                  aria-controls="pkg-detail"
+                  onClick={() => setActive(active === t.id ? null : t.id)}
+                >
+                  <span className="pkg-tier-orb">
+                    <img src={t.img} alt="" loading="lazy" width="120" height="120" />
+                  </span>
+                  <span className="pkg-tier-name">{t.name}</span>
+                  <span className="pkg-tier-klasse">{t.klasse}</span>
+                </button>
               </li>
             ))}
           </ul>
         </Reveal>
 
+        {/* Hier bewusst flach: was genau drinsteckt, entscheidet der Besucher
+            auf der Preise-Seite, nicht mitten auf der Startseite. */}
+        <AnimatePresence initial={false} mode="wait">
+          {tier && (
+            <motion.div
+              id="pkg-detail"
+              className="pkg-detail"
+              key={tier.id}
+              initial={reduced ? { opacity: 0 } : { height: 0, opacity: 0 }}
+              animate={reduced ? { opacity: 1 } : { height: "auto", opacity: 1 }}
+              exit={reduced ? { opacity: 0 } : { height: 0, opacity: 0 }}
+              transition={{ duration: reduced ? 0 : 0.36, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <div className="pkg-detail-inner">
+                <p className="pkg-detail-rule">{tier.rule}</p>
+                <p className="pkg-detail-desc">{tier.desc}</p>
+                <OrbitButton to={`/preise?tier=${tier.id}`}>
+                  {tier.mode === "consult"
+                    ? "Was im Gespräch passiert"
+                    : "Setup zusammenstellen"}
+                </OrbitButton>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         <Reveal delay={0.26}>
           <div className="pkg-cta">
             <MagneticButton to="/preise">Pakete ansehen</MagneticButton>
+            <OrbitButton to="/plattform">Plattform ansehen</OrbitButton>
           </div>
         </Reveal>
       </div>

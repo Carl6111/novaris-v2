@@ -22,7 +22,7 @@ export default function Integrations() {
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         >
-          Gebaut auf bewährter Technik — keine Klick-Tools.
+          Gebaut auf der Technik, mit der auch die Anbieter selbst arbeiten.
         </motion.p>
         {/* Endlos-Loop statt statischer Reihe. Marquee rendert die Kopie
             für den Loop selbst (aria-hidden) und fällt bei Reduced Motion

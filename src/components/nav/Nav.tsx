@@ -143,7 +143,7 @@ export default function Nav() {
               transition={{ delay: reduced ? 0 : 0.5, duration: 0.5 }}
             >
               <MagneticButton to="/kontakt">Gespräch buchen</MagneticButton>
-              <p>KI-Automatisierungen, die Wachstum planbar machen.</p>
+              <p>KI-Systeme, die euren Betrieb täglich entlasten.</p>
             </motion.div>
           </motion.div>
         )}

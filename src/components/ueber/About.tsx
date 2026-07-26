@@ -3,9 +3,9 @@ import TiltCard from "../ui/TiltCard";
 import "./about.css";
 
 const VALUES = [
-  { t: "Echt statt Schein", d: "Echter Code und echte KI-Agents — keine Klick-Tools, die beim ersten Update brechen." },
-  { t: "Wenige, tiefe Lösungen", d: "Wir bauen nicht alles. Wir bauen das Richtige — und das richtig." },
-  { t: "Partner, kein Lieferant", d: "Wir betreuen, optimieren und wachsen mit eurem Betrieb. Jeden Monat." },
+  { t: "Eigener Code", d: "Das System läuft auf eurer Infrastruktur und gehört euch, auch wenn ihr uns nicht mehr braucht." },
+  { t: "Wenige, tiefe Lösungen", d: "Lieber ein Prozess, der wirklich läuft, als fünf, die halb funktionieren." },
+  { t: "Laufender Betrieb", d: "Wir übergeben nicht und verschwinden. Jeden Monat wird nachgeschärft." },
 ] as const;
 
 export default function About() {
@@ -22,9 +22,9 @@ export default function About() {
           </Reveal>
           <Reveal delay={0.08}>
             <p className="about-para">
-              Novaris baut KI-Systeme, die Arbeit wirklich abnehmen — damit ihr
-              mehr schafft, ohne neu einzustellen. Mehr Output, gleiches Team.
-              Kein Software-Friedhof, sondern eine Plattform, die euch gehört.
+              Novaris baut KI-Systeme, die euren Betrieb täglich entlasten. Ihr
+              schafft mehr, ohne neu einzustellen. Und die Plattform gehört euch,
+              nicht uns.
             </p>
           </Reveal>
 

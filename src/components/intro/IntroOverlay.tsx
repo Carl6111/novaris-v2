@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { useNavigate } from "react-router-dom";
 import { getLenis } from "../../lib/lenis";
 import "./intro-overlay.css";
 
@@ -14,6 +15,7 @@ const SESSION_KEY = "novaris:intro-seen";
 
 export default function IntroOverlay() {
   const reduced = useReducedMotion();
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [playing, setPlaying] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -30,6 +32,13 @@ export default function IntroOverlay() {
     setOpen(false);
     (restoreFocus.current as HTMLElement | null)?.focus?.();
   }, []);
+
+  // Same exit as closing — the overlay animates out while the route swaps
+  // underneath, so the visitor never sees a bare white frame.
+  const goToPricing = useCallback(() => {
+    close();
+    navigate("/preise");
+  }, [close, navigate]);
 
   // Lock the page behind the overlay, trap Tab inside it, close on Escape.
   useEffect(() => {
@@ -131,12 +140,14 @@ export default function IntroOverlay() {
             exit={reduced ? { opacity: 0 } : { opacity: 0, y: 16, scale: 0.985 }}
             transition={{ duration: 0.72, ease: [0.16, 1, 0.3, 1] }}
           >
-            <motion.h1 id="intro-title" className="intro-title" {...rise(0.14)}>
-              Introducing <span className="intro-brand">Novaris</span>
-            </motion.h1>
+            {/* Kein h1 — die Seite dahinter bringt ihre eigene Überschrift mit. */}
+            <motion.p id="intro-title" className="intro-title" {...rise(0.14)}>
+              Das ist <span className="intro-brand">Novaris</span>
+            </motion.p>
 
             <motion.p className="intro-sub" {...rise(0.2)}>
-              Demo-Video ansehen:
+              77 Sekunden: Anruf-Agent, Website, CRM, AI Docs und Client Portal
+              in einem System.
             </motion.p>
 
             <motion.div className="intro-stage" {...rise(0.26)}>
@@ -165,6 +176,18 @@ export default function IntroOverlay() {
                   </svg>
                 </button>
               )}
+            </motion.div>
+
+            <motion.div className="intro-actions" {...rise(0.34)}>
+              <button type="button" className="intro-cta" onClick={goToPricing}>
+                Angebote ansehen
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M4 12 H18 M12.5 6.5 L18 12 L12.5 17.5" />
+                </svg>
+              </button>
+              <button type="button" className="intro-skip" onClick={close}>
+                Weiter zur Seite
+              </button>
             </motion.div>
           </motion.div>
         </motion.div>

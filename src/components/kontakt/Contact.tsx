@@ -4,9 +4,9 @@ import BookingWizard from "./BookingWizard";
 import "./contact.css";
 
 const STEPS = [
-  { n: "01", t: "Kurz ausfüllen", d: "Ein paar Fragen — dauert unter einer Minute." },
-  { n: "02", t: "Buchungslink per Mail", d: "Ihr bekommt direkt euren persönlichen Termin-Link." },
-  { n: "03", t: "15 Minuten reden", d: "Wir schauen, wo euer System am meisten Zeit spart." },
+  { n: "01", t: "Sechs Fragen", d: "Zwei Minuten, damit wir nicht bei null anfangen." },
+  { n: "02", t: "Termin-Link per Mail", d: "Kommt innerhalb von 24 Stunden bei euch an." },
+  { n: "03", t: "15 Minuten reden", d: "Wir gehen euren Prozess durch und sagen, was sich lohnt." },
 ] as const;
 
 export default function Contact() {

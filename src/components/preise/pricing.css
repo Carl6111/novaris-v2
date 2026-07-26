@@ -79,36 +79,13 @@
   }
 }
 
-.price-badge-wrap {
-  position: absolute;
-  z-index: 3;
-  top: 0.9rem;
-  right: 1.4rem;
-  padding: 0.15rem 0.7rem;
-  /* schwebt über dem Card-Inhalt (preserve-3d der TiltCard) */
-  transform: translateZ(40px);
-}
-
-.price-badge {
-  position: relative;
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--primary);
-  background: color-mix(in oklab, var(--background) 80%, transparent);
-  padding: 0.25rem 0.7rem;
-  border-radius: 999px;
-  border: 1px solid color-mix(in oklab, var(--primary) 55%, transparent);
-  backdrop-filter: blur(6px);
-}
-
 .price-visual {
   position: relative;
   aspect-ratio: 4 / 3;
   overflow: hidden;
-  /* TiltCard hat bewusst kein overflow: hidden — Ecken am inneren Element runden */
-  border-radius: inherit;
+  /* Nur oben runden: das Bild sitzt am Kartenkopf, unten schließt der Body an.
+     `inherit` würde auch die unteren Ecken kappen und Kerben erzeugen. */
+  border-radius: calc(var(--radius) * 2) calc(var(--radius) * 2) 0 0;
 }
 
 .price-visual img {
@@ -153,48 +130,65 @@
   letter-spacing: -0.02em;
 }
 
-.price-amount {
-  margin-top: 0.3rem;
-}
-
-.price-value {
-  font-family: var(--font-mono);
-  font-size: 1rem;
-  color: var(--primary);
-  letter-spacing: 0.02em;
-}
-
 .price-desc {
   margin-top: 0.8rem;
   color: var(--muted-foreground);
   font-size: 0.95rem;
   line-height: 1.55;
-}
-
-.price-features {
-  margin-top: 1.4rem;
-  list-style: none;
-  display: grid;
-  gap: 0.6rem;
   flex: 1;
 }
 
-.price-features li {
-  position: relative;
-  padding-left: 1.5rem;
+/* Öffnet die Auswahl. Kein zweiter CTA daneben — die Karte hat genau eine
+   nächste Handlung, der Abschluss-Button sitzt unten in der Auswahl. */
+.price-toggle {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  min-height: 44px;
+  margin-top: 1.5rem;
+  padding: 0.7rem 1rem;
+  border: 1px solid color-mix(in oklab, var(--primary) 40%, var(--border));
+  border-radius: 999px;
+  font: inherit;
   font-size: 0.92rem;
+  font-weight: 600;
+  text-align: left;
+  color: var(--foreground);
+  background: color-mix(in oklab, var(--primary) 8%, transparent);
+  cursor: pointer;
+  transition:
+    background-color 240ms ease-out,
+    border-color 240ms ease-out;
 }
 
-.price-features li::before {
-  content: "✓";
-  position: absolute;
-  left: 0;
+.price-toggle:hover,
+.price-toggle:focus-visible {
+  background: color-mix(in oklab, var(--primary) 16%, transparent);
+  border-color: var(--primary);
+}
+
+.price-toggle-chevron {
+  flex: none;
+  width: 18px;
   color: var(--primary);
-  font-weight: 700;
+  transition: rotate 340ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.price-cta {
-  margin-top: 1.8rem;
+.price-card--open .price-toggle-chevron {
+  rotate: 180deg;
+}
+
+.price-panel {
+  overflow: hidden;
+}
+
+/* Offen wird die Karte zum Formular: das Bild schrumpft, damit die Auswahl
+   nicht unter die Falz rutscht. */
+.price-card--open .price-visual {
+  aspect-ratio: 16 / 6;
 }
 
 @media (max-width: 900px) {
@@ -202,5 +196,13 @@
     grid-template-columns: 1fr;
     max-width: 30rem;
     margin-inline: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .price-toggle,
+  .price-toggle-chevron,
+  .price-visual img {
+    transition: none;
   }
 }

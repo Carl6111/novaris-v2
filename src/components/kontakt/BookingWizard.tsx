@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import MagneticButton from "../ui/MagneticButton";
+import { PROBLEMS, PROBLEMS_BY_ID, TIERS_BY_ID, isTierId } from "../../data/setups";
 import "./booking-wizard.css";
 
 type StepBase = { id: string; title: string; hint?: string };
@@ -19,16 +21,9 @@ const STEPS: Step[] = [
   {
     id: "topic",
     type: "multi",
-    title: "Worum geht's?",
+    title: "Wo geht bei euch am meisten Zeit drauf?",
     hint: "Mehrfachauswahl möglich.",
-    options: [
-      "Anfragen automatisieren",
-      "Angebote & Docs",
-      "Rechnungen",
-      "Lead-Pipeline",
-      "Ganze Plattform",
-      "Anderes",
-    ],
+    options: [...PROBLEMS.map((p) => p.label), "Etwas anderes"],
   },
   {
     id: "team",
@@ -39,26 +34,26 @@ const STEPS: Step[] = [
   {
     id: "leak",
     type: "text",
-    title: "Wo geht am meisten Zeit verloren?",
+    title: "Wie sieht das bei euch konkret aus?",
     placeholder: "Ein, zwei Sätze reichen.",
   },
   {
     id: "name",
     type: "text",
-    title: "Wie heißt du?",
+    title: "Wie heißt ihr?",
     placeholder: "Vor- und Nachname",
   },
   {
     id: "company",
     type: "text",
-    title: "Und deine Firma?",
+    title: "Und eure Firma?",
     placeholder: "Firmenname",
   },
   {
     id: "email",
     type: "text",
     title: "Wohin schicken wir den Buchungslink?",
-    hint: "Du bekommst direkt eine E-Mail mit dem Termin-Link.",
+    hint: "Ihr bekommt eine E-Mail mit dem Termin-Link.",
     placeholder: "name@firma.de",
     input: "email",
   },
@@ -66,15 +61,50 @@ const STEPS: Step[] = [
 
 const WEB3_KEY = import.meta.env.VITE_WEB3FORMS_KEY as string | undefined;
 const CALENDLY_URL = import.meta.env.VITE_CALENDLY_URL as string | undefined;
-const FALLBACK_EMAIL = "[PLATZHALTER-EMAIL]";
+// TODO(Carl): durch die echte Geschäftsadresse ersetzen. Diese hier ist der
+// einzige Weg, auf dem ein Lead ankommt, solange VITE_WEB3FORMS_KEY fehlt.
+const FALLBACK_EMAIL = "tafkac@icloud.com";
 
 type Answers = Record<string, string | string[]>;
 
+/**
+ * `?setup=pulsar,calls,calls-crm` — die Auswahl aus der Preise-Seite.
+ * Sie befüllt den ersten Schritt vor, damit niemand zweimal dieselbe Frage
+ * beantwortet, und geht als eigenes Feld mit in die Mail.
+ */
+function readSetup(raw: string | null) {
+  if (!raw) return null;
+  const [tierId, ...rest] = raw.split(",").filter(Boolean);
+  if (!isTierId(tierId)) return null;
+
+  const tierName = TIERS_BY_ID.get(tierId)?.name ?? tierId;
+  const base = rest[0] ? PROBLEMS_BY_ID.get(rest[0]) : undefined;
+  const addonLabels = base
+    ? base.addons.filter((a) => rest.includes(a.id)).map((a) => a.label)
+    : [];
+
+  return {
+    tierName,
+    baseLabel: base?.label ?? null,
+    summary: [tierName, base?.label, ...addonLabels].filter(Boolean).join(" · "),
+  };
+}
+
 export default function BookingWizard() {
   const reduced = useReducedMotion();
+  const [searchParams] = useSearchParams();
+  const setup = useMemo(
+    () => readSetup(searchParams.get("setup")),
+    [searchParams],
+  );
+
   const [step, setStep] = useState(0);
   const [dir, setDir] = useState(1);
-  const [answers, setAnswers] = useState<Answers>({});
+  const [answers, setAnswers] = useState<Answers>(() => {
+    const seeded: Answers = {};
+    if (setup?.baseLabel) seeded.topic = [setup.baseLabel];
+    return seeded;
+  });
   const [status, setStatus] = useState<"idle" | "sending" | "done" | "error">("idle");
 
   const current = STEPS[step];
@@ -121,11 +151,15 @@ export default function BookingWizard() {
       thema: Array.isArray(answers.topic) ? answers.topic.join(", ") : "",
       teamgroesse: answers.team || "",
       zeitleck: answers.leak || "",
+      setup: setup?.summary ?? "",
+      // Honeypot: Web3Forms verwirft die Einsendung, wenn ein Bot ihn füllt.
+      botcheck: "",
     };
 
+    // Ohne Key gibt es keinen Weg, auf dem die Antworten ankommen. Ein
+    // Erfolgs-Screen wäre hier eine Lüge und der Lead wäre verloren.
     if (!WEB3_KEY) {
-      // no service configured yet — still show success, book via link/mail
-      setStatus("done");
+      setStatus("error");
       return;
     }
     try {
@@ -146,20 +180,11 @@ export default function BookingWizard() {
     return (
       <div className="wizard wizard--done">
         <div className="wizard-check" aria-hidden="true">✓</div>
-        <h3>Fast geschafft.</h3>
-        <p>
-          {WEB3_KEY
-            ? "Check deine Mails — dein persönlicher Buchungslink ist unterwegs."
-            : "Danke! Wir melden uns mit einem Terminvorschlag."}
-        </p>
+        <h3>Angekommen.</h3>
+        <p>Der Termin-Link liegt gleich in eurem Postfach.</p>
         {CALENDLY_URL && (
           <a className="wizard-book" href={CALENDLY_URL} target="_blank" rel="noopener noreferrer">
             Direkt Termin wählen →
-          </a>
-        )}
-        {!WEB3_KEY && !CALENDLY_URL && (
-          <a className="wizard-book" href={`mailto:${FALLBACK_EMAIL}`}>
-            Schreib uns direkt →
           </a>
         )}
       </div>
@@ -176,6 +201,13 @@ export default function BookingWizard() {
 
   return (
     <div className="wizard">
+      {setup && (
+        <p className="wizard-setup">
+          <span className="wizard-setup-label">Aus eurer Auswahl</span>
+          {setup.summary}
+        </p>
+      )}
+
       <div className="wizard-progress" aria-hidden="true">
         {STEPS.map((s, i) => (
           <span key={s.id} className={i <= step ? "is-on" : ""} />
@@ -207,9 +239,9 @@ export default function BookingWizard() {
               value={(answers[current.id] as string) ?? ""}
               onChange={(e) => setAnswer(current.id, e.target.value)}
               onKeyDown={(e) => {
-                if (e.key === "Enter" && canAdvance()) {
-                  onLast ? submit() : go(step + 1);
-                }
+                if (e.key !== "Enter" || !canAdvance()) return;
+                if (onLast) void submit();
+                else go(step + 1);
               }}
               autoFocus
             />
@@ -252,7 +284,10 @@ export default function BookingWizard() {
                 type="button"
                 className={`wizard-next ${!canAdvance() ? "is-disabled" : ""}`}
                 disabled={!canAdvance() || status === "sending"}
-                onClick={() => (onLast ? submit() : go(step + 1))}
+                onClick={() => {
+                  if (onLast) void submit();
+                  else go(step + 1);
+                }}
               >
                 {onLast ? (status === "sending" ? "Senden…" : "Absenden") : "Weiter"}
               </MagneticButton>
@@ -260,9 +295,10 @@ export default function BookingWizard() {
           </div>
 
           {status === "error" && (
-            <p className="wizard-error">
-              Da lief was schief. Schreib uns direkt:{" "}
-              <a href={`mailto:${FALLBACK_EMAIL}`}>{FALLBACK_EMAIL}</a>
+            <p className="wizard-error" role="alert">
+              Das Formular kam nicht durch. Schreibt uns direkt an{" "}
+              <a href={`mailto:${FALLBACK_EMAIL}`}>{FALLBACK_EMAIL}</a>. Eure
+              Angaben stehen noch oben, sie gehen nicht verloren.
             </p>
           )}
         </motion.div>

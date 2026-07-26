@@ -5,9 +5,9 @@ import "./not-for-you.css";
 
 const ITEMS = [
   "Ihr sucht ein einmaliges Skript und danach nie wieder Kontakt.",
-  "Ihr wollt Klick-Tools wie Make oder Zapier zusammenstecken.",
-  "„Läuft schon irgendwie“ reicht euch — kein Bedarf, Zeit zurückzuholen.",
-  "Ihr wollt den billigsten Anbieter, nicht das System, das euch gehört.",
+  "Bei euch soll niemand am laufenden System weiterarbeiten.",
+  "„Läuft schon irgendwie“ reicht euch.",
+  "Der Preis entscheidet, nicht das Ergebnis.",
 ];
 
 export default function NotForYou() {
@@ -36,7 +36,7 @@ export default function NotForYou() {
         </ul>
         <Reveal delay={0.2}>
           <p className="nfy-foot">
-            Passt nichts davon? Dann sind wir wahrscheinlich ein guter Fit.
+            Wenn nichts davon zutrifft, lohnt sich das Gespräch.
           </p>
         </Reveal>
       </div>

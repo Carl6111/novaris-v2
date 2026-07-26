@@ -1,140 +1,146 @@
-import { motion, useReducedMotion } from "motion/react";
+import { useEffect, useRef, useState } from "react";
+import { useSearchParams } from "react-router-dom";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import Reveal from "../ui/Reveal";
 import TiltCard from "../ui/TiltCard";
-import MagneticButton from "../ui/MagneticButton";
-import OrbitButton from "../ui/OrbitButton";
-import { SketchCircle } from "../doodles/Doodles";
+import TierSelector from "./TierSelector";
+import { getLenis } from "../../lib/lenis";
+import { TIERS, isTierId, type TierId } from "../../data/setups";
 import "./pricing.css";
-
-type Tier = {
-  klasse: string;
-  name: string;
-  img: string;
-  price: string;
-  desc: string;
-  features: string[];
-  featured: boolean;
-};
-
-const TIERS: Tier[] = [
-  {
-    klasse: "Klasse I · Zündung",
-    name: "Nova",
-    img: "/images/tier-nova.webp",
-    price: "Auf Anfrage",
-    desc: "Eure erste Automatisierung, richtig gebaut.",
-    features: [
-      "1 Kernprozess end-to-end automatisiert",
-      "Bis zu 3 Tool-Integrationen",
-      "Monitoring + monatliches Tuning",
-      "Async-Support",
-    ],
-    featured: false,
-  },
-  {
-    klasse: "Klasse II · Rotation",
-    name: "Pulsar",
-    img: "/images/tier-pulsar.webp",
-    price: "Auf Anfrage",
-    desc: "Eine Automatisierungs-Engine über eure Abläufe.",
-    features: [
-      "3–5 Prozesse + 1 individueller KI-Agent",
-      "Bis zu 10 Tool-Integrationen",
-      "Datenpipeline + Reporting-Ebene",
-      "Fester Engineer, wöchentlicher Takt",
-    ],
-    featured: true,
-  },
-  {
-    klasse: "Klasse III · Leuchtkern",
-    name: "Quasar",
-    img: "/images/tier-quasar.webp",
-    price: "Auf Anfrage",
-    desc: "Eine vollautonome Operations-Ebene.",
-    features: [
-      "Unbegrenzte Prozesse + Agent-Flotte",
-      "Firmenweites Integrations-Netz",
-      "Eigene Modelle auf euren Daten",
-      "Eingebettetes Team, SLA, 24/7-Überwachung",
-    ],
-    featured: false,
-  },
-];
 
 export default function Pricing() {
   const reduceMotion = useReducedMotion();
+  const [searchParams] = useSearchParams();
+  const [openTier, setOpenTier] = useState<TierId | null>(null);
+  const cardRefs = useRef<Partial<Record<TierId, HTMLDivElement | null>>>({});
+
+  // ?tier=pulsar öffnet die passende Karte und holt sie in den Blick — der
+  // Einstieg von der Startseite landet damit nicht oben auf einer fremden Seite.
+  const tierParam = searchParams.get("tier");
+  useEffect(() => {
+    if (!isTierId(tierParam)) return;
+    setOpenTier(tierParam);
+    const el = cardRefs.current[tierParam];
+    if (!el) return;
+    const lenis = getLenis();
+    // Ein Tick Verzögerung: die Karte muss erst aufgeklappt sein, sonst
+    // scrollen wir auf die alte Höhe.
+    const id = window.setTimeout(() => {
+      if (lenis) lenis.scrollTo(el, { offset: -110 });
+      else el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 120);
+    return () => window.clearTimeout(id);
+  }, [tierParam]);
 
   return (
     <section id="preise" className="pricing">
       <div className="wrap">
         <Reveal>
           <div className="pricing-head">
-            <p className="eyebrow">// Missions-Klassen</p>
+            <p className="eyebrow">// Drei Klassen</p>
             <h2>
-              Drei Größenordnungen <span className="accent">Schub.</span>
+              Wählt das Problem. Wir bauen das <span className="accent">System.</span>
             </h2>
             <p className="pricing-lead">
-              Jede Zusammenarbeit ist eine Mission mit eigener Klasse. Startet bei
-              Nova und steigt auf — oder direkt in eine hellere Umlaufbahn.
+              Ihr klickt an, was euch am meisten Zeit kostet. Was ihr dafür
+              braucht, setzen wir zusammen.
             </p>
           </div>
         </Reveal>
 
         <div className="pricing-grid">
-          {TIERS.map((t, i) => (
-            <motion.div
-              key={t.name}
-              className={`price-card ${t.featured ? "price-card--featured" : ""}`}
-              initial={
-                reduceMotion
-                  ? { opacity: 0 }
-                  : { opacity: 0, rotateX: -18, y: 40 }
-              }
-              whileInView={
-                reduceMotion ? { opacity: 1 } : { opacity: 1, rotateX: 0, y: 0 }
-              }
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ delay: i * 0.12, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            >
-              <TiltCard maxTilt={6}>
-                {t.featured && (
-                  <span className="price-badge-wrap">
-                    <SketchCircle delay={0.7} />
-                    <span className="price-badge">Beliebt</span>
-                  </span>
-                )}
-                <div className="price-visual">
-                  <img
-                    src={t.img}
-                    alt={`${t.name} — ${t.desc}`}
-                    loading="lazy"
-                    width="1000"
-                    height="750"
-                  />
-                  <span className="price-klasse">{t.klasse}</span>
-                </div>
-                <div className="price-body">
-                  <h3>{t.name}</h3>
-                  <div className="price-amount">
-                    <span className="price-value">{t.price}</span>
+          {TIERS.map((t, i) => {
+            const open = openTier === t.id;
+            return (
+              <motion.div
+                key={t.id}
+                ref={(el) => {
+                  cardRefs.current[t.id] = el;
+                }}
+                className={`price-card${t.id === "pulsar" ? " price-card--featured" : ""}${
+                  open ? " price-card--open" : ""
+                }`}
+                initial={
+                  reduceMotion
+                    ? { opacity: 0 }
+                    : { opacity: 0, rotateX: -18, y: 40 }
+                }
+                whileInView={
+                  reduceMotion ? { opacity: 1 } : { opacity: 1, rotateX: 0, y: 0 }
+                }
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ delay: i * 0.12, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+              >
+                {/* Offen ist die Karte ein Formular — Tilt und Glanzlicht
+                    würden beim Anklicken der Optionen im Weg stehen. */}
+                <TiltCard maxTilt={open ? 0 : 6} lift={!open} glare={!open}>
+                  <div className="price-visual">
+                    <img
+                      src={t.img}
+                      alt=""
+                      loading="lazy"
+                      width="1000"
+                      height="750"
+                    />
+                    <span className="price-klasse">{t.klasse}</span>
                   </div>
-                  <p className="price-desc">{t.desc}</p>
-                  <ul className="price-features">
-                    {t.features.map((f) => (
-                      <li key={f}>{f}</li>
-                    ))}
-                  </ul>
-                  <div className="price-cta">
-                    {t.featured ? (
-                      <MagneticButton to="/kontakt">{t.name} starten</MagneticButton>
-                    ) : (
-                      <OrbitButton to="/kontakt">{t.name} starten</OrbitButton>
+
+                  <div className="price-body">
+                    <h3>{t.name}</h3>
+                    <p className="price-desc">{t.desc}</p>
+
+                    <button
+                      type="button"
+                      className="price-toggle"
+                      aria-expanded={open}
+                      aria-controls={`tier-panel-${t.id}`}
+                      onClick={() => setOpenTier(open ? null : t.id)}
+                    >
+                      <span>
+                        {open
+                          ? "Auswahl schließen"
+                          : t.mode === "consult"
+                            ? "Wie das läuft"
+                            : "Setup zusammenstellen"}
+                      </span>
+                      <svg
+                        className="price-toggle-chevron"
+                        viewBox="0 0 24 16"
+                        aria-hidden="true"
+                      >
+                        <path
+                          d="M3 4 C 7 9, 11 12, 12 12.5 C 13 12, 17 9, 21 4.5"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          fill="none"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+
+                  <AnimatePresence initial={false}>
+                    {open && (
+                      <motion.div
+                        id={`tier-panel-${t.id}`}
+                        role="region"
+                        className="price-panel"
+                        initial={reduceMotion ? false : { height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{
+                          duration: reduceMotion ? 0 : 0.38,
+                          ease: [0.16, 1, 0.3, 1],
+                        }}
+                      >
+                        <TierSelector tier={t} />
+                      </motion.div>
                     )}
-                  </div>
-                </div>
-              </TiltCard>
-            </motion.div>
-          ))}
+                  </AnimatePresence>
+                </TiltCard>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>

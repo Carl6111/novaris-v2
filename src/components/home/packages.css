@@ -114,6 +114,29 @@
   flex-direction: column;
   align-items: center;
   gap: 0.7rem;
+  padding: 0.6rem 0.9rem;
+  border: 0;
+  border-radius: calc(var(--radius) * 2);
+  background: none;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  transition: background-color 260ms ease-out;
+}
+
+.pkg-tier:hover,
+.pkg-tier:focus-visible {
+  background: color-mix(in oklab, var(--card) 45%, transparent);
+}
+
+/* Gewählte Bahn: Ring am Orb, nicht nur ein Farbwechsel */
+.pkg-tier--active .pkg-tier-orb {
+  outline: 2px solid var(--primary);
+  outline-offset: 4px;
+}
+
+.pkg-tier--active .pkg-tier-name {
+  color: var(--primary);
 }
 
 .pkg-tier-orb {
@@ -158,8 +181,43 @@
   color: var(--muted-foreground);
 }
 
+.pkg-detail {
+  overflow: hidden;
+}
+
+/* Padding auf dem Innen-Div, damit die Höhen-Animation nicht springt */
+.pkg-detail-inner {
+  max-width: 34rem;
+  margin: 2rem auto 0;
+  padding: 1.5rem 1.6rem;
+  border: 1px solid color-mix(in oklab, var(--primary) 32%, var(--border));
+  border-radius: calc(var(--radius) * 2);
+  background: color-mix(in oklab, var(--card) 55%, transparent);
+  text-align: left;
+}
+
+.pkg-detail-rule {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+
+.pkg-detail-desc {
+  margin: 0.6rem 0 1.3rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--muted-foreground);
+}
+
+/* Zwei CTAs: Pakete primär, Plattform als sekundärer Ausweg darunter */
 .pkg-cta {
   margin-top: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.1rem;
 }
 
 @media (prefers-reduced-motion: reduce) {

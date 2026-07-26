@@ -51,9 +51,9 @@ export default function Hero() {
       <section className="hero hero--static">
         <div className="hero-fallback" aria-hidden="true" />
         <div className="hero-overlay">
-          <p className="eyebrow">// Growth Engine+</p>
+          <p className="eyebrow">// Novaris</p>
           <h1>
-            48h weniger Admin <span className="accent">pro Woche.</span>
+            80 Stunden weniger Admin. <span className="accent">Jeden Monat.</span>
           </h1>
           <p className="hero-static-line">Hinter jeder Galaxie steckt Ordnung.</p>
           <p className="hero-static-line">Hinter jedem erfolgreichen Unternehmen auch.</p>
@@ -61,7 +61,7 @@ export default function Hero() {
             <img className="hero-final-mark" src="/logos/novaris-n.png" alt="Novaris" />
             <span className="hero-final-name">Novaris</span>
             <p className="hero-tagline">
-              KI-Automatisierungen, die Wachstum planbar machen.
+              KI-Systeme, die euren Betrieb täglich entlasten.
             </p>
           </div>
         </div>
@@ -93,9 +93,9 @@ export default function Hero() {
 
         {/* opening: concrete benefit above the fold */}
         <motion.div className="hero-open" style={{ opacity: openOpacity, y: openY }}>
-          <p className="eyebrow">// Growth Engine+</p>
+          <p className="eyebrow">// Novaris</p>
           <h1 className="hero-open-title">
-            48h weniger Admin <span className="accent">pro Woche.</span>
+            80 Stunden weniger Admin. <span className="accent">Jeden Monat.</span>
           </h1>
         </motion.div>
         <motion.p className="hero-cue" style={{ opacity: cueOpacity }}>
@@ -130,7 +130,7 @@ export default function Hero() {
             Novaris
           </motion.span>
           <motion.p className="hero-tagline" style={{ opacity: tagOpacity }}>
-            KI-Automatisierungen, die Wachstum planbar machen.
+            KI-Systeme, die euren Betrieb täglich entlasten.
           </motion.p>
         </div>
       </div>

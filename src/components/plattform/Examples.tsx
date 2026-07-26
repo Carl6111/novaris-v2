@@ -6,17 +6,17 @@ const EXAMPLES = [
   {
     name: "Lead-Capture",
     flow: ["Anfrage rein", "qualifizierte Antwort", "Eintrag im CRM"],
-    desc: "In Minuten statt Stunden. Kein Lead bleibt liegen.",
+    desc: "Die Erstantwort geht raus, bevor jemand das Postfach öffnet.",
   },
   {
-    name: "Support-Agent",
-    flow: ["Frage rein", "Antwort rund um die Uhr", "Eskalation nur bei Bedarf"],
-    desc: "Beantwortet Kundenfragen 24/7, eskaliert nur das Komplexe.",
+    name: "Anruf-Agent",
+    flow: ["Anruf um 21:47", "Gespräch zusammengefasst", "Lead im CRM"],
+    desc: "Nimmt ab, wenn niemand kann, und übergibt das Ergebnis an die Pipeline.",
   },
   {
-    name: "Reporting-Agent",
-    flow: ["Woche endet", "Bericht raus", "Klarheit am Montag"],
-    desc: "Conversion, Antwortzeit, Lead-Qualität — automatisch.",
+    name: "AI Docs",
+    flow: ["Lead qualifiziert", "Angebot erzeugt", "Im Portal bereit"],
+    desc: "Das Angebot entsteht aus den Daten, die schon im System liegen.",
   },
 ] as const;
 

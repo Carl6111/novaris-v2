@@ -5,9 +5,9 @@ import { ScribbleUnderline } from "../doodles/Doodles";
 import "./stats.css";
 
 const STATS = [
-  { value: 5, suffix: " Min", label: "bis Anfragen beantwortet sind — nicht Stunden." },
-  { value: 24, suffix: "/7", label: "läuft euer Betrieb. Auch nachts und am Wochenende." },
-  { value: 1, suffix: " System", label: "für Anrufe, Website, CRM, Docs & Portal — ein Login." },
+  { value: 24, suffix: "/7", label: "nimmt der Anruf-Agent ab. Auch nachts und am Wochenende." },
+  { value: 5, suffix: " Module", label: "Website, CRM, AI Docs, Client Portal, Anruf-Agent." },
+  { value: 1, suffix: " Login", label: "für alles davon. Kein Tool-Wechsel, keine doppelte Pflege." },
 ] as const;
 
 function Counter({ value, suffix }: { value: number; suffix: string }) {

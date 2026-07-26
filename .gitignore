@@ -26,6 +26,12 @@ config.secret.*
 id_rsa
 id_ed25519
 
+# Media: standardmaessig nichts aus public/videos committen (Rohschnitte sind
+# schnell 30 MB+ und lassen sich aus der History nicht mehr entfernen).
+# Was die Seite wirklich ausliefert, wird einzeln freigegeben.
+public/videos/*
+!public/videos/novaris-intro.mp4
+
 # Build
 .vercel
 dist/

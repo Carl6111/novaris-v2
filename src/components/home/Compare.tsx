@@ -21,7 +21,7 @@ export default function Compare() {
               Neue Stelle oder <span className="accent">ein System?</span>
             </h2>
             <p className="compare-lead">
-              Grobe Richtwerte, kein Angebot — aber die Richtung stimmt.
+              Grobe Richtwerte, kein Angebot. Die Größenordnung stimmt.
             </p>
           </div>
         </Reveal>

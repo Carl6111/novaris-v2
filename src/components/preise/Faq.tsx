@@ -6,19 +6,19 @@ import "./faq.css";
 const FAQS = [
   {
     q: "Was kostet das?",
-    a: "Die Pakete starten bei 500€/Monat. Der genaue Preis hängt davon ab, wie viel euer System abdecken soll — wir schnüren es auf euren Prozess.",
+    a: "Das hängt davon ab, welcher Prozess automatisiert wird. Klickt auf der Preisseite euer Problem an, dann seht ihr direkt den Richtwert für genau diese Auswahl. Fest wird er im Gespräch.",
   },
   {
     q: "Wie lange dauert der Aufbau?",
-    a: "Erste Automatisierungen laufen oft in 1–2 Wochen. Die volle Plattform bauen wir Schritt für Schritt, ohne euren Betrieb zu stören.",
+    a: "Die erste Automatisierung läuft meist nach ein bis zwei Wochen. Weitere Module kommen danach dazu, während der Betrieb weiterläuft.",
   },
   {
     q: "Brauchen wir technisches Wissen?",
-    a: "Nein. Wir bauen, integrieren und betreuen alles. Ihr nutzt das System — wir kümmern uns um die Technik.",
+    a: "Nein. Aufbau, Anbindung und Betrieb liegen bei uns. Ihr bekommt eine Oberfläche, die sich bedient wie jede andere Software.",
   },
   {
     q: "Warum kein Make oder Zapier?",
-    a: "Klick-Tools brechen, gehören euch nicht und stoßen schnell an Grenzen. Wir bauen echten Code und echte KI-Agents, die euch gehören.",
+    a: "Klick-Tools gehören dem Anbieter, nicht euch. Sobald ein Ablauf komplexer wird oder eine API sich ändert, steht ihr still. Euer System läuft auf eigenem Code, den ihr behaltet.",
   },
   {
     q: "Was ist mit Datenschutz?",
@@ -26,11 +26,11 @@ const FAQS = [
   },
   {
     q: "Kann ich monatlich kündigen?",
-    a: "Ja. Alle Pakete laufen monatlich — keine Mindestlaufzeit, keine versteckten Fristen. Ihr bleibt, weil das System liefert, nicht wegen eines Vertrags.",
+    a: "Ja, alle Pakete laufen monatlich. Keine Mindestlaufzeit und keine Kündigungsfrist im Kleingedruckten.",
   },
   {
     q: "Was, wenn ich Make oder Zapier schon nutze?",
-    a: "Dann lösen wir das Schritt für Schritt ab — ohne dass etwas stehen bleibt. Eure bestehenden Abläufe werden in echten Code überführt, den ihr besitzt. Kein hartes Umschalten, kein Datenverlust.",
+    a: "Dann läuft beides parallel, bis der neue Weg steht. Eure bestehenden Abläufe werden nacheinander in eigenen Code überführt, damit nichts stehen bleibt.",
   },
 ] as const;
 

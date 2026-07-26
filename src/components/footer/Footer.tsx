@@ -1,11 +1,9 @@
 import { Link } from "react-router-dom";
 import "./footer.css";
 
-// [PLATZHALTER] echte Profile eintragen
-const SOCIAL = [
-  { label: "LinkedIn", href: "#" },
-  { label: "X", href: "#" },
-];
+// TODO(Carl): echte Profil-URLs eintragen. Bis dahin bleibt die Zeile leer —
+// tote Links auf "#" sind schlimmer als gar keine Social-Leiste.
+const SOCIAL: { label: string; href: string }[] = [];
 
 export default function Footer() {
   return (
@@ -42,7 +40,7 @@ export default function Footer() {
       </div>
       <div className="wrap footer-bottom">
         <span>© {new Date().getFullYear()} Novaris</span>
-        <span>Gebaut mit echtem Code &amp; echter KI.</span>
+        <span>Gebaut in Deutschland.</span>
       </div>
     </footer>
   );

@@ -13,7 +13,7 @@ export default function Ueber() {
             Mehr Output. <span className="accent">Gleiches Team.</span>
           </>
         }
-        subtitle="Wir bringen ambitionierte Betriebe aufs nächste Level — mit KI-Agents, die echte Arbeit übernehmen."
+        subtitle="Wir bauen KI-Systeme für Betriebe, die wachsen wollen, ohne jedes Mal jemanden einstellen zu müssen."
       />
       <About />
       <Statement eyebrow="// Die Überzeugung">

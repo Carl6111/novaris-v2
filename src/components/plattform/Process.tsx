@@ -27,7 +27,7 @@ const STEPS = [
   {
     n: "04",
     title: "Betrieb",
-    desc: "Wir betreuen, optimieren und erweitern — monatlich.",
+    desc: "Jeden Monat messen wir, was das System abnimmt, und schärfen nach.",
   },
 ] as const;
 

@@ -16,13 +16,13 @@ export default function Plattform() {
             Euer ganzer Betrieb. <span className="accent">Ein System.</span>
           </>
         }
-        subtitle="Fünf Werkzeuge, die sonst getrennt laufen — gebündelt, automatisiert, in eurer Hand."
+        subtitle="Fünf Werkzeuge, die sonst getrennt laufen, hinter einem Login."
         background={<HorizonBackground />}
       />
       <ModuleRows />
       <Statement
         eyebrow="// Kein Tool-Chaos"
-        subtitle="Keine Klick-Tools wie Make, Zapier oder n8n. Echter Code, echte KI-Agents — und alles gehört euch."
+        subtitle="Keine Klick-Tools wie Make, Zapier oder n8n. Euer System läuft auf eigenem Code, auf eurer Infrastruktur."
         underline
       >
         Gebaut, nicht <span className="accent">zusammengeklickt.</span>

@@ -1,5 +1,4 @@
 import Reveal from "../ui/Reveal";
-import OrbitButton from "../ui/OrbitButton";
 import { OrbitDoodle, ScribbleUnderline } from "../doodles/Doodles";
 import "./payoff.css";
 
@@ -24,9 +23,9 @@ export default function Payoff() {
           </Reveal>
           <Reveal delay={0.1}>
             <p className="platform-sub">
-              Website, CRM, AI Docs, Client Portal und Anruf-Agent — kein
-              Tool-Chaos mehr. Jeder Anruf, jeder Lead, jedes Dokument läuft
-              durch ein System. Alles greift ineinander, alles in eurer Hand.
+              Website, CRM, AI Docs, Client Portal und Anruf-Agent hinter einem
+              Login. Ein Anruf um 21:47 Uhr liegt am nächsten Morgen als Lead in
+              der Pipeline, mit Zusammenfassung und fertigem Angebotsentwurf.
             </p>
           </Reveal>
           <Reveal delay={0.15}>
@@ -39,25 +38,7 @@ export default function Payoff() {
               </ul>
             </div>
           </Reveal>
-          <Reveal delay={0.2}>
-            <OrbitButton to="/plattform" className="platform-cta">
-              Plattform ansehen
-            </OrbitButton>
-          </Reveal>
         </div>
-
-        <Reveal delay={0.1} className="platform-visual">
-          <div className="platform-frame">
-            <img
-              src="/images/googleseo.webp"
-              alt="Novaris Plattform-Dashboard"
-              className="platform-dash"
-              loading="lazy"
-              width="1280"
-              height="800"
-            />
-          </div>
-        </Reveal>
       </div>
     </section>
   );

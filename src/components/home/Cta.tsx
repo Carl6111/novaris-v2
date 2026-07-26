@@ -18,8 +18,8 @@ export default function Cta() {
         </Reveal>
         <Reveal delay={0.12}>
           <p className="cta-sub">
-            Wir schauen gemeinsam, wo euer System am meisten Zeit spart —
-            unverbindlich.
+            Fünfzehn Minuten, in denen wir euren Prozess durchgehen und sagen,
+            was sich rechnet und was nicht.
           </p>
         </Reveal>
         <Reveal delay={0.18}>
@@ -31,7 +31,7 @@ export default function Cta() {
           <ul className="cta-badges">
             <li>Monatlich kündbar</li>
             <li>DSGVO-konform</li>
-            <li>Keine Kreditkarte nötig</li>
+            <li>Antwort in 24 h</li>
           </ul>
         </Reveal>
       </div>

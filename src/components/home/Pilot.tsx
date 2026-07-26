@@ -22,23 +22,19 @@ export default function Pilot() {
                 </span>
               </h2>
               <p className="pilot-text">
-                Novaris ist neu — und wir bauen die ersten Systeme mit ausgewählten
-                Betrieben zu Sonderkonditionen. Im Austausch dokumentieren wir das
-                Ergebnis offen als Case-Study. Ehrlich: noch keine Hochglanz-Referenzen,
-                dafür volle Aufmerksamkeit und ein faires erstes Projekt.
+                Novaris ist neu. Die ersten Systeme bauen wir mit ausgewählten Betrieben
+                zu Sonderkonditionen, im Austausch dokumentieren wir das Ergebnis offen
+                als Case-Study. Referenzen haben wir noch keine. Dafür bekommt ihr die
+                volle Aufmerksamkeit von dem, der es baut.
               </p>
               <ul className="pilot-points">
                 <li>Sonderkonditionen für die ersten beiden Betriebe</li>
                 <li>Ergebnis wird transparent dokumentiert</li>
-                <li>Direkter Draht — kein Account-Manager dazwischen</li>
+                <li>Direkter Draht, kein Account-Manager dazwischen</li>
               </ul>
               <OrbitButton to="/kontakt" className="pilot-cta">
                 Pilotplatz sichern
               </OrbitButton>
-            </div>
-            <div className="pilot-count" aria-hidden="true">
-              <span className="pilot-count-num">2</span>
-              <span className="pilot-count-label">von 2 frei</span>
             </div>
           </TiltCard>
         </Reveal>
