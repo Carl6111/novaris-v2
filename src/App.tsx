@@ -5,6 +5,7 @@ import Lenis from "lenis";
 import { setLenis, scrollTop } from "./lib/lenis";
 import ConstellationField from "./components/background/ConstellationField";
 import IntroOverlay from "./components/intro/IntroOverlay";
+import AuthGateProvider from "./components/auth/AuthGateProvider";
 import Nav from "./components/nav/Nav";
 import Footer from "./components/footer/Footer";
 import Home from "./pages/Home";
@@ -82,13 +83,15 @@ export default function App() {
 
   return (
     <BrowserRouter>
-      <ConstellationField />
-      <div className="grain" aria-hidden="true" />
-      <div className="vignette" aria-hidden="true" />
-      <Nav />
-      <AnimatedRoutes />
-      <Footer />
-      <IntroOverlay />
+      <AuthGateProvider>
+        <ConstellationField />
+        <div className="grain" aria-hidden="true" />
+        <div className="vignette" aria-hidden="true" />
+        <Nav />
+        <AnimatedRoutes />
+        <Footer />
+        <IntroOverlay />
+      </AuthGateProvider>
     </BrowserRouter>
   );
 }

@@ -204,20 +204,6 @@
   border-top: 1px solid color-mix(in oklab, var(--border) 70%, transparent);
 }
 
-/* Der ausführliche Weg. Bewusst still: er soll erreichbar sein, nicht werben. */
-.tsel-alt {
-  font-size: 0.82rem;
-  color: color-mix(in oklab, var(--foreground) 58%, transparent);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  transition: color 180ms ease-out;
-}
-
-.tsel-alt:hover,
-.tsel-alt:focus-visible {
-  color: var(--foreground);
-}
-
 /* --- Quasar: keine Auswahl, nur was im Gespräch passiert --- */
 
 .tsel-rule {

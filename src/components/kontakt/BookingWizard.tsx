@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import MagneticButton from "../ui/MagneticButton";
+import { useAuthGate } from "../auth/authGateContext";
 import {
   PROBLEMS,
   PROBLEMS_BY_ID,
@@ -88,8 +89,13 @@ function readSetup(raw: string | null) {
   };
 }
 
+// Der Wizard sammelt Name, Firma und Zeitleck — dafuer will Novaris wissen,
+// mit wem es spricht. Die erste Antwort oeffnet das Anmelde-Fenster.
+const GATE_REASON = "Ihr Gespräch buchen Sie mit einem Konto.";
+
 export default function BookingWizard() {
   const reduced = useReducedMotion();
+  const gate = useAuthGate();
   const [searchParams] = useSearchParams();
   const setup = useMemo(
     () => readSetup(searchParams.get("setup")),
@@ -117,11 +123,13 @@ export default function BookingWizard() {
     setAnswers((a) => ({ ...a, [id]: value }));
 
   const toggleMulti = (id: string, opt: string) => {
+    if (!gate.requireAuth(GATE_REASON)) return;
     const cur = (answers[id] as string[]) ?? [];
     setAnswer(id, cur.includes(opt) ? cur.filter((o) => o !== opt) : [...cur, opt]);
   };
 
   const chooseSingle = (id: string, opt: string) => {
+    if (!gate.requireAuth(GATE_REASON)) return;
     setAnswer(id, opt);
     window.setTimeout(() => go(step + 1), reduced ? 0 : 260);
   };
@@ -216,7 +224,12 @@ export default function BookingWizard() {
               type={current.input === "email" ? "email" : "text"}
               placeholder={current.placeholder}
               value={(answers[current.id] as string) ?? ""}
-              onChange={(e) => setAnswer(current.id, e.target.value)}
+              onChange={(e) => {
+                // Beim ersten Tastendruck geht das Fenster auf; getippt wird
+                // erst uebernommen, wenn jemand angemeldet ist.
+                if (!gate.requireAuth(GATE_REASON)) return;
+                setAnswer(current.id, e.target.value);
+              }}
               onKeyDown={(e) => {
                 if (e.key !== "Enter" || !canAdvance()) return;
                 if (onLast) void submit();

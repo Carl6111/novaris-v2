@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useNavigate } from "react-router-dom";
 import { getLenis } from "../../lib/lenis";
-import LeadCapture from "../lead/LeadCapture";
+import { useAuthGate } from "../auth/authGateContext";
 import "./intro-overlay.css";
 
 /**
@@ -14,16 +14,24 @@ import "./intro-overlay.css";
 
 const SESSION_KEY = "novaris:intro-seen";
 
+/**
+ * Ab wie viel gesehenem Film das Anmelde-Fenster von selbst aufgeht.
+ * 0.6 = nach ~46 der 77 Sekunden. Eine Zahl, eine Entscheidung — wer frueher
+ * oder spaeter fragen will, aendert nur diesen Wert.
+ */
+const AUTH_AT = 0.6;
+
 export default function IntroOverlay() {
   const reduced = useReducedMotion();
   const navigate = useNavigate();
+  const gate = useAuthGate();
   const [open, setOpen] = useState(false);
   const [playing, setPlaying] = useState(false);
-  // Wer den Film zu Ende sieht, hat Interesse bewiesen. Erst dann fragen wir
-  // nach der Adresse — davor bleibt der Weg in die Seite reibungsfrei.
-  const [ended, setEnded] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const restoreFocus = useRef<Element | null>(null);
+  // Nur einmal pro Session fragen. Ohne die Sperre feuert `timeupdate`
+  // viermal pro Sekunde weiter, sobald die Schwelle ueberschritten ist.
+  const asked = useRef(false);
 
   useEffect(() => {
     if (sessionStorage.getItem(SESSION_KEY)) return;
@@ -43,6 +51,24 @@ export default function IntroOverlay() {
     close();
     navigate("/preise");
   }, [close, navigate]);
+
+  /**
+   * Wer den Film weit genug gesehen hat, hat Interesse bewiesen. Erst dann
+   * geht das Anmelde-Fenster auf — davor bleibt der Weg reibungsfrei.
+   * Der Film macht dabei Platz, statt sich zwei Fenster zu stapeln.
+   */
+  const askForAccount = useCallback(() => {
+    if (asked.current || gate.allowed) return;
+    asked.current = true;
+    close();
+    gate.open("Sie haben gesehen, was Novaris macht.");
+  }, [close, gate]);
+
+  const onProgress = useCallback(() => {
+    const v = videoRef.current;
+    if (!v || !v.duration || Number.isNaN(v.duration)) return;
+    if (v.currentTime / v.duration >= AUTH_AT) askForAccount();
+  }, [askForAccount]);
 
   // Lock the page behind the overlay, trap Tab inside it, close on Escape.
   useEffect(() => {
@@ -166,7 +192,9 @@ export default function IntroOverlay() {
                 preload="metadata"
                 aria-label="Novaris Demo-Film"
                 onPlay={() => setPlaying(true)}
-                onEnded={() => setEnded(true)}
+                onTimeUpdate={onProgress}
+                // Sicherheitsnetz: wer vorspult, ueberspringt die Schwelle.
+                onEnded={askForAccount}
               />
               {!playing && (
                 <button
@@ -183,35 +211,17 @@ export default function IntroOverlay() {
               )}
             </motion.div>
 
-            {ended ? (
-              /* Der Ausgang bleibt daneben stehen — ein Overlay, das nach dem
-                 Film nur noch ein Formular zeigt, ist eine Falle. */
-              <motion.div className="intro-actions intro-actions--capture" {...rise(0.1)}>
-                <LeadCapture
-                  variant="overlay"
-                  quelle="intro"
-                  subject="Zugangsanfrage — nach Demo-Film"
-                  title="Ihr Zugang zum System"
-                  cta="Zugang anfragen"
-                  doneText="Angekommen. Wir melden uns in 24 h."
-                />
-                <button type="button" className="intro-skip" onClick={close}>
-                  Weiter zur Seite
-                </button>
-              </motion.div>
-            ) : (
-              <motion.div className="intro-actions" {...rise(0.34)}>
-                <button type="button" className="intro-cta" onClick={goToPricing}>
-                  Angebote ansehen
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M4 12 H18 M12.5 6.5 L18 12 L12.5 17.5" />
-                  </svg>
-                </button>
-                <button type="button" className="intro-skip" onClick={close}>
-                  Weiter zur Seite
-                </button>
-              </motion.div>
-            )}
+            <motion.div className="intro-actions" {...rise(0.34)}>
+              <button type="button" className="intro-cta" onClick={goToPricing}>
+                Angebote ansehen
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M4 12 H18 M12.5 6.5 L18 12 L12.5 17.5" />
+                </svg>
+              </button>
+              <button type="button" className="intro-skip" onClick={close}>
+                Weiter zur Seite
+              </button>
+            </motion.div>
           </motion.div>
         </motion.div>
       )}

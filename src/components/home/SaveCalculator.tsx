@@ -1,15 +1,26 @@
 import { useState } from "react";
 import Reveal from "../ui/Reveal";
 import MagneticButton from "../ui/MagneticButton";
+import { useAuthGate } from "../auth/authGateContext";
 import "./save-calculator.css";
 
 // grobe, ehrliche Schätzung: ein Teil der Admin-Zeit lässt sich automatisieren
 const AUTOMATABLE_SHARE = 0.4;
 
+const GATE_REASON = "Rechnen Sie Ihre Zahlen mit einem Konto durch.";
+
 export default function SaveCalculator() {
+  const gate = useAuthGate();
   const [team, setTeam] = useState(8);
   const [hours, setHours] = useState(6);
   const [rate, setRate] = useState(45);
+
+  // Ein Regler bewegt sich erst, wenn jemand angemeldet ist — der erste Zug
+  // oeffnet das Anmelde-Fenster.
+  const gated = (set: (v: number) => void) => (v: number) => {
+    if (!gate.requireAuth(GATE_REASON)) return;
+    set(v);
+  };
 
   const savedHours = Math.round(team * hours * AUTOMATABLE_SHARE * 4.33);
   const savedEuro = Math.round(savedHours * rate);
@@ -36,7 +47,7 @@ export default function SaveCalculator() {
                 max={100}
                 step={1}
                 suffix=" Personen"
-                onChange={setTeam}
+                onChange={gated(setTeam)}
               />
               <Slider
                 label="Admin-Stunden pro Person / Woche"
@@ -45,7 +56,7 @@ export default function SaveCalculator() {
                 max={30}
                 step={1}
                 suffix=" Std."
-                onChange={setHours}
+                onChange={gated(setHours)}
               />
               <Slider
                 label="Interner Stundensatz"
@@ -54,7 +65,7 @@ export default function SaveCalculator() {
                 max={150}
                 step={5}
                 suffix=" €"
-                onChange={setRate}
+                onChange={gated(setRate)}
               />
             </div>
 

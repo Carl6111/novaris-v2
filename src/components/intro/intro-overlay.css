@@ -148,13 +148,6 @@
   margin-top: clamp(1.2rem, 2.4vw, 1.8rem);
 }
 
-/* Nach dem Film: Formular oben, Ausgang darunter — nebeneinander würden sie
-   um dieselbe Zeile kämpfen. */
-.intro-actions--capture {
-  flex-direction: column;
-  gap: 0.4rem;
-}
-
 .intro-cta {
   display: inline-flex;
   align-items: center;
