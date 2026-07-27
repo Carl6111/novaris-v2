@@ -77,3 +77,37 @@
 .orbitbtn:hover .orbitbtn-arrow {
   transform: translateX(4px);
 }
+
+/* solid variant — primary CTA that has to carry a page on its own */
+.orbitbtn--solid {
+  padding: 1rem 2.1rem;
+  font-size: 1.05rem;
+  border-color: var(--primary);
+  color: var(--primary-foreground);
+  box-shadow: 0 10px 34px -8px color-mix(in oklch, var(--primary) 65%, transparent);
+  transition: color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease,
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* fill already raised: the liquid sweep is the resting state, not the hover state */
+.orbitbtn--solid .orbitbtn-fill {
+  clip-path: ellipse(150% 150% at 50% 50%);
+}
+
+/* red dot on red fill is invisible — run the orbit in the foreground colour instead */
+.orbitbtn--solid .orbitbtn-ring rect {
+  stroke: var(--primary-foreground);
+  filter: drop-shadow(0 0 5px color-mix(in oklch, var(--primary-foreground) 70%, transparent));
+}
+
+.orbitbtn--solid:hover {
+  color: var(--primary-foreground);
+  transform: translateY(-2px);
+  box-shadow: 0 16px 44px -8px color-mix(in oklch, var(--primary) 85%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orbitbtn--solid:hover {
+    transform: none;
+  }
+}

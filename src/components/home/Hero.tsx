@@ -5,6 +5,7 @@ import {
   useTransform,
   useReducedMotion,
 } from "motion/react";
+import OrbitButton from "../ui/OrbitButton";
 import "./hero.css";
 
 const HeroCanvas = lazy(() => import("./HeroCanvas"));
@@ -39,12 +40,21 @@ export default function Hero() {
 
   // finale: veil rises, Novaris wordmark + tagline
   // explicit head/tail keyframes so values stay pinned (framer extrapolates 2-point ranges)
-  const veilOpacity = useTransform(scrollYProgress, [0, 0.8, 0.9, 1], [0, 0, 1, 1]);
-  const markOpacity = useTransform(scrollYProgress, [0, 0.83, 0.9, 1], [0, 0, 1, 1]);
-  const markScale = useTransform(scrollYProgress, [0, 0.83, 0.9, 1], [0.9, 0.9, 1, 1]);
-  const nameOpacity = useTransform(scrollYProgress, [0, 0.88, 0.94, 1], [0, 0, 1, 1]);
-  const nameY = useTransform(scrollYProgress, [0, 0.88, 0.94, 1], [16, 16, 0, 0]);
-  const tagOpacity = useTransform(scrollYProgress, [0, 0.93, 0.99, 1], [0, 0, 1, 1]);
+  // the whole finale runs early enough that it holds fully assembled over the last ~5% of
+  // the scroll — otherwise the CTA flashes past in the moment the hero unsticks
+  const veilOpacity = useTransform(scrollYProgress, [0, 0.76, 0.85, 1], [0, 0, 1, 1]);
+  const markOpacity = useTransform(scrollYProgress, [0, 0.79, 0.86, 1], [0, 0, 1, 1]);
+  const markScale = useTransform(scrollYProgress, [0, 0.79, 0.86, 1], [0.9, 0.9, 1, 1]);
+  const nameOpacity = useTransform(scrollYProgress, [0, 0.83, 0.89, 1], [0, 0, 1, 1]);
+  const nameY = useTransform(scrollYProgress, [0, 0.83, 0.89, 1], [16, 16, 0, 0]);
+  const tagOpacity = useTransform(scrollYProgress, [0, 0.86, 0.92, 1], [0, 0, 1, 1]);
+  const ctaOpacity = useTransform(scrollYProgress, [0, 0.9, 0.95, 1], [0, 0, 1, 1]);
+  const ctaY = useTransform(scrollYProgress, [0, 0.9, 0.95, 1], [14, 14, 0, 0]);
+  // visibility, not just opacity: keeps the link out of tab order while it sits invisible
+  // over the opening headline
+  const ctaVisibility = useTransform(scrollYProgress, (v) =>
+    v > 0.89 ? "visible" : "hidden",
+  );
 
   if (reduced) {
     return (
@@ -63,6 +73,11 @@ export default function Hero() {
             <p className="hero-tagline">
               KI-Systeme, die Ihren Betrieb täglich entlasten.
             </p>
+            <div className="hero-final-cta">
+              <OrbitButton to="/preise" className="orbitbtn--solid">
+              Angebote ansehen
+            </OrbitButton>
+            </div>
           </div>
         </div>
       </section>
@@ -132,6 +147,14 @@ export default function Hero() {
           <motion.p className="hero-tagline" style={{ opacity: tagOpacity }}>
             KI-Systeme, die Ihren Betrieb täglich entlasten.
           </motion.p>
+          <motion.div
+            className="hero-final-cta"
+            style={{ opacity: ctaOpacity, y: ctaY, visibility: ctaVisibility }}
+          >
+            <OrbitButton to="/preise" className="orbitbtn--solid">
+              Angebote ansehen
+            </OrbitButton>
+          </motion.div>
         </div>
       </div>
     </section>
