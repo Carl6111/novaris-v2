@@ -1,13 +1,18 @@
 import { Link } from "react-router-dom";
+import { SignIn } from "@clerk/react";
 import PageHero from "../components/ui/PageHero";
-import LeadCapture from "../components/lead/LeadCapture";
+import { AUTH_READY } from "../lib/auth";
 import "./login.css";
 
 /**
  * Der Einstieg, den die Seite überall verspricht ("ein Login").
  *
- * Kein Passwortfeld: das Portal gehört zum Setup und wird eingerichtet, nicht
- * selbst angelegt. Ein Feld, das nichts tut, wäre schlimmer als keins.
+ * Der Hauptweg ist das Fenster aus der Navigation. Diese Seite fängt ab, wer
+ * die Adresse direkt eintippt oder aus einer alten Mail kommt.
+ *
+ * `routing="hash"` statt "path": die Zwischenschritte von Clerk (Code
+ * eingeben, Passwort zurücksetzen) laufen damit hinter dem #, ohne dass die
+ * Catch-all-Route in App.tsx sie auf die Startseite wirft.
  */
 
 export default function Login() {
@@ -25,19 +30,14 @@ export default function Login() {
 
       <section className="login">
         <div className="wrap login-inner">
-          <LeadCapture
-            variant="page"
-            quelle="login"
-            subject="Zugangsanfrage — Login-Seite"
-            title="Ihre hinterlegte E-Mail-Adresse"
-            cta="Zugangslink anfordern"
-            doneText="Angekommen. Wir melden uns in 24 h."
-          />
-
-          <p className="login-note">
-            Ihr Zugang gehört zu Ihrem Setup. Wir schicken den Link an die
-            Adresse, die bei uns hinterlegt ist.
-          </p>
+          {AUTH_READY ? (
+            <SignIn routing="hash" signUpUrl="/login" fallbackRedirectUrl="/portal" />
+          ) : (
+            <p className="login-note" role="status">
+              Die Anmeldung ist noch nicht eingerichtet. Bis dahin läuft alles
+              über das Erstgespräch.
+            </p>
+          )}
 
           <p className="login-alt">
             Noch kein Zugang? <Link to="/kontakt">Gespräch buchen →</Link>

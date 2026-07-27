@@ -1,0 +1,19 @@
+.authnav {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.authnav--overlay {
+  gap: 1.1rem;
+}
+
+/* Der Anmelde-Trigger ist ein <button>, sieht aber aus wie die Textlinks
+   daneben — sonst stünden zwei Knöpfe nebeneinander und keiner führt. */
+button.nav-login,
+button.nav-ol-login {
+  border: 0;
+  background: none;
+  font-family: inherit;
+  cursor: pointer;
+}

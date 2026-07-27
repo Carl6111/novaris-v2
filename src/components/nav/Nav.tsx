@@ -8,6 +8,8 @@ import {
   useReducedMotion,
 } from "motion/react";
 import MagneticButton from "../ui/MagneticButton";
+import AuthNav from "../auth/AuthNav";
+import { AUTH_READY } from "../../lib/auth";
 import "./nav.css";
 
 const LINKS = [
@@ -73,10 +75,16 @@ export default function Nav() {
           ))}
         </nav>
 
-        {/* Textlink, kein Button: der einzige laute CTA bleibt "Gespräch buchen". */}
-        <Link to="/login" className="nav-login">
-          Login
-        </Link>
+        {/* Textlink, kein Button: der einzige laute CTA bleibt "Gespräch buchen".
+            Ohne Clerk-Key führt der Weg auf die Seite statt ins Fenster — sie
+            sagt dort selbst, dass die Anmeldung noch nicht eingerichtet ist. */}
+        {AUTH_READY ? (
+          <AuthNav variant="pill" />
+        ) : (
+          <Link to="/login" className="nav-login">
+            Anmelden
+          </Link>
+        )}
 
         <Link to="/kontakt" className="nav-cta">
           Gespräch buchen
@@ -148,9 +156,17 @@ export default function Nav() {
               transition={{ delay: reduced ? 0 : 0.5, duration: 0.5 }}
             >
               <MagneticButton to="/kontakt">Gespräch buchen</MagneticButton>
-              <Link to="/login" className="nav-ol-login" onClick={() => setOpen(false)}>
-                Login
-              </Link>
+              {AUTH_READY ? (
+                <AuthNav variant="overlay" onNavigate={() => setOpen(false)} />
+              ) : (
+                <Link
+                  to="/login"
+                  className="nav-ol-login"
+                  onClick={() => setOpen(false)}
+                >
+                  Anmelden
+                </Link>
+              )}
               <p>KI-Systeme, die Ihren Betrieb täglich entlasten.</p>
             </motion.div>
           </motion.div>

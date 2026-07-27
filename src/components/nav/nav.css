@@ -429,6 +429,7 @@
 @media (max-width: 820px) {
   .nav-links,
   .nav-login,
+  .authnav--pill,
   .nav-cta {
     display: none;
   }

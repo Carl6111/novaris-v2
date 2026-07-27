@@ -1,0 +1,86 @@
+.portal {
+  padding: 0 0 clamp(4rem, 9vh, 7rem);
+}
+
+.portal-inner {
+  max-width: 52rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.portal-state {
+  color: var(--muted-foreground);
+  line-height: 1.7;
+}
+
+.portal-state a {
+  color: var(--foreground);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.portal-hello {
+  font-family: var(--font-display, var(--font-sans));
+  font-size: clamp(1.2rem, 0.9rem + 1vw, 1.6rem);
+  letter-spacing: -0.02em;
+  color: var(--foreground);
+}
+
+.portal-card {
+  padding: clamp(1.2rem, 3vw, 1.8rem);
+  border: 1px solid color-mix(in oklab, var(--border) 70%, transparent);
+  border-radius: 14px;
+  background: color-mix(in oklab, var(--card) 60%, transparent);
+}
+
+.portal-card h2 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.portal-card p {
+  margin-top: 0.55rem;
+  color: var(--muted-foreground);
+  line-height: 1.7;
+}
+
+/* Die einzige Handlung auf der Seite trägt als einzige die Aktionsfarbe. */
+.portal-card--pay {
+  border-color: color-mix(in oklab, var(--primary) 45%, transparent);
+}
+
+.portal-pay {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 46px;
+  margin-top: 1rem;
+  padding: 0.7rem 1.35rem;
+  border-radius: 999px;
+  font-weight: 600;
+  color: var(--primary-foreground);
+  background: var(--primary);
+  text-decoration: none;
+  transition:
+    background-color 200ms ease-out,
+    translate 240ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.portal-pay:hover,
+.portal-pay:focus-visible {
+  background: color-mix(in oklab, var(--primary) 88%, white);
+  translate: 0 -2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portal-pay {
+    transition: none;
+  }
+
+  .portal-pay:hover,
+  .portal-pay:focus-visible {
+    translate: 0 0;
+  }
+}
