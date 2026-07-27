@@ -21,7 +21,7 @@ export default function SaveCalculator() {
           <div className="section-head">
             <p className="eyebrow">// Zeitspar-Rechner</p>
             <h2>
-              Was holt ihr <span className="accent">im Monat zurück?</span>
+              Was holen Sie <span className="accent">im Monat zurück?</span>
             </h2>
           </div>
         </Reveal>

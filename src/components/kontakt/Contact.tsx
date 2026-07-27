@@ -5,8 +5,8 @@ import "./contact.css";
 
 const STEPS = [
   { n: "01", t: "Sechs Fragen", d: "Zwei Minuten, damit wir nicht bei null anfangen." },
-  { n: "02", t: "Termin-Link per Mail", d: "Kommt innerhalb von 24 Stunden bei euch an." },
-  { n: "03", t: "15 Minuten reden", d: "Wir gehen euren Prozess durch und sagen, was sich lohnt." },
+  { n: "02", t: "Termin-Link per Mail", d: "Kommt innerhalb von 24 Stunden bei Ihnen an." },
+  { n: "03", t: "15 Minuten reden", d: "Wir gehen Ihren Prozess durch und sagen, was sich lohnt." },
 ] as const;
 
 export default function Contact() {

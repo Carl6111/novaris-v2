@@ -24,7 +24,7 @@ export default function Pilot() {
               <p className="pilot-text">
                 Novaris ist neu. Die ersten Systeme bauen wir mit ausgewählten Betrieben
                 zu Sonderkonditionen, im Austausch dokumentieren wir das Ergebnis offen
-                als Case-Study. Referenzen haben wir noch keine. Dafür bekommt ihr die
+                als Case-Study. Referenzen haben wir noch keine. Dafür bekommen Sie die
                 volle Aufmerksamkeit von dem, der es baut.
               </p>
               <ul className="pilot-points">

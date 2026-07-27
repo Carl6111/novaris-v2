@@ -8,10 +8,10 @@ export default function Kontakt() {
         eyebrow="// 15 Minuten"
         title={
           <>
-            Lass uns <span className="accent">reden.</span>
+            Lassen Sie uns <span className="accent">reden.</span>
           </>
         }
-        subtitle="Sechs Fragen, dann bekommt ihr einen Termin-Link. Kein Vertrieb dazwischen."
+        subtitle="Sechs Fragen, dann bekommen Sie einen Termin-Link. Kein Vertrieb dazwischen."
       />
       <Contact />
     </>

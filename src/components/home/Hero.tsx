@@ -61,7 +61,7 @@ export default function Hero() {
             <img className="hero-final-mark" src="/logos/novaris-n.png" alt="Novaris" />
             <span className="hero-final-name">Novaris</span>
             <p className="hero-tagline">
-              KI-Systeme, die euren Betrieb täglich entlasten.
+              KI-Systeme, die Ihren Betrieb täglich entlasten.
             </p>
           </div>
         </div>
@@ -130,7 +130,7 @@ export default function Hero() {
             Novaris
           </motion.span>
           <motion.p className="hero-tagline" style={{ opacity: tagOpacity }}>
-            KI-Systeme, die euren Betrieb täglich entlasten.
+            KI-Systeme, die Ihren Betrieb täglich entlasten.
           </motion.p>
         </div>
       </div>

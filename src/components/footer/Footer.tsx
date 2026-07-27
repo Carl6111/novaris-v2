@@ -15,7 +15,7 @@ export default function Footer() {
             <img src="/logos/novaris-n.png" alt="" className="footer-mark" />
             <span>OVARIS</span>
           </Link>
-          <p>KI-Systeme, die euren Betrieb täglich entlasten.</p>
+          <p>KI-Systeme, die Ihren Betrieb täglich entlasten.</p>
           <div className="footer-social">
             {SOCIAL.map((s) => (
               <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer">

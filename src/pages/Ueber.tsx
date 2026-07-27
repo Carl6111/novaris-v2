@@ -17,7 +17,7 @@ export default function Ueber() {
       />
       <About />
       <Statement eyebrow="// Die Überzeugung">
-        Technik soll arbeiten. <span className="accent">Nicht ihr.</span>
+        Technik soll arbeiten. <span className="accent">Nicht Sie.</span>
       </Statement>
       <Cta />
     </>

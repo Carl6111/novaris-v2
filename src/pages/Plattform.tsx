@@ -13,7 +13,7 @@ export default function Plattform() {
         eyebrow="// Die Plattform"
         title={
           <>
-            Euer ganzer Betrieb. <span className="accent">Ein System.</span>
+            Ihr ganzer Betrieb. <span className="accent">Ein System.</span>
           </>
         }
         subtitle="Fünf Werkzeuge, die sonst getrennt laufen, hinter einem Login."
@@ -22,7 +22,7 @@ export default function Plattform() {
       <ModuleRows />
       <Statement
         eyebrow="// Kein Tool-Chaos"
-        subtitle="Keine Klick-Tools wie Make, Zapier oder n8n. Euer System läuft auf eigenem Code, auf eurer Infrastruktur."
+        subtitle="Keine Klick-Tools wie Make, Zapier oder n8n. Ihr System läuft auf eigenem Code, auf Ihrer Infrastruktur."
         underline
       >
         Gebaut, nicht <span className="accent">zusammengeklickt.</span>

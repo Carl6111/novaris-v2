@@ -3,7 +3,7 @@ import TiltCard from "../ui/TiltCard";
 import "./includes.css";
 
 const ITEMS = [
-  { t: "Eigener Code", d: "Das System läuft auf eurer Infrastruktur. Ihr könnt es mitnehmen." },
+  { t: "Eigener Code", d: "Das System läuft auf Ihrer Infrastruktur. Sie können es mitnehmen." },
   { t: "DSGVO-konform", d: "Gehostet in der EU, dokumentiert, mit Auftragsverarbeitungsvertrag." },
   { t: "Laufende Betreuung", d: "Jeden Monat wird gemessen, nachgeschärft und erweitert." },
   { t: "Monatlich", d: "Keine Mindestlaufzeit, kein Setup-Aufschlag." },

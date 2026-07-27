@@ -14,7 +14,7 @@ export default function Payoff() {
           </Reveal>
           <Reveal delay={0.05}>
             <h2 className="platform-title">
-              Euer ganzer Betrieb.{" "}
+              Ihr ganzer Betrieb.{" "}
               <span className="accent">
                 Ein Login.
                 <ScribbleUnderline delay={0.5} />

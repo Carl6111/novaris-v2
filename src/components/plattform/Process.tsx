@@ -17,12 +17,12 @@ const STEPS = [
   {
     n: "02",
     title: "Aufbau",
-    desc: "Wir bauen euer System auf eurem echten Prozess.",
+    desc: "Wir bauen Ihr System auf Ihrem echten Prozess.",
   },
   {
     n: "03",
     title: "Integration",
-    desc: "Es läuft mit euren Tools und eurem Team.",
+    desc: "Es läuft mit Ihren Tools und Ihrem Team.",
   },
   {
     n: "04",

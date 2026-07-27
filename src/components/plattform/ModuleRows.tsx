@@ -36,15 +36,15 @@ const MODULES: Module[] = [
   {
     tag: "Client Portal",
     title: "Ein Zuhause",
-    accent: "für eure Kunden.",
-    desc: "Kunden sehen Stand, Dokumente und nächste Schritte selbst. Das erspart euch die Nachfragen per Mail und Telefon.",
+    accent: "für Ihre Kunden.",
+    desc: "Kunden sehen Stand, Dokumente und nächste Schritte selbst. Das erspart Ihnen die Nachfragen per Mail und Telefon.",
     img: "/images/clientportal.webp",
   },
   {
     tag: "Anruf-Agent",
     title: "Kein Anruf",
     accent: "geht verloren.",
-    desc: "Nimmt ab, wenn niemand kann. Das Gespräch wird zusammengefasst und liegt als Lead im CRM, bevor ihr zurückruft.",
+    desc: "Nimmt ab, wenn niemand kann. Das Gespräch wird zusammengefasst und liegt als Lead im CRM, bevor Sie zurückrufen.",
   },
 ];
 

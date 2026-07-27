@@ -18,9 +18,9 @@ export default function Datenschutz() {
 
         <h2>2. Erhebung und Verarbeitung von Daten</h2>
         <p>
-          Diese Website erhebt personenbezogene Daten nur, wenn ihr sie uns aktiv
-          mitteilt — etwa über das Buchungsformular (Name, Firma, E-Mail, eure
-          Angaben zum Anliegen). Die Verarbeitung erfolgt zur Bearbeitung eurer
+          Diese Website erhebt personenbezogene Daten nur, wenn Sie sie uns aktiv
+          mitteilen — etwa über das Buchungsformular (Name, Firma, E-Mail, Ihre
+          Angaben zum Anliegen). Die Verarbeitung erfolgt zur Bearbeitung Ihrer
           Anfrage auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO.
         </p>
 
@@ -40,7 +40,7 @@ export default function Datenschutz() {
           Beim Aufruf werden technisch notwendige Server-Logs verarbeitet.
         </p>
 
-        <h2>5. Eure Rechte</h2>
+        <h2>5. Ihre Rechte</h2>
         <ul>
           <li>Auskunft, Berichtigung, Löschung, Einschränkung</li>
           <li>Datenübertragbarkeit und Widerspruch</li>

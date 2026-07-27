@@ -7,9 +7,7 @@ import {
   PROBLEMS_BY_ID,
   QUASAR_STEPS,
   encodeSelection,
-  formatRange,
   lockedAddonsFor,
-  priceRange,
   type Selection,
   type TierConfig,
 } from "../../data/setups";
@@ -29,7 +27,6 @@ export default function TierSelector({ tier }: Props) {
   const [sel, setSel] = useState<Selection>(EMPTY_SELECTION);
 
   const base = sel.baseId ? PROBLEMS_BY_ID.get(sel.baseId) : undefined;
-  const range = priceRange(sel);
   const maxAddons = tier.maxAddons ?? 0;
   const addonLimitReached = sel.addonIds.length >= maxAddons;
 
@@ -171,38 +168,9 @@ export default function TierSelector({ tier }: Props) {
       </AnimatePresence>
 
       <div className="tsel-foot">
-        <AnimatePresence mode="wait" initial={false}>
-          {range ? (
-            <motion.p
-              key={`${sel.baseId}-${sel.addonIds.join("-")}`}
-              className="tsel-price"
-              {...fade}
-              transition={{ duration: reduced ? 0 : 0.22 }}
-            >
-              <span className="tsel-price-num">
-                ca. {formatRange(range)}
-                <span className="tsel-price-unit"> / Monat</span>
-              </span>
-              <span className="tsel-price-note">
-                Richtwert. Fest wird er im Gespräch.
-              </span>
-            </motion.p>
-          ) : (
-            <motion.p
-              key="empty"
-              className="tsel-price tsel-price--empty"
-              {...fade}
-              transition={{ duration: reduced ? 0 : 0.22 }}
-            >
-              Der Preis hängt vom Prozess ab. Wählt oben, was euch am meisten
-              kostet.
-            </motion.p>
-          )}
-        </AnimatePresence>
-
         {sel.baseId && (
           <MagneticButton to={`/kontakt?setup=${encodeSelection(tier.id, sel)}`}>
-            Setup besprechen
+            Formular abschicken
           </MagneticButton>
         )}
       </div>

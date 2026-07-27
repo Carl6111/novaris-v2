@@ -12,7 +12,7 @@ import "./problems.css";
 
 const PROBLEMS = [
   "Anfragen bleiben Stunden liegen.",
-  "Angebote schreibt ihr abends. Von Hand.",
+  "Angebote schreiben Sie abends. Von Hand.",
   "Der Anruf um 18:40 Uhr landet auf der Mailbox.",
   "Niemand weiß, wo ein Lead gerade steht.",
   "Kunden fragen nach, weil sie den Stand nicht sehen.",
@@ -77,7 +77,7 @@ export default function Problems() {
         <div className="wrap">
           <p className="eyebrow">// Der ganz normale Tag</p>
           <h2 className="problems-thesis-text">
-            Kommt euch das <span className="accent">bekannt vor?</span>
+            Kommt Ihnen das <span className="accent">bekannt vor?</span>
           </h2>
           <ul className="problems-list">
             {PROBLEMS.map((t, i) => (
@@ -109,7 +109,7 @@ export default function Problems() {
           className="problems-constellation"
         />
         <h2 className="problems-thesis-text">
-          Kommt euch das <span className="accent">bekannt vor?</span>
+          Kommt Ihnen das <span className="accent">bekannt vor?</span>
         </h2>
         <div className="problems-stage">
           {PROBLEMS.map((t, i) => (

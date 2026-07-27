@@ -21,39 +21,39 @@ const STEPS: Step[] = [
   {
     id: "topic",
     type: "multi",
-    title: "Wo geht bei euch am meisten Zeit drauf?",
+    title: "Wo geht bei Ihnen am meisten Zeit drauf?",
     hint: "Mehrfachauswahl möglich.",
     options: [...PROBLEMS.map((p) => p.label), "Etwas anderes"],
   },
   {
     id: "team",
     type: "single",
-    title: "Wie groß ist euer Team?",
+    title: "Wie groß ist Ihr Team?",
     options: ["1–10", "11–50", "51–100", "100+"],
   },
   {
     id: "leak",
     type: "text",
-    title: "Wie sieht das bei euch konkret aus?",
+    title: "Wie sieht das bei Ihnen konkret aus?",
     placeholder: "Ein, zwei Sätze reichen.",
   },
   {
     id: "name",
     type: "text",
-    title: "Wie heißt ihr?",
+    title: "Wie heißen Sie?",
     placeholder: "Vor- und Nachname",
   },
   {
     id: "company",
     type: "text",
-    title: "Und eure Firma?",
+    title: "Und Ihre Firma?",
     placeholder: "Firmenname",
   },
   {
     id: "email",
     type: "text",
     title: "Wohin schicken wir den Buchungslink?",
-    hint: "Ihr bekommt eine E-Mail mit dem Termin-Link.",
+    hint: "Sie bekommen eine E-Mail mit dem Termin-Link.",
     placeholder: "name@firma.de",
     input: "email",
   },
@@ -181,7 +181,7 @@ export default function BookingWizard() {
       <div className="wizard wizard--done">
         <div className="wizard-check" aria-hidden="true">✓</div>
         <h3>Angekommen.</h3>
-        <p>Der Termin-Link liegt gleich in eurem Postfach.</p>
+        <p>Der Termin-Link liegt gleich in Ihrem Postfach.</p>
         {CALENDLY_URL && (
           <a className="wizard-book" href={CALENDLY_URL} target="_blank" rel="noopener noreferrer">
             Direkt Termin wählen →
@@ -203,7 +203,7 @@ export default function BookingWizard() {
     <div className="wizard">
       {setup && (
         <p className="wizard-setup">
-          <span className="wizard-setup-label">Aus eurer Auswahl</span>
+          <span className="wizard-setup-label">Aus Ihrer Auswahl</span>
           {setup.summary}
         </p>
       )}
@@ -296,8 +296,8 @@ export default function BookingWizard() {
 
           {status === "error" && (
             <p className="wizard-error" role="alert">
-              Das Formular kam nicht durch. Schreibt uns direkt an{" "}
-              <a href={`mailto:${FALLBACK_EMAIL}`}>{FALLBACK_EMAIL}</a>. Eure
+              Das Formular kam nicht durch. Schreiben Sie uns direkt an{" "}
+              <a href={`mailto:${FALLBACK_EMAIL}`}>{FALLBACK_EMAIL}</a>. Ihre
               Angaben stehen noch oben, sie gehen nicht verloren.
             </p>
           )}

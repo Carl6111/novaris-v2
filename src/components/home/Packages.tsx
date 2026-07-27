@@ -40,7 +40,7 @@ export default function Packages() {
         </Reveal>
         <Reveal delay={0.06}>
           <h2 className="pkg-title">
-            Wählt eure <span className="accent">Umlaufbahn.</span>
+            Wählen Sie Ihre <span className="accent">Umlaufbahn.</span>
           </h2>
         </Reveal>
         <Reveal delay={0.12}>

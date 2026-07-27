@@ -7,7 +7,7 @@ const ROWS = [
   { label: "Einarbeitung", hire: "Wochen bis Monate", nova: "Läuft in 1–2 Wochen erste Automatisierung" },
   { label: "Verfügbarkeit", hire: "40 Std./Woche, Urlaub & krank", nova: "24/7, auch nachts und am Wochenende" },
   { label: "Skaliert", hire: "Nur durch weitere Einstellungen", nova: "Mehr Last = gleiches System" },
-  { label: "Gehört euch", hire: "Wissen geht, wenn Person geht", nova: "Echter Code, bleibt im Betrieb" },
+  { label: "Gehört Ihnen", hire: "Wissen geht, wenn Person geht", nova: "Echter Code, bleibt im Betrieb" },
 ];
 
 export default function Compare() {

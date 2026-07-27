@@ -39,11 +39,11 @@ export default function Pricing() {
           <div className="pricing-head">
             <p className="eyebrow">// Drei Klassen</p>
             <h2>
-              Wählt das Problem. Wir bauen das <span className="accent">System.</span>
+              Wählen Sie das Problem. Wir bauen das <span className="accent">System.</span>
             </h2>
             <p className="pricing-lead">
-              Ihr klickt an, was euch am meisten Zeit kostet. Was ihr dafür
-              braucht, setzen wir zusammen.
+              Sie klicken an, was Ihnen am meisten Zeit kostet. Was Sie dafür
+              brauchen, setzen wir zusammen.
             </p>
           </div>
         </Reveal>

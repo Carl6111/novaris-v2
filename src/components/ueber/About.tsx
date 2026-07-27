@@ -3,7 +3,7 @@ import TiltCard from "../ui/TiltCard";
 import "./about.css";
 
 const VALUES = [
-  { t: "Eigener Code", d: "Das System läuft auf eurer Infrastruktur und gehört euch, auch wenn ihr uns nicht mehr braucht." },
+  { t: "Eigener Code", d: "Das System läuft auf Ihrer Infrastruktur und gehört Ihnen, auch wenn Sie uns nicht mehr brauchen." },
   { t: "Wenige, tiefe Lösungen", d: "Lieber ein Prozess, der wirklich läuft, als fünf, die halb funktionieren." },
   { t: "Laufender Betrieb", d: "Wir übergeben nicht und verschwinden. Jeden Monat wird nachgeschärft." },
 ] as const;
@@ -16,15 +16,15 @@ export default function About() {
           <Reveal>
             <p className="about-lead">
               Die meisten Agenturen verkaufen Werkzeuge. Wir bauen{" "}
-              <span className="accent">Systeme</span>, die Teil eures Betriebs
+              <span className="accent">Systeme</span>, die Teil Ihres Betriebs
               werden.
             </p>
           </Reveal>
           <Reveal delay={0.08}>
             <p className="about-para">
-              Novaris baut KI-Systeme, die euren Betrieb täglich entlasten. Ihr
-              schafft mehr, ohne neu einzustellen. Und die Plattform gehört euch,
-              nicht uns.
+              Novaris baut KI-Systeme, die Ihren Betrieb täglich entlasten. Sie
+              schaffen mehr, ohne neu einzustellen. Und die Plattform gehört
+              Ihnen, nicht uns.
             </p>
           </Reveal>
 

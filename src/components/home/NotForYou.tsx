@@ -4,9 +4,9 @@ import { ScribbleX } from "../doodles/Doodles";
 import "./not-for-you.css";
 
 const ITEMS = [
-  "Ihr sucht ein einmaliges Skript und danach nie wieder Kontakt.",
-  "Bei euch soll niemand am laufenden System weiterarbeiten.",
-  "„Läuft schon irgendwie“ reicht euch.",
+  "Sie suchen ein einmaliges Skript und danach nie wieder Kontakt.",
+  "Bei Ihnen soll niemand am laufenden System weiterarbeiten.",
+  "„Läuft schon irgendwie“ reicht Ihnen.",
   "Der Preis entscheidet, nicht das Ergebnis.",
 ];
 
@@ -18,7 +18,7 @@ export default function NotForYou() {
           <div className="section-head">
             <p className="eyebrow">// Ehrlich gesagt</p>
             <h2>
-              Nicht für euch, <span className="accent">wenn…</span>
+              Nicht für Sie, <span className="accent">wenn…</span>
             </h2>
           </div>
         </Reveal>

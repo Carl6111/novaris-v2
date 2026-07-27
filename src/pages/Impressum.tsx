@@ -6,7 +6,7 @@ export default function Impressum() {
       <div className="wrap legal-inner">
         <h1>Impressum</h1>
         <p className="legal-note">
-          Platzhalter — bitte mit euren echten Angaben ersetzen. In Deutschland
+          Platzhalter — bitte mit den echten Angaben ersetzen. In Deutschland
           nach § 5 DDG (TMG) Pflicht.
         </p>
 
