@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Show, SignInButton, UserButton } from "@clerk/react";
+import { useClerk, useUser, UserButton } from "@clerk/react";
 import "./auth-nav.css";
 
 /**
@@ -8,6 +8,13 @@ import "./auth-nav.css";
  * Ausgeloggt: ein stiller Textlink, der das Clerk-Fenster öffnet — kein
  * zweiter lauter Knopf neben "Gespräch buchen".
  * Eingeloggt: Weg ins Portal plus das Konto-Menü von Clerk.
+ *
+ * Bewusst `openSignIn()` statt `<SignInButton mode="modal">` in einem
+ * `<Show>`: Clerk schließt sein Fenster, sobald der auslösende Knopf
+ * ausgehängt wird, und `<Show>` liefert `null`, solange der Auth-Zustand
+ * lädt. Beim Absenden des Formulars flackert genau dieser Zustand — das
+ * Fenster ging dabei mitten in der Registrierung zu. Der Trigger hier bleibt
+ * deshalb dauerhaft gemountet, und das Fenster gehört Clerk allein.
  *
  * `withSignUp` heißt: dasselbe Fenster trägt Anmeldung und Registrierung.
  * Wer noch kein Konto hat, muss nicht erst den richtigen Knopf finden.
@@ -23,27 +30,35 @@ type Props = {
 };
 
 export default function AuthNav({ variant, onNavigate }: Props) {
+  const clerk = useClerk();
+  const { isSignedIn } = useUser();
   const linkClass = variant === "pill" ? "nav-login" : "nav-ol-login";
 
-  return (
-    // Der Klick-Handler sitzt auf der Hülle statt auf den Kindern: Clerk
-    // ersetzt den onClick des Trigger-Elements durch seinen eigenen.
-    <span className={`authnav authnav--${variant}`} onClick={onNavigate}>
-      <Show
-        when="signed-in"
-        fallback={
-          <SignInButton mode="modal" withSignUp>
-            <button type="button" className={linkClass}>
-              Anmelden
-            </button>
-          </SignInButton>
-        }
-      >
-        <Link to="/portal" className={linkClass}>
+  // Nur ein bestätigtes `true` schaltet um. Während `isSignedIn` noch
+  // undefined ist, bleibt der Trigger stehen statt kurz zu verschwinden.
+  if (isSignedIn === true) {
+    return (
+      <span className={`authnav authnav--${variant}`}>
+        <Link to="/portal" className={linkClass} onClick={onNavigate}>
           Portal
         </Link>
         <UserButton />
-      </Show>
+      </span>
+    );
+  }
+
+  return (
+    <span className={`authnav authnav--${variant}`}>
+      <button
+        type="button"
+        className={linkClass}
+        onClick={() => {
+          onNavigate?.();
+          void clerk.openSignIn({ withSignUp: true });
+        }}
+      >
+        Anmelden
+      </button>
     </span>
   );
 }
