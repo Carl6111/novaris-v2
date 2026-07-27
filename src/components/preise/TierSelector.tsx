@@ -1,11 +1,14 @@
 import { useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import MagneticButton from "../ui/MagneticButton";
+import LeadCapture from "../lead/LeadCapture";
 import {
   EMPTY_SELECTION,
   PROBLEMS,
   PROBLEMS_BY_ID,
   QUASAR_STEPS,
+  describeSelection,
   encodeSelection,
   lockedAddonsFor,
   type Selection,
@@ -167,11 +170,29 @@ export default function TierSelector({ tier }: Props) {
         )}
       </AnimatePresence>
 
+      {/* Die getroffene Auswahl ist der Kaufmoment. Sie hier auf eine andere
+          Seite zu schicken, kostet genau dort Leads — also fragen wir direkt in
+          der Karte nach einer Adresse und schicken die Auswahl mit. Der lange
+          Weg bleibt als zweiter Link erreichbar. */}
       <div className="tsel-foot">
         {sel.baseId && (
-          <MagneticButton to={`/kontakt?setup=${encodeSelection(tier.id, sel)}`}>
-            Formular abschicken
-          </MagneticButton>
+          <>
+            <LeadCapture
+              variant="card"
+              quelle="preise"
+              subject={`Setup-Anfrage — ${tier.name}`}
+              extraFields={{ setup: describeSelection(tier.id, sel).join(" · ") }}
+              title="Wir schicken Ihnen eine Einschätzung dazu."
+              cta="Setup schicken"
+              doneText="Angekommen. Wir melden uns in 24 h."
+            />
+            <Link
+              className="tsel-alt"
+              to={`/kontakt?setup=${encodeSelection(tier.id, sel)}`}
+            >
+              Lieber ausführlich? Zum Formular →
+            </Link>
+          </>
         )}
       </div>
     </div>

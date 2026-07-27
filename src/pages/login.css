@@ -1,0 +1,34 @@
+.login {
+  padding: 0 0 clamp(4rem, 9vh, 7rem);
+}
+
+.login-inner {
+  max-width: 52rem;
+}
+
+.login-note {
+  margin-top: 1.4rem;
+  max-width: 32rem;
+  color: var(--muted-foreground);
+  line-height: 1.7;
+}
+
+.login-alt {
+  margin-top: 1.6rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid color-mix(in oklab, var(--border) 70%, transparent);
+  max-width: 32rem;
+  color: var(--muted-foreground);
+}
+
+.login-alt a {
+  color: var(--foreground);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 180ms ease-out;
+}
+
+.login-alt a:hover,
+.login-alt a:focus-visible {
+  color: var(--primary);
+}

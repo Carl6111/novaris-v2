@@ -19,14 +19,32 @@ export default function Datenschutz() {
         <h2>2. Erhebung und Verarbeitung von Daten</h2>
         <p>
           Diese Website erhebt personenbezogene Daten nur, wenn Sie sie uns aktiv
-          mitteilen — etwa über das Buchungsformular (Name, Firma, E-Mail, Ihre
-          Angaben zum Anliegen). Die Verarbeitung erfolgt zur Bearbeitung Ihrer
-          Anfrage auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO.
+          mitteilen. Das passiert an vier Stellen:
+        </p>
+        <ul>
+          <li>
+            Buchungsformular auf <em>/kontakt</em> — Name, Firma, E-Mail und Ihre
+            Angaben zum Anliegen
+          </li>
+          <li>
+            Kurzformular am Ende des Demo-Films auf der Startseite — nur E-Mail
+          </li>
+          <li>
+            Kurzformular auf <em>/preise</em>, sobald Sie eine Auswahl getroffen
+            haben — E-Mail und die von Ihnen gewählte Zusammenstellung
+          </li>
+          <li>
+            Zugangsanfrage auf <em>/login</em> — nur E-Mail
+          </li>
+        </ul>
+        <p>
+          Die Verarbeitung erfolgt zur Bearbeitung Ihrer Anfrage auf Grundlage von
+          Art. 6 Abs. 1 lit. b DSGVO.
         </p>
 
         <h2>3. Formular &amp; Terminbuchung</h2>
         <p>
-          Formulardaten werden über
+          Alle vier Formulare werden über
           <span className="placeholder"> [PLATZHALTER: Dienst, z. B. Web3Forms] </span>
           verarbeitet und per E-Mail an uns übermittelt. Für die Terminvereinbarung
           nutzen wir

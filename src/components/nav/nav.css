@@ -97,6 +97,21 @@
   stroke-dashoffset: 0;
 }
 
+/* Still neben dem roten CTA — Bestandskunden suchen ihn, Interessenten
+   sollen ihn übersehen dürfen. */
+.nav-login {
+  font-size: 0.88rem;
+  color: var(--muted-foreground);
+  text-decoration: none;
+  padding: 0.25rem 0;
+  transition: color 0.25s ease;
+}
+
+.nav-login:hover,
+.nav-login:focus-visible {
+  color: var(--foreground);
+}
+
 .nav-cta {
   font-size: 0.88rem;
   font-weight: 600;
@@ -384,6 +399,19 @@
   gap: 1rem;
 }
 
+.nav-ol-login {
+  font-size: 0.9rem;
+  color: var(--muted-foreground);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.25s ease;
+}
+
+.nav-ol-login:hover,
+.nav-ol-login:focus-visible {
+  color: var(--foreground);
+}
+
 .nav-overlay-foot p {
   font-family: var(--font-mono);
   font-size: 0.8rem;
@@ -400,6 +428,7 @@
 
 @media (max-width: 820px) {
   .nav-links,
+  .nav-login,
   .nav-cta {
     display: none;
   }

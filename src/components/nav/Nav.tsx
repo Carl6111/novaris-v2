@@ -73,6 +73,11 @@ export default function Nav() {
           ))}
         </nav>
 
+        {/* Textlink, kein Button: der einzige laute CTA bleibt "Gespräch buchen". */}
+        <Link to="/login" className="nav-login">
+          Login
+        </Link>
+
         <Link to="/kontakt" className="nav-cta">
           Gespräch buchen
         </Link>
@@ -143,6 +148,9 @@ export default function Nav() {
               transition={{ delay: reduced ? 0 : 0.5, duration: 0.5 }}
             >
               <MagneticButton to="/kontakt">Gespräch buchen</MagneticButton>
+              <Link to="/login" className="nav-ol-login" onClick={() => setOpen(false)}>
+                Login
+              </Link>
               <p>KI-Systeme, die Ihren Betrieb täglich entlasten.</p>
             </motion.div>
           </motion.div>

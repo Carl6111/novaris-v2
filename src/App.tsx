@@ -12,6 +12,7 @@ import Plattform from "./pages/Plattform";
 import Preise from "./pages/Preise";
 import Ueber from "./pages/Ueber";
 import Kontakt from "./pages/Kontakt";
+import Login from "./pages/Login";
 import Impressum from "./pages/Impressum";
 import Datenschutz from "./pages/Datenschutz";
 import Agb from "./pages/Agb";
@@ -46,6 +47,7 @@ function AnimatedRoutes() {
           <Route path="/preise" element={<Preise />} />
           <Route path="/ueber" element={<Ueber />} />
           <Route path="/kontakt" element={<Kontakt />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/impressum" element={<Impressum />} />
           <Route path="/datenschutz" element={<Datenschutz />} />
           <Route path="/agb" element={<Agb />} />

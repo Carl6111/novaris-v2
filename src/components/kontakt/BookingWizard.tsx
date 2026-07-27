@@ -2,7 +2,13 @@ import { useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import MagneticButton from "../ui/MagneticButton";
-import { PROBLEMS, PROBLEMS_BY_ID, TIERS_BY_ID, isTierId } from "../../data/setups";
+import {
+  PROBLEMS,
+  PROBLEMS_BY_ID,
+  describeSelection,
+  isTierId,
+} from "../../data/setups";
+import { CALENDLY_URL, FALLBACK_EMAIL, isEmail, submitLead } from "../../lib/leads";
 import "./booking-wizard.css";
 
 type StepBase = { id: string; title: string; hint?: string };
@@ -59,12 +65,6 @@ const STEPS: Step[] = [
   },
 ];
 
-const WEB3_KEY = import.meta.env.VITE_WEB3FORMS_KEY as string | undefined;
-const CALENDLY_URL = import.meta.env.VITE_CALENDLY_URL as string | undefined;
-// TODO(Carl): durch die echte Geschäftsadresse ersetzen. Diese hier ist der
-// einzige Weg, auf dem ein Lead ankommt, solange VITE_WEB3FORMS_KEY fehlt.
-const FALLBACK_EMAIL = "tafkac@icloud.com";
-
 type Answers = Record<string, string | string[]>;
 
 /**
@@ -74,19 +74,17 @@ type Answers = Record<string, string | string[]>;
  */
 function readSetup(raw: string | null) {
   if (!raw) return null;
-  const [tierId, ...rest] = raw.split(",").filter(Boolean);
+  const [tierId, baseId, ...addonIds] = raw.split(",").filter(Boolean);
   if (!isTierId(tierId)) return null;
 
-  const tierName = TIERS_BY_ID.get(tierId)?.name ?? tierId;
-  const base = rest[0] ? PROBLEMS_BY_ID.get(rest[0]) : undefined;
-  const addonLabels = base
-    ? base.addons.filter((a) => rest.includes(a.id)).map((a) => a.label)
-    : [];
+  const base = baseId ? PROBLEMS_BY_ID.get(baseId) : undefined;
 
   return {
-    tierName,
     baseLabel: base?.label ?? null,
-    summary: [tierName, base?.label, ...addonLabels].filter(Boolean).join(" · "),
+    summary: describeSelection(tierId, {
+      baseId: base ? baseId : null,
+      addonIds,
+    }).join(" · "),
   };
 }
 
@@ -133,7 +131,7 @@ export default function BookingWizard() {
     if (current.type === "multi") return Array.isArray(v) && v.length > 0;
     if (current.type === "text") {
       const s = (v as string) ?? "";
-      if (current.input === "email") return /.+@.+\..+/.test(s);
+      if (current.input === "email") return isEmail(s);
       return s.trim().length > 0;
     }
     return true;
@@ -141,37 +139,18 @@ export default function BookingWizard() {
 
   const submit = async () => {
     setStatus("sending");
-    const payload = {
-      access_key: WEB3_KEY ?? "",
+    const result = await submitLead({
       subject: `Neue Buchungsanfrage — ${answers.name || "—"}`,
-      from_name: "Novaris Website",
-      name: answers.name || "",
-      email: answers.email || "",
-      firma: answers.company || "",
+      quelle: "wizard",
+      name: String(answers.name ?? ""),
+      email: String(answers.email ?? ""),
+      firma: String(answers.company ?? ""),
       thema: Array.isArray(answers.topic) ? answers.topic.join(", ") : "",
-      teamgroesse: answers.team || "",
-      zeitleck: answers.leak || "",
+      teamgroesse: String(answers.team ?? ""),
+      zeitleck: String(answers.leak ?? ""),
       setup: setup?.summary ?? "",
-      // Honeypot: Web3Forms verwirft die Einsendung, wenn ein Bot ihn füllt.
-      botcheck: "",
-    };
-
-    // Ohne Key gibt es keinen Weg, auf dem die Antworten ankommen. Ein
-    // Erfolgs-Screen wäre hier eine Lüge und der Lead wäre verloren.
-    if (!WEB3_KEY) {
-      setStatus("error");
-      return;
-    }
-    try {
-      const res = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify(payload),
-      });
-      setStatus(res.ok ? "done" : "error");
-    } catch {
-      setStatus("error");
-    }
+    });
+    setStatus(result === "ok" ? "done" : "error");
   };
 
   const onLast = step === total - 1;
