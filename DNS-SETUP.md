@@ -80,15 +80,19 @@ Es fragt nach der Domain → **`lunakris.de`** eingeben.
 Danach sag mir Bescheid. Ich hole mit `clerk deploy status` die erzeugten
 Einträge und trage sie unten in die Tabelle ein.
 
-### Was dabei herauskommt (Platzhalter, bis du deployt hast)
+### Die echten Werte (Production-Instanz `ins_3H9ZBbti4vb29eL4o9z7ZdSn3jK`)
 
 | Typ | Name / Host | Wert | Zweck |
 |---|---|---|---|
-| `CNAME` | `clerk` | _wird nach `clerk deploy` eingetragen_ | Frontend-API |
-| `CNAME` | `accounts` | _dito_ | Konto-Seiten |
-| `CNAME` | `clkmail` | _dito_ | Mailversand |
-| `CNAME` | `clk._domainkey` | _dito_ | DKIM-Signatur |
-| `CNAME` | `clk2._domainkey` | _dito_ | DKIM-Signatur |
+| `CNAME` | `clerk` | `frontend-api.clerk.services` | Frontend-API — **hiervon lädt die Anmeldung ihr JavaScript** |
+| `CNAME` | `accounts` | `accounts.clerk.services` | Konto-Seiten |
+| `CNAME` | `clkmail` | `mail.nfu6jvilqce0.clerk.services` | Mailversand |
+| `CNAME` | `clk._domainkey` | `dkim1.nfu6jvilqce0.clerk.services` | DKIM-Signatur |
+| `CNAME` | `clk2._domainkey` | `dkim2.nfu6jvilqce0.clerk.services` | DKIM-Signatur |
+
+Keiner kollidiert mit deinen bestehenden Einträgen. Die IONOS-DKIM-Einträge
+heißen `s1-ionos._domainkey` / `s2-ionos._domainkey`, die neuen `clk.` und
+`clk2.` — die stehen nebeneinander.
 
 Diese kommen genauso in die IONOS-DNS-Tabelle wie in Schritt 1 — nur eben als
 Typ `CNAME` statt `A`.
@@ -120,22 +124,29 @@ Production geht das nicht mehr — und der Google-Zustimmungsdialog soll
 
 ## Schritt 4 — Production-Key in Vercel
 
-`clerk deploy` erzeugt einen Production-Publishable-Key (`pk_live_…`).
+✅ **Schon erledigt.** `VITE_CLERK_PUBLISHABLE_KEY` = `pk_live_Y2xlcmsubHVuYWtyaXMuZGUk`
+liegt in Vercel unter Scope *Production*.
+
+### ⚠️ Aber: erst deployen, wenn `clerk.lunakris.de` auflöst
+
+Die Variable greift erst beim nächsten Deploy — und der darf **nicht** vor den
+CNAMEs laufen. Grund: Clerk lädt sein JavaScript von `clerk.lunakris.de`.
+Fehlt der Eintrag, ist der Key zwar gesetzt (die Seite hält die Anmeldung
+damit für eingerichtet), aber Clerk kann nicht laden. Ergebnis: der
+Anmelden-Knopf erscheint und tut nichts, und die Formulare sind gesperrt ohne
+Anmeldemöglichkeit. Das ist schlechter als der Zustand ohne Key.
+
+Prüfen, dann deployen:
 
 ```bash
-cd ~/Downloads/lunakris-v2
-vercel env add VITE_CLERK_PUBLISHABLE_KEY production
-# Key einfügen, Enter
+dig +short CNAME clerk.lunakris.de     # muss frontend-api.clerk.services zeigen
+~/.hermes/node/bin/clerk deploy status # domainStatus dns/ssl: "verified"
+git commit --allow-empty -m "chore: Deploy mit Clerk-Production-Key" && git push
 ```
 
-Oder im Vercel-Dashboard: Projekt → **Settings → Environment Variables** →
-Name `VITE_CLERK_PUBLISHABLE_KEY`, Scope **Production**.
-
-Danach neu deployen, sonst greift die Variable nicht:
-
-```bash
-vercel --prod
-```
+**Deploy immer über `git push`, nicht über `vercel --prod`.** Aus dem
+Deployment-Protokoll von Praxis Stärke & Staack: wiederholte CLI-Deploys haben
+dort schon einmal den Vercel-Account gesperrt.
 
 **Ohne diesen Key läuft die Seite trotzdem** — nur ohne Anmeldung. `/login` und
 `/portal` sagen dann selbst, dass die Anmeldung noch nicht eingerichtet ist,
