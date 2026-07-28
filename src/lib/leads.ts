@@ -29,7 +29,7 @@ export async function submitLead(
       headers: { "Content-Type": "application/json", Accept: "application/json" },
       body: JSON.stringify({
         access_key: WEB3_KEY,
-        from_name: "Novaris Website",
+        from_name: "Lunakris Website",
         // Honeypot: Web3Forms verwirft die Einsendung, wenn ein Bot ihn füllt.
         botcheck: "",
         ...fields,

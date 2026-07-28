@@ -55,9 +55,9 @@ export default function Nav() {
   return (
     <header className={`nav ${scrolled ? "nav--solid" : ""}`}>
       <div className="nav-pill">
-        <Link to="/" className="nav-logo" aria-label="Novaris Startseite">
-          <img src="/logos/novaris-n.png" alt="" className="nav-mark" />
-          <span>OVARIS</span>
+        <Link to="/" className="nav-logo" aria-label="Lunakris Startseite">
+          <img src="/logos/lunakris-l.png" alt="" className="nav-mark" />
+          <span>UNAKRIS</span>
         </Link>
 
         <nav className="nav-links" aria-label="Hauptnavigation">

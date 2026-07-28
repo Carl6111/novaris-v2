@@ -22,7 +22,7 @@ export default function About() {
           </Reveal>
           <Reveal delay={0.08}>
             <p className="about-para">
-              Novaris baut KI-Systeme, die Ihren Betrieb täglich entlasten. Sie
+              Lunakris baut KI-Systeme, die Ihren Betrieb täglich entlasten. Sie
               schaffen mehr, ohne neu einzustellen. Und die Plattform gehört
               Ihnen, nicht uns.
             </p>

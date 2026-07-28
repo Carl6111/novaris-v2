@@ -71,7 +71,7 @@
   color: var(--muted-foreground);
 }
 
-/* Novaris-Zelle als TiltCard: Klasse sitzt auf .tilt-wrap (Grid-Item),
+/* Lunakris-Zelle als TiltCard: Klasse sitzt auf .tilt-wrap (Grid-Item),
    die eigentliche Zellen-Optik auf der inneren .tilt-card.
    Rahmen/Radius der Card werden neutralisiert, damit das Raster fugenlos bleibt. */
 .compare-nova .tilt-card {
@@ -86,7 +86,7 @@
   transition: background 0.3s ease, color 0.3s ease;
 }
 
-/* Coral-Akzent beim Hover über einer Novaris-Zelle */
+/* Coral-Akzent beim Hover über einer Lunakris-Zelle */
 .compare-nova .tilt-card:hover {
   background: color-mix(in oklab, var(--primary) 14%, transparent);
   color: var(--primary);

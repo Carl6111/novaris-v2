@@ -1,6 +1,6 @@
-# Novaris v2
+# Lunakris v2
 
-Marketing-Website für Novaris — KI-Systeme für ambitionierte Betriebe.
+Marketing-Website für Lunakris — KI-Systeme für ambitionierte Betriebe.
 Dark Space-Theme, echtes WebGL 3D (react-three-fiber), Coral-Palette.
 
 ## Stack

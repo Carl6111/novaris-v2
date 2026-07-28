@@ -53,6 +53,10 @@
 
 .nav-mark {
   height: 1.5rem;
+  /* Der L-Fuss ist der rechteste Punkt der Zeichnung, sitzt aber auf der
+     Grundlinie — auf Schrifthoehe bliebe sonst eine Luecke und die Wortmarke
+     laese sich als "L UNAKRIS". */
+  margin-right: -0.22rem;
   width: auto;
   display: block;
 }

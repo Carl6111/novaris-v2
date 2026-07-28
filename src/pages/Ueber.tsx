@@ -7,7 +7,7 @@ export default function Ueber() {
   return (
     <>
       <PageHero
-        eyebrow="// Novaris"
+        eyebrow="// Lunakris"
         title={
           <>
             Mehr Output. <span className="accent">Gleiches Team.</span>

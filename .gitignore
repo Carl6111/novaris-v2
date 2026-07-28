@@ -30,7 +30,7 @@ id_ed25519
 # schnell 30 MB+ und lassen sich aus der History nicht mehr entfernen).
 # Was die Seite wirklich ausliefert, wird einzeln freigegeben.
 public/videos/*
-!public/videos/novaris-intro.mp4
+!public/videos/lunakris-intro.mp4
 
 # Build
 .vercel

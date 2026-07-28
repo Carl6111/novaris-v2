@@ -1,5 +1,5 @@
 /**
- * Die Bausteine, aus denen ein Novaris-Setup entsteht.
+ * Die Bausteine, aus denen ein Lunakris-Setup entsteht.
  *
  * Der Kunde klickt Probleme an, keine Module. Was er technisch bekommt, steht
  * als Zweitzeile darunter — er muss nicht wissen, welches Modul sein Problem

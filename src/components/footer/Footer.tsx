@@ -11,9 +11,9 @@ export default function Footer() {
       <div className="css-stars" aria-hidden="true" />
       <div className="wrap footer-inner">
         <div className="footer-brand">
-          <Link to="/" className="footer-logo" aria-label="Novaris Startseite">
-            <img src="/logos/novaris-n.png" alt="" className="footer-mark" />
-            <span>OVARIS</span>
+          <Link to="/" className="footer-logo" aria-label="Lunakris Startseite">
+            <img src="/logos/lunakris-l.png" alt="" className="footer-mark" />
+            <span>UNAKRIS</span>
           </Link>
           <p>KI-Systeme, die Ihren Betrieb täglich entlasten.</p>
           <div className="footer-social">
@@ -39,7 +39,7 @@ export default function Footer() {
         </nav>
       </div>
       <div className="wrap footer-bottom">
-        <span>© {new Date().getFullYear()} Novaris</span>
+        <span>© {new Date().getFullYear()} Lunakris</span>
         <span>Gebaut in Deutschland.</span>
       </div>
     </footer>

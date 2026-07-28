@@ -2,13 +2,14 @@ import sharp from "sharp";
 import { mkdir, stat } from "node:fs/promises";
 import path from "node:path";
 
-const OLD = "/Users/carlstaerke/Downloads/Novaris";
+const OLD = "/Users/carlstaerke/Downloads/Lunakris";
 const OUT = new URL("../public", import.meta.url).pathname;
 
 // [source, outBaseName, width, formats]
 const jobs = [
   [`${OLD}/Endframe.png`, "images/endframe", 1920, ["avif", "webp"]],
-  [`${OLD}/novarisfinalpic.png`, "images/novarisfinal", 1920, ["webp"]],
+  // images/lunakrisfinal (die Social-Karte) kommt aus make-brand-assets.mjs —
+  // sie wird aus der Logo-Masterdatei aufgebaut, nicht aus einem Foto.
   [`${OLD}/astronaut hero.png`, "images/astronaut-cutout", 800, ["webp"]],
   [`${OLD}/public/images/aidocs.png`, "images/aidocs", 1280, ["webp"]],
   [`${OLD}/public/images/crm.png`, "images/crm", 1280, ["webp"]],

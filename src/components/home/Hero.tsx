@@ -38,7 +38,7 @@ export default function Hero() {
   const bOpacity = useTransform(scrollYProgress, [0.48, 0.56, 0.66, 0.76], [0, 1, 1, 0]);
   const bY = useTransform(scrollYProgress, [0.48, 0.56, 0.66, 0.76], [40, 0, 0, -40]);
 
-  // finale: veil rises, Novaris wordmark + tagline
+  // finale: veil rises, Lunakris wordmark + tagline
   // explicit head/tail keyframes so values stay pinned (framer extrapolates 2-point ranges)
   // the whole finale runs early enough that it holds fully assembled over the last ~5% of
   // the scroll — otherwise the CTA flashes past in the moment the hero unsticks
@@ -61,15 +61,15 @@ export default function Hero() {
       <section className="hero hero--static">
         <div className="hero-fallback" aria-hidden="true" />
         <div className="hero-overlay">
-          <p className="eyebrow">// Novaris</p>
+          <p className="eyebrow">// Lunakris</p>
           <h1>
             80 Stunden weniger Admin. <span className="accent">Jeden Monat.</span>
           </h1>
           <p className="hero-static-line">Hinter jeder Galaxie steckt Ordnung.</p>
           <p className="hero-static-line">Hinter jedem erfolgreichen Unternehmen auch.</p>
           <div className="hero-final hero-final--static">
-            <img className="hero-final-mark" src="/logos/novaris-n.png" alt="Novaris" />
-            <span className="hero-final-name">Novaris</span>
+            <img className="hero-final-mark" src="/logos/lunakris-l.png" alt="Lunakris" />
+            <span className="hero-final-name">Lunakris</span>
             <p className="hero-tagline">
               KI-Systeme, die Ihren Betrieb täglich entlasten.
             </p>
@@ -87,7 +87,7 @@ export default function Hero() {
   const showCanvas = canvasReady && !canvasDead;
 
   return (
-    <section ref={ref} className="hero" aria-label="Novaris Intro">
+    <section ref={ref} className="hero" aria-label="Lunakris Intro">
       <div className="hero-sticky">
         {/* solid black base paints instantly; the WebGL scene fades in over it */}
         <div className="hero-fallback" aria-hidden="true" />
@@ -108,7 +108,7 @@ export default function Hero() {
 
         {/* opening: concrete benefit above the fold */}
         <motion.div className="hero-open" style={{ opacity: openOpacity, y: openY }}>
-          <p className="eyebrow">// Novaris</p>
+          <p className="eyebrow">// Lunakris</p>
           <h1 className="hero-open-title">
             80 Stunden weniger Admin. <span className="accent">Jeden Monat.</span>
           </h1>
@@ -134,15 +134,15 @@ export default function Hero() {
         <div className="hero-final">
           <motion.img
             className="hero-final-mark"
-            src="/logos/novaris-n.png"
-            alt="Novaris"
+            src="/logos/lunakris-l.png"
+            alt="Lunakris"
             style={{ opacity: markOpacity, scale: markScale }}
           />
           <motion.span
             className="hero-final-name"
             style={{ opacity: nameOpacity, y: nameY }}
           >
-            Novaris
+            Lunakris
           </motion.span>
           <motion.p className="hero-tagline" style={{ opacity: tagOpacity }}>
             KI-Systeme, die Ihren Betrieb täglich entlasten.

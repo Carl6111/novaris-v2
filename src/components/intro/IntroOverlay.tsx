@@ -12,7 +12,7 @@ import "./intro-overlay.css";
  * people is a takeover that gets hated.
  */
 
-const SESSION_KEY = "novaris:intro-seen";
+const SESSION_KEY = "lunakris:intro-seen";
 
 /**
  * Ab wie viel gesehenem Film das Anmelde-Fenster von selbst aufgeht.
@@ -61,7 +61,7 @@ export default function IntroOverlay() {
     if (asked.current || gate.allowed) return;
     asked.current = true;
     close();
-    gate.open("Sie haben gesehen, was Novaris macht.");
+    gate.open("Sie haben gesehen, was Lunakris macht.");
   }, [close, gate]);
 
   const onProgress = useCallback(() => {
@@ -172,7 +172,7 @@ export default function IntroOverlay() {
           >
             {/* Kein h1 — die Seite dahinter bringt ihre eigene Überschrift mit. */}
             <motion.p id="intro-title" className="intro-title" {...rise(0.14)}>
-              Das ist <span className="intro-brand">Novaris</span>
+              Das ist <span className="intro-brand">Lunakris</span>
             </motion.p>
 
             <motion.p className="intro-sub" {...rise(0.2)}>
@@ -184,13 +184,13 @@ export default function IntroOverlay() {
               <video
                 ref={videoRef}
                 className="intro-video"
-                src="/videos/novaris-intro.mp4"
-                poster="/images/novaris-intro-poster.webp"
+                src="/videos/lunakris-intro.mp4"
+                poster="/images/lunakris-intro-poster.webp"
                 muted
                 controls
                 playsInline
                 preload="metadata"
-                aria-label="Novaris Demo-Film"
+                aria-label="Lunakris Demo-Film"
                 onPlay={() => setPlaying(true)}
                 onTimeUpdate={onProgress}
                 // Sicherheitsnetz: wer vorspult, ueberspringt die Schwelle.

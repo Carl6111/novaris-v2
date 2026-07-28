@@ -22,7 +22,7 @@ export default function Pilot() {
                 </span>
               </h2>
               <p className="pilot-text">
-                Novaris ist neu. Die ersten Systeme bauen wir mit ausgewählten Betrieben
+                Lunakris ist neu. Die ersten Systeme bauen wir mit ausgewählten Betrieben
                 zu Sonderkonditionen, im Austausch dokumentieren wir das Ergebnis offen
                 als Case-Study. Referenzen haben wir noch keine. Dafür bekommen Sie die
                 volle Aufmerksamkeit von dem, der es baut.

@@ -89,7 +89,7 @@ function readSetup(raw: string | null) {
   };
 }
 
-// Der Wizard sammelt Name, Firma und Zeitleck — dafuer will Novaris wissen,
+// Der Wizard sammelt Name, Firma und Zeitleck — dafuer will Lunakris wissen,
 // mit wem es spricht. Die erste Antwort oeffnet das Anmelde-Fenster.
 const GATE_REASON = "Ihr Gespräch buchen Sie mit einem Konto.";
 

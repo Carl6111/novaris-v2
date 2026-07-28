@@ -16,7 +16,7 @@ export const CLERK_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY as
 export const AUTH_READY = Boolean(CLERK_KEY);
 
 /**
- * Novaris ist dauerhaft dunkel (`<html class="dark">`), also muss das Clerk-
+ * Lunakris ist dauerhaft dunkel (`<html class="dark">`), also muss das Clerk-
  * Fenster es auch sein. Hex statt oklch, weil Clerk die Werte selbst
  * weiterrechnet und dabei nicht auf jede Farbsyntax vorbereitet ist.
  */

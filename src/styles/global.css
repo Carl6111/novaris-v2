@@ -37,7 +37,7 @@ body {
   z-index: 1;
 }
 
-/* mono eyebrow labels — "// Novaris" style */
+/* mono eyebrow labels — "// Lunakris" style */
 .eyebrow {
   font-family: var(--font-mono);
   font-size: 0.8rem;

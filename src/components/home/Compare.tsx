@@ -33,14 +33,14 @@ export default function Compare() {
               <h3>Neue Einstellung</h3>
             </div>
             <div className="compare-col compare-col--nova">
-              <h3>Novaris</h3>
+              <h3>Lunakris</h3>
             </div>
 
             {ROWS.map((r) => (
               <div key={r.label} className="compare-row">
                 <span className="compare-rowlabel">{r.label}</span>
                 <span className="compare-hire">{r.hire}</span>
-                {/* Nur die Novaris-Zelle ist eine Tilt-Card — ganze Zeilen würden
+                {/* Nur die Lunakris-Zelle ist eine Tilt-Card — ganze Zeilen würden
                     das Grid über display:contents sprengen (Wrapper = Grid-Item) */}
                 <TiltCard maxTilt={3} lift={false} className="compare-nova">
                   <span className="compare-check" aria-hidden="true">✓</span>

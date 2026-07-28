@@ -28,7 +28,7 @@ export default function TierSelector({ tier }: Props) {
   const gate = useAuthGate();
   const [sel, setSel] = useState<Selection>(EMPTY_SELECTION);
 
-  // Das Zusammenstellen ist der Kaufmoment — ab hier will Novaris wissen, mit
+  // Das Zusammenstellen ist der Kaufmoment — ab hier will Lunakris wissen, mit
   // wem es spricht. Die erste Auswahl oeffnet deshalb das Anmelde-Fenster und
   // wird erst uebernommen, wenn jemand angemeldet ist.
   const REASON = "Stellen Sie Ihr Setup mit einem Konto zusammen.";
