@@ -11,12 +11,17 @@ weitere `ui-dns.*`). Alle Klickwege unten sind deshalb IONOS-Klickwege.
 
 | | Stand |
 |---|---|
-| Domain gekauft | ✅ `lunakris.de`, aktiv seit 2023, DNS bei IONOS |
-| Apex zeigt auf | ⚠️ `217.160.0.244` — die IONOS-Parkseite |
-| `www` | ⚠️ existiert noch nicht |
-| In Vercel eingetragen | ✅ `lunakris.de` **und** `www.lunakris.de`, Projekt `novaris` |
-| Vercel-Konfiguration | ⚠️ „not configured" — wartet auf die DNS-Einträge unten |
-| Clerk Production | ❌ existiert noch nicht — **du musst `clerk deploy` ausführen** |
+| Domain gekauft | ✅ `lunakris.de`, DNS bei IONOS |
+| Apex `A @` | ✅ `76.76.21.21` |
+| `www` `A` | ✅ `76.76.21.21`, Zertifikat ausgestellt |
+| AAAA (Parkseite, IPv6) | ✅ von IONOS mit deaktiviert |
+| E-Mail (MX, SPF, DKIM, DMARC) | ✅ unberührt |
+| In Vercel eingetragen | ✅ Apex + `www`, Projekt `novaris` |
+| Seite live | ✅ Lunakris-Stand ausgeliefert, kein „Novaris" mehr im HTML |
+| Clerk Production | ❌ fehlt — **du musst `clerk deploy` ausführen** (Schritt 2) |
+| Anmeldung auf lunakris.de | ⏸️ schläft, bis der Production-Key gesetzt ist (Schritt 4) |
+
+**Schritt 1 ist damit erledigt.** Offen sind Schritt 2 bis 4.
 
 ---
 
