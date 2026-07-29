@@ -19,22 +19,18 @@ export default function Datenschutz() {
         <h2>2. Erhebung und Verarbeitung von Daten</h2>
         <p>
           Diese Website erhebt personenbezogene Daten nur, wenn Sie sie uns aktiv
-          mitteilen. Das passiert an vier Stellen:
+          mitteilen. Das passiert an zwei Stellen:
         </p>
         <ul>
           <li>
-            Buchungsformular auf <em>/kontakt</em> — Name, Firma, E-Mail und Ihre
-            Angaben zum Anliegen
+            <strong>Buchungsformular auf <em>/kontakt</em></strong> — Name, Firma,
+            E-Mail, Teamgröße, Ihre Angaben zum Anliegen sowie die auf{" "}
+            <em>/preise</em> getroffene Auswahl, falls Sie von dort kommen
           </li>
           <li>
-            Kurzformular am Ende des Demo-Films auf der Startseite — nur E-Mail
-          </li>
-          <li>
-            Kurzformular auf <em>/preise</em>, sobald Sie eine Auswahl getroffen
-            haben — E-Mail und die von Ihnen gewählte Zusammenstellung
-          </li>
-          <li>
-            Zugangsanfrage auf <em>/login</em> — nur E-Mail
+            <strong>Anmeldung und Registrierung</strong> — Vor- und Nachname sowie
+            E-Mail-Adresse. Melden Sie sich mit Google an, übermittelt Google
+            zusätzlich Ihr Profilbild und Ihre bestätigte Adresse.
           </li>
         </ul>
         <p>
@@ -42,14 +38,28 @@ export default function Datenschutz() {
           Art. 6 Abs. 1 lit. b DSGVO.
         </p>
 
-        <h2>3. Formular &amp; Terminbuchung</h2>
+        <h2>3. Speicherung, Formular &amp; Terminbuchung</h2>
         <p>
-          Alle vier Formulare werden über
+          Die Angaben aus dem Buchungsformular werden <strong>gespeichert</strong>,
+          nicht nur per E-Mail weitergeleitet. Sie liegen in einer Datenbank bei
+          Supabase (Rechenzentrum Frankfurt am Main, Region EU) und sind
+          ausschließlich für uns zugänglich. Wir bewahren sie so lange auf, wie
+          das Anliegen bearbeitet wird, und löschen sie danach spätestens nach{" "}
+          <span className="placeholder">[PLATZHALTER: Frist, z. B. 24 Monate]</span>.
+        </p>
+        <p>
+          Zusätzlich benachrichtigt uns
           <span className="placeholder"> [PLATZHALTER: Dienst, z. B. Web3Forms] </span>
-          verarbeitet und per E-Mail an uns übermittelt. Für die Terminvereinbarung
-          nutzen wir
+          per E-Mail über neue Anfragen. Die Anmeldung läuft über
+          <span className="placeholder"> [PLATZHALTER: Clerk Inc.] </span>, für die
+          Terminvereinbarung nutzen wir
           <span className="placeholder"> [PLATZHALTER: z. B. Calendly] </span>.
           Details siehe deren Datenschutzhinweise.
+        </p>
+        <p>
+          Sie können jederzeit Auskunft über die zu Ihnen gespeicherten Daten
+          verlangen und ihre Löschung fordern. Eine formlose Nachricht an die oben
+          genannte Adresse genügt.
         </p>
 
         <h2>4. Hosting</h2>

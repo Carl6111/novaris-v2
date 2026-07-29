@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import MagneticButton from "../ui/MagneticButton";
@@ -71,7 +71,11 @@ type Answers = Record<string, string | string[]>;
 /**
  * `?setup=pulsar,calls,calls-crm` — die Auswahl aus der Preise-Seite.
  * Sie befüllt den ersten Schritt vor, damit niemand zweimal dieselbe Frage
- * beantwortet, und geht als eigenes Feld mit in die Mail.
+ * beantwortet.
+ *
+ * Zurück kommt beides: der lesbare Satz für Anzeige und Mail, **und** die
+ * Struktur. Vorher ging nur der Satz mit — in der Datenbank stand danach
+ * „Pulsar: Anrufe · CRM-Anbindung" und nichts, wonach man filtern könnte.
  */
 function readSetup(raw: string | null) {
   if (!raw) return null;
@@ -79,12 +83,18 @@ function readSetup(raw: string | null) {
   if (!isTierId(tierId)) return null;
 
   const base = baseId ? PROBLEMS_BY_ID.get(baseId) : undefined;
+  const gueltigeAddons = base
+    ? addonIds.filter((id) => base.addons.some((a) => a.id === id))
+    : [];
 
   return {
+    tierId,
+    baseId: base ? baseId : null,
+    addonIds: gueltigeAddons,
     baseLabel: base?.label ?? null,
     summary: describeSelection(tierId, {
       baseId: base ? baseId : null,
-      addonIds,
+      addonIds: gueltigeAddons,
     }).join(" · "),
   };
 }
@@ -110,6 +120,7 @@ export default function BookingWizard() {
     return seeded;
   });
   const [status, setStatus] = useState<"idle" | "sending" | "done" | "error">("idle");
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const current = STEPS[step];
   const total = STEPS.length;
@@ -145,20 +156,30 @@ export default function BookingWizard() {
     return true;
   };
 
+  // Eigener Riegel neben `status`: React fasst Zustandsänderungen zusammen,
+  // zwei Enter-Anschläge im selben Tick sähen beide noch "idle". Mit Datenbank
+  // wären das zwei Datensätze statt zweier Mails.
+  const sending = useRef(false);
+
   const submit = async () => {
+    if (sending.current) return;
+    sending.current = true;
     setStatus("sending");
     const result = await submitLead({
-      subject: `Neue Buchungsanfrage — ${answers.name || "—"}`,
-      quelle: "wizard",
       name: String(answers.name ?? ""),
       email: String(answers.email ?? ""),
       firma: String(answers.company ?? ""),
-      thema: Array.isArray(answers.topic) ? answers.topic.join(", ") : "",
+      thema: Array.isArray(answers.topic) ? answers.topic : [],
       teamgroesse: String(answers.team ?? ""),
       zeitleck: String(answers.leak ?? ""),
-      setup: setup?.summary ?? "",
+      tier: setup?.tierId ?? null,
+      baseId: setup?.baseId ?? null,
+      addonIds: setup?.addonIds ?? [],
+      setupText: setup?.summary ?? "",
     });
+    sending.current = false;
     setStatus(result === "ok" ? "done" : "error");
+    if (result === "error") inputRef.current?.focus();
   };
 
   const onLast = step === total - 1;
@@ -166,7 +187,12 @@ export default function BookingWizard() {
   if (status === "done") {
     return (
       <div className="wizard wizard--done">
-        <div className="wizard-check" aria-hidden="true">✓</div>
+        {/* Gezeichnet statt eingeblendet: die Linie laeuft in die Richtung,
+            in die man einen Haken selbst zoege. Einmal, 400ms. */}
+        <svg className="wizard-check" viewBox="0 0 52 52" aria-hidden="true">
+          <circle cx="26" cy="26" r="24" />
+          <path d="M15 27 l8 8 l15 -16" />
+        </svg>
         <h3>Angekommen.</h3>
         <p>Der Termin-Link liegt gleich in Ihrem Postfach.</p>
         {CALENDLY_URL && (
@@ -220,8 +246,18 @@ export default function BookingWizard() {
 
           {current.type === "text" ? (
             <input
+              ref={inputRef}
               className="wizard-input"
               type={current.input === "email" ? "email" : "text"}
+              autoComplete={
+                current.input === "email"
+                  ? "email"
+                  : current.id === "name"
+                    ? "name"
+                    : current.id === "company"
+                      ? "organization"
+                      : "off"
+              }
               placeholder={current.placeholder}
               value={(answers[current.id] as string) ?? ""}
               onChange={(e) => {
@@ -231,7 +267,11 @@ export default function BookingWizard() {
                 setAnswer(current.id, e.target.value);
               }}
               onKeyDown={(e) => {
-                if (e.key !== "Enter" || !canAdvance()) return;
+                // `status` muss hier mit rein: sonst schickt jeder weitere
+                // Enter-Anschlag waehrend des Sendens noch einen Datensatz.
+                if (e.key !== "Enter" || !canAdvance() || status === "sending") {
+                  return;
+                }
                 if (onLast) void submit();
                 else go(step + 1);
               }}
@@ -274,24 +314,45 @@ export default function BookingWizard() {
             {(current.type !== "single" || onLast) && (
               <MagneticButton
                 type="button"
-                className={`wizard-next ${!canAdvance() ? "is-disabled" : ""}`}
+                // `is-disabled` deckte vorher nur !canAdvance() ab — der Knopf
+                // sah waehrend des Sendens aktiv aus, war es aber nicht.
+                className={`wizard-next ${
+                  !canAdvance() || status === "sending" ? "is-disabled" : ""
+                }`}
                 disabled={!canAdvance() || status === "sending"}
+                aria-busy={status === "sending"}
                 onClick={() => {
                   if (onLast) void submit();
                   else go(step + 1);
                 }}
               >
+                {status === "sending" && (
+                  <span className="wizard-spinner" aria-hidden="true" />
+                )}
                 {onLast ? (status === "sending" ? "Senden…" : "Absenden") : "Weiter"}
               </MagneticButton>
             )}
           </div>
 
           {status === "error" && (
-            <p className="wizard-error" role="alert">
-              Das Formular kam nicht durch. Schreiben Sie uns direkt an{" "}
-              <a href={`mailto:${FALLBACK_EMAIL}`}>{FALLBACK_EMAIL}</a>. Ihre
-              Angaben stehen noch oben, sie gehen nicht verloren.
-            </p>
+            <div className="wizard-error" role="alert">
+              <p>
+                Das Formular kam nicht durch. Ihre Angaben stehen noch oben, sie
+                gehen nicht verloren.
+              </p>
+              <div className="wizard-error-actions">
+                <button
+                  type="button"
+                  className="wizard-retry"
+                  onClick={() => void submit()}
+                >
+                  Nochmal senden
+                </button>
+                <a href={`mailto:${FALLBACK_EMAIL}`}>
+                  Oder direkt an {FALLBACK_EMAIL}
+                </a>
+              </div>
+            </div>
           )}
         </motion.div>
       </AnimatePresence>

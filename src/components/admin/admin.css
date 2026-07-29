@@ -1,0 +1,576 @@
+/* Der interne Posteingang. Wird gescannt, nicht gelesen — deshalb liegt die
+   Sorgfalt hier auf Informationsdichte und Zustand, nicht auf Typografie.
+
+   Die Statusfarben sind bewusst eigene Werte und nicht das Markenrot: Rot ist
+   auf dieser Seite der Akzent, nicht die Bedeutung. Alle liegen ueber 70%
+   Helligkeit und damit sicher ueber 4.5:1 auf dem dunklen Kartengrund. */
+.adm {
+  --st-neu: oklch(0.74 0.13 235);
+  --st-kontaktiert: oklch(0.79 0.14 75);
+  --st-gespraech: oklch(0.74 0.15 300);
+  --st-kunde: oklch(0.77 0.15 152);
+  --st-abgesagt: oklch(0.68 0.02 260);
+
+  padding-block: clamp(2rem, 1rem + 3vw, 3.5rem) clamp(4rem, 3rem + 5vw, 7rem);
+}
+
+.adm-state {
+  padding: clamp(4rem, 3rem + 6vw, 9rem) 1.5rem;
+  text-align: center;
+  color: var(--muted-foreground);
+}
+
+.adm-state a {
+  color: var(--primary);
+}
+
+/* Zahlen mit gleicher Ziffernbreite, sonst wackeln sie beim Aktualisieren. */
+.adm-num {
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- Kopfzahlen: erst die Summe, dann die Details --- */
+
+.adm-zahlen {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(1.5rem, 1rem + 3vw, 3.5rem);
+  padding-bottom: 1.6rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.adm-zahlen p {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.adm-zahl {
+  font-family: var(--font-display, var(--font-sans));
+  font-size: clamp(1.8rem, 1.4rem + 1.4vw, 2.6rem);
+  font-weight: 740;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.adm-zahl-label {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+/* --- Werkzeugleiste --- */
+
+.adm-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.8rem 1.2rem;
+  padding-block: 1.2rem;
+}
+
+.adm-suchfeld input,
+.adm-datum {
+  min-height: 44px;
+  padding: 0.5rem 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font: inherit;
+  font-size: 0.9rem;
+  color: var(--foreground);
+  background: color-mix(in oklab, var(--card) 70%, transparent);
+}
+
+.adm-suchfeld input {
+  width: min(22rem, 60vw);
+}
+
+.adm-suchfeld input:focus-visible,
+.adm-datum:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.adm-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.adm-rechts {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-left: auto;
+}
+
+/* --- Status-Chips: Farbe UND Text, nie nur Farbe --- */
+
+.adm-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 34px;
+  padding: 0.3rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--muted-foreground);
+  background: none;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition:
+    background-color 200ms ease-out,
+    border-color 200ms ease-out,
+    color 200ms ease-out;
+}
+
+/* Der Punkt traegt die Farbe, der Text die Bedeutung. */
+.adm-chip--neu::before,
+.adm-chip--kontaktiert::before,
+.adm-chip--gespraech::before,
+.adm-chip--kunde::before,
+.adm-chip--abgesagt::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--st, var(--muted-foreground));
+}
+
+.adm-chip--neu { --st: var(--st-neu); }
+.adm-chip--kontaktiert { --st: var(--st-kontaktiert); }
+.adm-chip--gespraech { --st: var(--st-gespraech); }
+.adm-chip--kunde { --st: var(--st-kunde); }
+.adm-chip--abgesagt { --st: var(--st-abgesagt); }
+
+.adm-chip:hover,
+.adm-chip:focus-visible {
+  color: var(--foreground);
+  border-color: color-mix(in oklab, var(--st, var(--primary)) 55%, transparent);
+}
+
+.adm-chip.is-on {
+  color: var(--st, var(--foreground));
+  border-color: color-mix(in oklab, var(--st, var(--primary)) 60%, transparent);
+  background: color-mix(in oklab, var(--st, var(--primary)) 14%, transparent);
+}
+
+.adm-chip:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+span.adm-chip {
+  cursor: default;
+}
+
+.adm-export,
+.adm-close,
+.adm-save,
+.adm-fehler button {
+  min-height: 44px;
+  padding: 0.5rem 1.1rem;
+  border: 1px solid color-mix(in oklab, var(--primary) 45%, var(--border));
+  border-radius: 999px;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--foreground);
+  background: color-mix(in oklab, var(--primary) 10%, transparent);
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: background-color 200ms ease-out;
+}
+
+.adm-export:hover,
+.adm-close:hover,
+.adm-save:hover:not(:disabled),
+.adm-fehler button:hover {
+  background: color-mix(in oklab, var(--primary) 20%, transparent);
+}
+
+.adm-save:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* --- Liste und Detail nebeneinander --- */
+
+.adm-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.4rem;
+  align-items: start;
+}
+
+@media (min-width: 1100px) {
+  .adm-split {
+    grid-template-columns: minmax(0, 1fr) 22rem;
+  }
+}
+
+/* --- Tabelle (ab 760px) --- */
+
+.adm-table {
+  display: none;
+}
+
+@media (min-width: 760px) {
+  .adm-table {
+    display: table;
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+  }
+
+  .adm-cards {
+    display: none;
+  }
+}
+
+.adm-table th {
+  padding: 0.55rem 0.7rem;
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+.adm-table th button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0.35rem 0;
+  cursor: pointer;
+}
+
+.adm-table th button:hover,
+.adm-table th button:focus-visible {
+  color: var(--foreground);
+}
+
+.adm-sort {
+  color: var(--primary);
+}
+
+.adm-table tbody tr {
+  cursor: pointer;
+  border-bottom: 1px solid color-mix(in oklab, var(--border) 55%, transparent);
+  transition: background-color 180ms ease-out;
+}
+
+.adm-table tbody tr:hover,
+.adm-table tbody tr.is-open {
+  background: color-mix(in oklab, var(--card) 80%, transparent);
+}
+
+.adm-table td {
+  padding: 0.7rem;
+  vertical-align: middle;
+  color: var(--muted-foreground);
+}
+
+.adm-rowbtn {
+  font: inherit;
+  font-weight: 600;
+  color: var(--foreground);
+  background: none;
+  border: 0;
+  padding: 0;
+  text-align: left;
+  cursor: pointer;
+}
+
+.adm-rowbtn:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+}
+
+.adm-thema {
+  max-width: 20rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* --- Karten (unter 760px) --- */
+
+.adm-cards {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.adm-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  width: 100%;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) * 1.5);
+  background: color-mix(in oklab, var(--card) 70%, transparent);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition:
+    border-color 200ms ease-out,
+    scale 120ms ease-out;
+}
+
+.adm-card:active {
+  scale: 0.99;
+}
+
+.adm-card.is-open {
+  border-color: color-mix(in oklab, var(--primary) 55%, transparent);
+}
+
+.adm-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+}
+
+.adm-card-name {
+  font-weight: 650;
+  color: var(--foreground);
+}
+
+.adm-card-firma {
+  font-size: 0.88rem;
+  color: var(--muted-foreground);
+}
+
+.adm-card-meta {
+  display: flex;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--muted-foreground);
+}
+
+/* --- Detail --- */
+
+.adm-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  padding: 1.3rem;
+  border: 1px solid color-mix(in oklab, var(--primary) 30%, var(--border));
+  border-radius: calc(var(--radius) * 2);
+  background: var(--card);
+}
+
+@media (min-width: 1100px) {
+  .adm-detail {
+    position: sticky;
+    top: 6rem;
+  }
+}
+
+.adm-detail-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.adm-detail-head h3 {
+  font-size: 1.3rem;
+  font-weight: 720;
+  letter-spacing: -0.02em;
+}
+
+.adm-detail-head h3:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 4px;
+}
+
+.adm-facts {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.adm-facts div {
+  display: grid;
+  grid-template-columns: 7.5rem minmax(0, 1fr);
+  gap: 0.6rem;
+  font-size: 0.85rem;
+}
+
+.adm-facts dt {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  padding-top: 0.15rem;
+}
+
+.adm-facts dd {
+  color: var(--foreground);
+  overflow-wrap: anywhere;
+}
+
+.adm-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  padding-top: 1rem;
+  border-top: 1px solid color-mix(in oklab, var(--border) 60%, transparent);
+}
+
+.adm-block h4,
+.adm-label {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+.adm-themen {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.adm-themen li {
+  padding: 0.25rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 0.78rem;
+  color: var(--foreground);
+}
+
+.adm-quote {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--foreground);
+  padding-left: 0.8rem;
+  border-left: 2px solid color-mix(in oklab, var(--primary) 55%, transparent);
+}
+
+.adm-status-set {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.adm-notiz {
+  width: 100%;
+  padding: 0.7rem 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) * 1.2);
+  font: inherit;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--foreground);
+  background: color-mix(in oklab, var(--background) 70%, transparent);
+  resize: vertical;
+}
+
+.adm-notiz:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.adm-save {
+  align-self: flex-start;
+}
+
+/* --- Leer, Laden, Fehler --- */
+
+.adm-leer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.7rem;
+  padding: clamp(2.5rem, 2rem + 4vw, 5rem) 0;
+  max-width: 46ch;
+}
+
+.adm-leer h2 {
+  font-size: 1.5rem;
+  font-weight: 720;
+  letter-spacing: -0.02em;
+}
+
+.adm-leer p {
+  color: var(--muted-foreground);
+  line-height: 1.6;
+}
+
+.adm-skelett {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.adm-skelett li {
+  height: 3.4rem;
+  border-radius: calc(var(--radius) * 1.5);
+  background: linear-gradient(
+    90deg,
+    color-mix(in oklab, var(--card) 60%, transparent),
+    color-mix(in oklab, var(--card) 95%, transparent),
+    color-mix(in oklab, var(--card) 60%, transparent)
+  );
+  background-size: 200% 100%;
+  animation: adm-shimmer 1.4s ease-in-out infinite;
+}
+
+@keyframes adm-shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+.adm-fehler {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 1rem;
+  font-size: 0.88rem;
+  color: var(--destructive);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .adm-chip,
+  .adm-card,
+  .adm-table tbody tr,
+  .adm-export,
+  .adm-close,
+  .adm-save {
+    transition: none;
+  }
+
+  .adm-card:active {
+    scale: 1;
+  }
+
+  .adm-skelett li {
+    animation: none;
+  }
+}

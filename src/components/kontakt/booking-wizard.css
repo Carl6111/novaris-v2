@@ -163,10 +163,60 @@
   pointer-events: none;
 }
 
+/* Kreisender Ring im Absenden-Knopf. Ohne ihn war "Senden…" die einzige
+   Rueckmeldung, und die sieht aus wie ein Knopf, der nichts tut. */
+.wizard-spinner {
+  flex: none;
+  width: 0.95em;
+  height: 0.95em;
+  margin-right: 0.55em;
+  border: 2px solid color-mix(in oklab, currentColor 30%, transparent);
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: wizard-spin 700ms linear infinite;
+}
+
+@keyframes wizard-spin {
+  to {
+    rotate: 360deg;
+  }
+}
+
 .wizard-error {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
   margin-top: 1rem;
   font-size: 0.85rem;
   color: var(--destructive);
+}
+
+.wizard-error-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+}
+
+/* Der erste Ausweg ist das Wiederholen, nicht die Mail — meistens war es die
+   Verbindung, nicht das Formular. */
+.wizard-retry {
+  min-height: 44px;
+  padding: 0.5rem 1.1rem;
+  border: 1px solid var(--destructive);
+  border-radius: 999px;
+  font: inherit;
+  font-weight: 600;
+  color: var(--foreground);
+  background: color-mix(in oklab, var(--destructive) 12%, transparent);
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: background-color 200ms ease-out;
+}
+
+.wizard-retry:hover,
+.wizard-retry:focus-visible {
+  background: color-mix(in oklab, var(--destructive) 22%, transparent);
 }
 
 .wizard-error a {
@@ -181,18 +231,37 @@
   gap: 0.4rem;
 }
 
+/* Der Haken wird gezeichnet, in der Richtung, in die man ihn selbst zoege.
+   Einmal, dann steht er. */
 .wizard-check {
-  display: grid;
-  place-items: center;
   width: 3.4rem;
   height: 3.4rem;
-  border-radius: 50%;
-  background: var(--primary);
-  color: var(--primary-foreground);
-  font-size: 1.5rem;
-  font-weight: 700;
   margin-bottom: 0.6rem;
-  box-shadow: 0 8px 30px color-mix(in oklab, var(--primary) 55%, transparent);
+  overflow: visible;
+  fill: none;
+  stroke: var(--primary);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 8px 24px color-mix(in oklab, var(--primary) 45%, transparent));
+}
+
+.wizard-check circle {
+  stroke-dasharray: 152;
+  stroke-dashoffset: 152;
+  animation: wizard-draw 400ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.wizard-check path {
+  stroke-dasharray: 40;
+  stroke-dashoffset: 40;
+  animation: wizard-draw 400ms cubic-bezier(0.16, 1, 0.3, 1) 260ms forwards;
+}
+
+@keyframes wizard-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
 }
 
 .wizard--done h3 {
@@ -250,4 +319,22 @@
   letter-spacing: 0.09em;
   text-transform: uppercase;
   color: var(--primary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Der Haken steht sofort — das Zeichnen ist Schmuck. */
+  .wizard-check circle,
+  .wizard-check path {
+    stroke-dashoffset: 0;
+    animation: none;
+  }
+
+  /* Der Spinner steht still — global.css schaltet jede Animation mit
+     !important ab, dagegen kaeme hier nichts an. Die Rueckmeldung traegt dann
+     die Beschriftung ("Senden…") und aria-busy. Der Ring bleibt sichtbar,
+     damit der Knopf nicht plötzlich anders aussieht. */
+
+  .wizard-retry {
+    transition: none;
+  }
 }

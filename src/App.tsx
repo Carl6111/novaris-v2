@@ -16,6 +16,7 @@ import Kontakt from "./pages/Kontakt";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Portal from "./pages/Portal";
+import Admin from "./pages/Admin";
 import Impressum from "./pages/Impressum";
 import Datenschutz from "./pages/Datenschutz";
 import Agb from "./pages/Agb";
@@ -53,6 +54,7 @@ function AnimatedRoutes() {
           <Route path="/login" element={<Login />} />
           <Route path="/registrieren" element={<Register />} />
           <Route path="/portal" element={<Portal />} />
+          <Route path="/admin" element={<Admin />} />
           <Route path="/impressum" element={<Impressum />} />
           <Route path="/datenschutz" element={<Datenschutz />} />
           <Route path="/agb" element={<Agb />} />
