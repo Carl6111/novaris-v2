@@ -119,7 +119,12 @@ export default function AuthGate({ open, title, onGuest }: Props) {
             </p>
 
             <div className="authgate-form">
-              <SignIn routing="hash" fallbackRedirectUrl="/portal" />
+              {/* `withSignUp`: dasselbe Fenster traegt Anmeldung UND
+                  Registrierung. Ohne das endet ein Google-Klick mit noch
+                  unbekanntem Konto in "The External Account was not found" —
+                  Clerk sucht dann nur nach einem bestehenden Konto, statt
+                  eines anzulegen. */}
+              <SignIn routing="hash" withSignUp fallbackRedirectUrl="/portal" />
             </div>
 
             {/* Der Ausweg. Immer sichtbar — ein Fenster, das niemanden

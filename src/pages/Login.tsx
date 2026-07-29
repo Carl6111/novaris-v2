@@ -31,7 +31,11 @@ export default function Login() {
       <section className="login">
         <div className="wrap login-inner">
           {AUTH_READY ? (
-            <SignIn routing="hash" signUpUrl="/login" fallbackRedirectUrl="/portal" />
+            {/* `withSignUp` statt eines eigenen signUpUrl: Anmeldung und
+                Registrierung laufen im selben Formular. Ein signUpUrl, das auf
+                diese Seite selbst zeigt, half niemandem — und ohne beides
+                scheiterte Google mit noch unbekanntem Konto. */}
+            <SignIn routing="hash" withSignUp fallbackRedirectUrl="/portal" />
           ) : (
             <p className="login-note" role="status">
               Die Anmeldung ist noch nicht eingerichtet. Bis dahin läuft alles
