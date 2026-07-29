@@ -44,7 +44,10 @@ export default function Login() {
           )}
 
           <p className="login-alt">
-            Noch kein Zugang? <Link to="/kontakt">Gespräch buchen →</Link>
+            Noch kein Konto? <Link to="/registrieren">Registrieren →</Link>
+          </p>
+          <p className="login-alt">
+            Lieber erst reden? <Link to="/kontakt">Gespräch buchen →</Link>
           </p>
         </div>
       </section>
