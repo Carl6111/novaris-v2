@@ -32,6 +32,22 @@ export default function Pricing() {
     return () => window.clearTimeout(id);
   }, [tierParam]);
 
+  // Am Handy stehen die Karten untereinander: die aufgeklappte Auswahl liegt
+  // sonst komplett unter der Falz. Am Desktop stehen alle drei nebeneinander,
+  // dort waere das Wegscrollen aufdringlich. Beim Schliessen wird nicht
+  // gescrollt — die Seite wird kuerzer, das ist bei einem Akkordeon richtig so.
+  const toggleTier = (id: TierId, isOpen: boolean) => {
+    setOpenTier(isOpen ? null : id);
+    if (isOpen || !window.matchMedia("(max-width: 900px)").matches) return;
+    const el = cardRefs.current[id];
+    if (!el) return;
+    const lenis = getLenis();
+    window.setTimeout(() => {
+      if (lenis) lenis.scrollTo(el, { offset: -90 });
+      else el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 120);
+  };
+
   return (
     <section id="preise" className="pricing">
       <div className="wrap">
@@ -94,7 +110,7 @@ export default function Pricing() {
                       className="price-toggle"
                       aria-expanded={open}
                       aria-controls={`tier-panel-${t.id}`}
-                      onClick={() => setOpenTier(open ? null : t.id)}
+                      onClick={() => toggleTier(t.id, open)}
                     >
                       <span>
                         {open

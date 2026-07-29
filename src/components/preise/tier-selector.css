@@ -38,10 +38,14 @@
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  /* 8px ist die Untergrenze fuer nebeneinanderliegende Touch-Ziele. Vorher
+     standen hier 0.4rem = 6.4px — knapp darunter. */
+  gap: 0.5rem;
 }
 
-/* Eine Zeile = eine Entscheidung. Marke links, Problem groß, Modul klein. */
+/* Eine Zeile = eine Entscheidung. Marke links, Problem groß, Modul klein.
+   Der Rand ist bewusst schon im Ruhezustand sichtbar: eine Zeile, die aussieht
+   wie Text, wird nicht angetippt. */
 .tsel-opt {
   position: relative;
   display: flex;
@@ -49,13 +53,23 @@
   gap: 0.75rem;
   min-height: 44px;
   padding: 0.65rem 0.8rem;
-  border: 1px solid transparent;
+  border: 1px solid color-mix(in oklab, var(--border) 65%, transparent);
   border-radius: calc(var(--radius) * 1.5);
-  background: color-mix(in oklab, var(--card) 45%, transparent);
+  background: color-mix(in oklab, var(--card) 70%, transparent);
   cursor: pointer;
+  /* Nimmt die 300ms Tap-Verzoegerung raus, die Mobile-Browser sonst abwarten,
+     um auf einen Doppeltipp zu pruefen. */
+  touch-action: manipulation;
   transition:
     background-color 220ms ease-out,
-    border-color 220ms ease-out;
+    border-color 220ms ease-out,
+    scale 120ms ease-out;
+}
+
+/* Druck-Rueckmeldung. Nur scale — jede Groessenaenderung ueber Layout-Werte
+   wuerde die Nachbarzeilen verschieben. */
+.tsel-opt:active {
+  scale: 0.985;
 }
 
 .tsel-opt input {
@@ -74,6 +88,25 @@
 .tsel-opt:has(input:checked) {
   background: color-mix(in oklab, var(--primary) 11%, transparent);
   border-color: color-mix(in oklab, var(--primary) 50%, transparent);
+}
+
+/* Akzentbalken links: der gewaehlte Zustand ist damit auch im Augenwinkel
+   lesbar, nicht nur an der gefuellten Marke. */
+.tsel-opt::before {
+  content: "";
+  position: absolute;
+  left: -1px;
+  top: 50%;
+  width: 3px;
+  height: 0;
+  border-radius: 0 3px 3px 0;
+  background: var(--primary);
+  translate: 0 -50%;
+  transition: height 240ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.tsel-opt:has(input:checked)::before {
+  height: 58%;
 }
 
 .tsel-opt:has(input:focus-visible) {
@@ -151,8 +184,13 @@
 }
 
 .tsel-opt--blocked:hover {
-  background: color-mix(in oklab, var(--card) 45%, transparent);
-  border-color: transparent;
+  background: color-mix(in oklab, var(--card) 70%, transparent);
+  border-color: color-mix(in oklab, var(--border) 65%, transparent);
+}
+
+.tsel-opt--blocked:active,
+.tsel-opt--locked:active {
+  scale: 1;
 }
 
 /* Gesperrt, weil ein anderer Kern nötig wäre — steht bewusst da statt zu fehlen */
@@ -193,6 +231,21 @@
   color: var(--muted-foreground);
 }
 
+/* Beim Aufklappen laufen die Zeilen nacheinander ein. Bewegung fuehrt den
+   Blick — das ist der Grund, warum hier ueberhaupt animiert wird, nicht
+   Dekoration. 40ms Versatz, nach der letzten Zeile ist alles nach 240ms da. */
+@keyframes tsel-row-in {
+  from {
+    opacity: 0;
+    translate: 0 8px;
+  }
+}
+
+.tsel-list li {
+  animation: tsel-row-in 320ms cubic-bezier(0.16, 1, 0.3, 1) backwards;
+  animation-delay: calc(var(--i, 0) * 40ms);
+}
+
 /* --- Fuß: Abschluss --- */
 
 .tsel-foot {
@@ -202,6 +255,28 @@
   gap: 1rem;
   padding-top: 1.1rem;
   border-top: 1px solid color-mix(in oklab, var(--border) 70%, transparent);
+}
+
+/* Was mitgeht, bevor man klickt. */
+.tsel-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  width: 100%;
+}
+
+.tsel-summary-label {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+.tsel-summary-text {
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: var(--foreground);
 }
 
 /* --- Quasar: keine Auswahl, nur was im Gespräch passiert --- */
@@ -249,8 +324,17 @@
 
 @media (prefers-reduced-motion: reduce) {
   .tsel-opt,
+  .tsel-opt::before,
   .tsel-mark,
   .tsel-mark::after {
     transition: none;
+  }
+
+  .tsel-opt:active {
+    scale: 1;
+  }
+
+  .tsel-list li {
+    animation: none;
   }
 }

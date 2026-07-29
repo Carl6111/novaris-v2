@@ -185,12 +185,6 @@
   overflow: hidden;
 }
 
-/* Offen wird die Karte zum Formular: das Bild schrumpft, damit die Auswahl
-   nicht unter die Falz rutscht. */
-.price-card--open .price-visual {
-  aspect-ratio: 16 / 6;
-}
-
 @media (max-width: 900px) {
   .pricing-grid {
     grid-template-columns: 1fr;
@@ -199,9 +193,28 @@
   }
 }
 
+/* Offen wird die Karte zum Formular: das Bild schrumpft, damit die Auswahl
+   nicht unter die Falz rutscht.
+
+   Erst ab 901px. Am Handy ist die Karte volle Breite, dort waren das 130-200px,
+   die beim Schliessen SOFORT wieder auftauchen — oberhalb des Knopfes, waehrend
+   das Panel darunter noch 380ms zusammenfaehrt. Der Knopf wandert damit unter
+   dem Finger weg. Am Handy uebernimmt stattdessen der Scroll beim Oeffnen
+   (Pricing.tsx), damit die Auswahl trotzdem im Blick landet. */
+@media (min-width: 901px) {
+  .price-visual {
+    transition: aspect-ratio 380ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .price-card--open .price-visual {
+    aspect-ratio: 16 / 6;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .price-toggle,
   .price-toggle-chevron,
+  .price-visual,
   .price-visual img {
     transition: none;
   }

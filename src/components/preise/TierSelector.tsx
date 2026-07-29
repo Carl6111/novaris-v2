@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, type CSSProperties } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import MagneticButton from "../ui/MagneticButton";
 import { useAuthGate } from "../auth/authGateContext";
@@ -7,6 +7,7 @@ import {
   PROBLEMS,
   PROBLEMS_BY_ID,
   QUASAR_STEPS,
+  describeSelection,
   encodeSelection,
   lockedAddonsFor,
   type Selection,
@@ -93,8 +94,9 @@ export default function TierSelector({ tier }: Props) {
           <span className="tsel-count">genau 1</span>
         </legend>
         <ul className="tsel-list">
-          {PROBLEMS.map((p) => (
-            <li key={p.id}>
+          {PROBLEMS.map((p, i) => (
+            // `--i` treibt den gestaffelten Einzug in der CSS-Animation.
+            <li key={p.id} style={{ "--i": i } as CSSProperties}>
               <label className="tsel-opt">
                 <input
                   type="radio"
@@ -130,11 +132,11 @@ export default function TierSelector({ tier }: Props) {
             </legend>
 
             <ul className="tsel-list">
-              {base.addons.map((a) => {
+              {base.addons.map((a, i) => {
                 const checked = sel.addonIds.includes(a.id);
                 const blocked = !checked && addonLimitReached;
                 return (
-                  <li key={a.id}>
+                  <li key={a.id} style={{ "--i": i } as CSSProperties}>
                     <label
                       className={`tsel-opt${blocked ? " tsel-opt--blocked" : ""}`}
                     >
@@ -156,8 +158,11 @@ export default function TierSelector({ tier }: Props) {
 
               {/* Gesperrt und trotzdem sichtbar: zeigt, dass die Bausteine
                   aufeinander aufbauen statt frei kombinierbar zu sein. */}
-              {locked.map(({ addon, requires }) => (
-                <li key={addon.id}>
+              {locked.map(({ addon, requires }, i) => (
+                <li
+                  key={addon.id}
+                  style={{ "--i": base.addons.length + i } as CSSProperties}
+                >
                   <span className="tsel-opt tsel-opt--locked" aria-disabled="true">
                     <span className="tsel-mark tsel-mark--locked" aria-hidden="true">
                       <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -179,13 +184,38 @@ export default function TierSelector({ tier }: Props) {
         )}
       </AnimatePresence>
 
-      <div className="tsel-foot">
+      {/* Der Knopf hiess frueher "Formular abschicken" und war doch nur ein
+          Link — abgeschickt wird erst am Ende des Wizards. Darueber steht
+          jetzt, was mitgeht: man sieht seine Auswahl, bevor man klickt. */}
+      <AnimatePresence initial={false}>
         {sel.baseId && (
-          <MagneticButton to={`/kontakt?setup=${encodeSelection(tier.id, sel)}`}>
-            Formular abschicken
-          </MagneticButton>
+          <motion.div
+            className="tsel-foot"
+            key="foot"
+            initial={reduced ? { opacity: 0 } : { opacity: 0, y: 12 }}
+            animate={
+              reduced
+                ? { opacity: 1 }
+                : {
+                    opacity: 1,
+                    y: 0,
+                    transition: { type: "spring", stiffness: 320, damping: 26 },
+                  }
+            }
+            exit={{ opacity: 0, transition: { duration: 0.18 } }}
+          >
+            <p className="tsel-summary">
+              <span className="tsel-summary-label">Das nehmen Sie mit</span>
+              <span className="tsel-summary-text">
+                {describeSelection(tier.id, sel).join(" · ")}
+              </span>
+            </p>
+            <MagneticButton to={`/kontakt?setup=${encodeSelection(tier.id, sel)}`}>
+              Weiter zum Gespräch →
+            </MagneticButton>
+          </motion.div>
         )}
-      </div>
+      </AnimatePresence>
     </div>
   );
 }
