@@ -106,19 +106,54 @@ Clerk prüft selbstständig nach und schaltet dann frei.
 
 ---
 
-## Schritt 3 — Eigene Google-Zugangsdaten
+## Schritt 3 — Eigene Google-Zugangsdaten (optional)
 
-In der Entwicklungs-Instanz nutzt Clerk geteilte Google-Zugangsdaten. In
-Production geht das nicht mehr — und der Google-Zustimmungsdialog soll
-„Lunakris" sagen, nicht „Clerk".
+**Stand: Google ist auf der Production-Instanz abgeschaltet.** In der
+Entwicklungs-Instanz lief er über Clerks geteilte Zugangsdaten; die sind in
+Production gesperrt. Der Knopf war kurz live und lief in
+`Error 400: invalid_request — Missing required parameter: client_id`.
+Deshalb aus. E-Mail+Passwort und Magic Link laufen unabhängig davon.
 
-1. [console.cloud.google.com](https://console.cloud.google.com) → Projekt anlegen (Name: `Lunakris`)
-2. **APIs & Dienste → OAuth-Zustimmungsbildschirm** → Extern → App-Name `Lunakris`, Support-Mail eintragen
-3. **Anmeldedaten → Anmeldedaten erstellen → OAuth-Client-ID** → Webanwendung
-4. Bei **Autorisierte Weiterleitungs-URIs** den Wert eintragen, den Clerk im
-   Dashboard unter *SSO Connections → Google* anzeigt (etwa
-   `https://clerk.lunakris.de/v1/oauth_callback`)
-5. Client-ID und Client-Secret zurück ins Clerk-Dashboard bei Google eintragen
+### Der wichtigste Punkt zuerst: Freigabestatus
+
+Aus [Clerks Doku](https://clerk.com/docs/guides/configure/auth-strategies/social-connections/google):
+
+> *„To switch a Google OAuth app to production, you must set the publishing
+> status to **In production**. This involves a verification process."*
+
+Neue Google-Apps stehen auf **„Testing"** — begrenzt auf **100 Testnutzer**,
+die einzeln eingetragen werden. Für „In production" prüft Google App-Name,
+Logo und Scopes; das dauert.
+
+**Für den Anfang reicht „Testing".** Pilotkunden als Testnutzer eintragen,
+fertig. Die Verifizierung braucht es erst, wenn Fremde sich selbst anmelden.
+
+### Ablauf
+
+1. **Zuerst die URI holen:** Clerk-Dashboard → **SSO connections** →
+   *Add connection* → *For all users* → **Google**. Dort steht die
+   **Authorized Redirect URI**. Kopieren — nicht selbst zusammenbauen.
+2. [console.cloud.google.com](https://console.cloud.google.com) → Projekt `Lunakris` anlegen
+3. **APIs & Dienste → OAuth-Zustimmungsbildschirm** → Nutzertyp **Extern**,
+   App-Name `Lunakris`, Support- und Entwicklerkontakt eintragen
+4. **Anmeldedaten → Anmeldedaten erstellen → OAuth-Client-ID** →
+   Anwendungstyp **Webanwendung**
+   - **Autorisierte JavaScript-Quellen:** `https://lunakris.de` und
+     `http://localhost:5173`
+   - **Autorisierte Weiterleitungs-URIs:** der Wert aus Schritt 1
+5. **Client-ID** und **Client-Secret** zurück ins Clerk-Dashboard bei Google
+   unter *Use custom credentials* → **Save**. Das schaltet Google zugleich
+   wieder ein.
+
+### Fallen
+
+- **Client-Secret ist nur einmal sichtbar.** Sofort kopieren. Es gehört ins
+  Clerk-Dashboard, **nicht** in dieses Projekt.
+- **Kein WebView:** *„Google OAuth 2.0 does not allow apps to use WebViews for
+  authentication."* Betrifft In-App-Browser, etwa Links aus Instagram oder
+  LinkedIn — dort schlägt Google-Anmeldung fehl, E-Mail+Passwort nicht.
+- **E-Mail-Subadressen** mit `+`, `=` oder `#` blockiert Clerk standardmäßig
+  (`block_email_subaddresses`). Beim Testen mit `name+test@…` also normal.
 
 ---
 
