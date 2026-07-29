@@ -2,7 +2,7 @@ import {
   PROBLEMS_BY_ID,
   isTierId,
   type TierId,
-} from "../../src/data/setups";
+} from "../../src/data/setups.js";
 
 /**
  * Form und Pruefung eines Leads.

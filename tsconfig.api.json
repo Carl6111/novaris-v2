@@ -6,10 +6,12 @@
     "types": ["node"],
     "skipLibCheck": true,
 
-    /* Vercel buendelt die Funktionen mit esbuild — also dieselbe Aufloesung
-       wie dort, damit `../_lib/db.js` hier genauso zeigt wie im Betrieb. */
-    "module": "esnext",
-    "moduleResolution": "bundler",
+    /* Muss zu dem passen, womit Vercel die Funktionen uebersetzt: nodenext.
+       Mit "bundler" waren extensionslose Importe hier gruen und bei Vercel
+       rot (TS2835), und die Funktion stuerzte im Betrieb ab. Relative Importe
+       brauchen deshalb die .js-Endung, auch wenn die Datei .ts heisst. */
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
     "verbatimModuleSyntax": true,
     "moduleDetection": "force",
     "noEmit": true,

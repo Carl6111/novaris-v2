@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { db, LEADS } from "../_lib/db";
-import { requireAdmin } from "../_lib/auth";
-import { isStatus } from "../_lib/lead";
+import { db, LEADS } from "../_lib/db.js";
+import { requireAdmin } from "../_lib/auth.js";
+import { isStatus, type Status } from "../_lib/lead.js";
 
 /**
  * `PATCH /api/leads/:id` — nur Admin. Aendert Status und Notiz, sonst nichts.
@@ -27,13 +27,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     const body = (req.body ?? {}) as Record<string, unknown>;
-    const aenderung: { status?: string; notiz?: string | null } = {};
+    const aenderung: { status?: Status; notiz?: string | null } = {};
 
+    // Erst in eine lokale Konstante, dann pruefen. Die Verengung eines
+    // Zugriffs auf eine Index-Signatur (`body.status`) haelt nicht ueber die
+    // Zuweisung hinweg — lokal war das gruen, bei Vercel rot (TS2322).
     if ("status" in body) {
-      if (!isStatus(body.status)) {
+      const wert = body.status;
+      if (!isStatus(wert)) {
         return res.status(400).json({ error: "Status ungültig" });
       }
-      aenderung.status = body.status;
+      aenderung.status = wert;
     }
 
     if ("notiz" in body) {

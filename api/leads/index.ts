@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { db, LEADS } from "../_lib/db";
-import { optionalUserId, requireAdmin } from "../_lib/auth";
-import { isSortable, isStatus, parseLead } from "../_lib/lead";
+import { db, LEADS } from "../_lib/db.js";
+import { optionalUserId, requireAdmin } from "../_lib/auth.js";
+import { isSortable, isStatus, parseLead } from "../_lib/lead.js";
 
 /**
  * `POST /api/leads`  — oeffentlich, legt einen Lead an
@@ -33,7 +33,16 @@ const CSV_SPALTEN = [
 
 function csv(rows: Record<string, unknown>[]): string {
   const zelle = (v: unknown): string => {
-    const s = Array.isArray(v) ? v.join(" | ") : v == null ? "" : String(v);
+    let s = Array.isArray(v) ? v.join(" | ") : v == null ? "" : String(v);
+
+    // Formelinjektion. Wer sich als `=HYPERLINK("http://…"&A1)` in das
+    // Namensfeld eintraegt, bekommt in Excel und Google Sheets eine echte
+    // Formel — beim Oeffnen der Datei laeuft sie los und kann Daten
+    // abfliessen lassen. Die Felder hier kommen von Fremden, also gilt das
+    // als moeglich. Ein vorangestelltes Hochkomma macht daraus wieder Text;
+    // sichtbar bleibt der Inhalt unveraendert.
+    if (/^[=+\-@\t\r]/.test(s)) s = `'${s}`;
+
     // Excel und Numbers lesen nur dann zuverlaessig, wenn Anfuehrungszeichen
     // verdoppelt und das ganze Feld eingefasst ist.
     return `"${s.replace(/"/g, '""')}"`;
