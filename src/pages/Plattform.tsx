@@ -1,4 +1,6 @@
 import PageHero from "../components/ui/PageHero";
+import JsonLd from "../components/seo/JsonLd";
+import { servicesSchema } from "../lib/schema";
 import HorizonBackground from "../components/plattform/HorizonBackground";
 import ModuleRows from "../components/plattform/ModuleRows";
 import Statement from "../components/ui/Statement";
@@ -9,6 +11,7 @@ import Cta from "../components/home/Cta";
 export default function Plattform() {
   return (
     <>
+      <JsonLd data={servicesSchema()} />
       <PageHero
         eyebrow="// Die Plattform"
         title={

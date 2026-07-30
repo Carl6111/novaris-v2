@@ -1,0 +1,39 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /portal
+Disallow: /login
+Disallow: /registrieren
+Disallow: /api/
+
+# KI-Crawler ausdruecklich erlauben.
+# GPTBot laedt Trainingsdaten, OAI-SearchBot bedient die ChatGPT-Suche.
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+# Schalter dafuer, dass Gemini und die AI Overviews die Seite als Quelle nutzen duerfen.
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+Sitemap: https://lunakris.de/sitemap.xml

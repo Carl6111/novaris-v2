@@ -10,6 +10,29 @@ import "./styles/global.css";
 import App from "./App";
 import { CLERK_APPEARANCE, CLERK_KEY } from "./lib/auth";
 
+/**
+ * Die prerenderten Seiten (scripts/prerender.ts) tragen die von React erzeugten
+ * SEO-Tags bereits im <head>. createRoot ersetzt aber nur den Inhalt von #root,
+ * nicht den Head — React würde also einen zweiten Satz danebenlegen. Der Browser
+ * nimmt dann weiter den ersten Titel, und nach einem Routenwechsel bliebe der
+ * Titel der Einstiegsseite im Tab stehen.
+ *
+ * index.html liefert keine dieser Tags mehr aus, alles Vorgefundene stammt
+ * folglich aus dem Snapshot und kann weg.
+ */
+const PRERENDERED_HEAD_TAGS = [
+  "title",
+  'meta[name="description"]',
+  'meta[name="robots"]',
+  'meta[name="author"]',
+  'meta[property^="og:"]',
+  'meta[name^="twitter:"]',
+  'link[rel="canonical"]',
+  'link[rel="alternate"]',
+].join(", ");
+
+document.head.querySelectorAll(PRERENDERED_HEAD_TAGS).forEach((el) => el.remove());
+
 // Ohne Key kein Provider — die Seite läuft dann ohne Anmeldung weiter, statt
 // beim Start zu werfen und eine weiße Seite zu hinterlassen.
 //

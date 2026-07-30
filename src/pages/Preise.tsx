@@ -1,4 +1,6 @@
 import PageHero from "../components/ui/PageHero";
+import JsonLd from "../components/seo/JsonLd";
+import { faqSchema } from "../lib/schema";
 import Pricing from "../components/preise/Pricing";
 import Includes from "../components/preise/Includes";
 import Faq from "../components/preise/Faq";
@@ -7,6 +9,7 @@ import Cta from "../components/home/Cta";
 export default function Preise() {
   return (
     <>
+      <JsonLd data={faqSchema()} />
       <PageHero
         eyebrow="// Pakete"
         title={

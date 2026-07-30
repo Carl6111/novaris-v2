@@ -3,6 +3,9 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import Lenis from "lenis";
 import { setLenis, scrollTop } from "./lib/lenis";
+import Seo from "./components/seo/Seo";
+import JsonLd from "./components/seo/JsonLd";
+import { breadcrumbSchema, organizationSchema, websiteSchema } from "./lib/schema";
 import ConstellationField from "./components/background/ConstellationField";
 import IntroOverlay from "./components/intro/IntroOverlay";
 import AuthGateProvider from "./components/auth/AuthGateProvider";
@@ -17,6 +20,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Portal from "./pages/Portal";
 import Admin from "./pages/Admin";
+import Prospects from "./pages/Prospects";
 import Impressum from "./pages/Impressum";
 import Datenschutz from "./pages/Datenschutz";
 import Agb from "./pages/Agb";
@@ -45,6 +49,8 @@ function AnimatedRoutes() {
         {...variants}
         transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
       >
+        <Seo />
+        <JsonLd data={breadcrumbSchema(location.pathname)} />
         <Routes location={location}>
           <Route path="/" element={<Home />} />
           <Route path="/plattform" element={<Plattform />} />
@@ -55,6 +61,7 @@ function AnimatedRoutes() {
           <Route path="/registrieren" element={<Register />} />
           <Route path="/portal" element={<Portal />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/admin/prospects" element={<Prospects />} />
           <Route path="/impressum" element={<Impressum />} />
           <Route path="/datenschutz" element={<Datenschutz />} />
           <Route path="/agb" element={<Agb />} />
@@ -88,6 +95,8 @@ export default function App() {
   return (
     <BrowserRouter>
       <AuthGateProvider>
+        <JsonLd data={organizationSchema()} />
+        <JsonLd data={websiteSchema()} />
         <ConstellationField />
         <div className="grain" aria-hidden="true" />
         <div className="vignette" aria-hidden="true" />

@@ -1,5 +1,12 @@
 {
   "rewrites": [
+    { "source": "/plattform", "destination": "/plattform/index.html" },
+    { "source": "/preise", "destination": "/preise/index.html" },
+    { "source": "/ueber", "destination": "/ueber/index.html" },
+    { "source": "/kontakt", "destination": "/kontakt/index.html" },
+    { "source": "/impressum", "destination": "/impressum/index.html" },
+    { "source": "/datenschutz", "destination": "/datenschutz/index.html" },
+    { "source": "/agb", "destination": "/agb/index.html" },
     { "source": "/((?!api/).*)", "destination": "/index.html" }
   ],
   "headers": [
