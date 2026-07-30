@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { getLenis } from "../../lib/lenis";
 import { useAuthGate } from "../auth/authGateContext";
 import "./intro-overlay.css";
@@ -21,9 +21,16 @@ const SESSION_KEY = "lunakris:intro-seen";
  */
 const AUTH_AT = 0.6;
 
+/**
+ * Routen, auf denen der Film nichts zu suchen hat. Wer hier landet, kommt zum
+ * Arbeiten, nicht um beworben zu werden — /admin ist Carls Posteingang.
+ */
+const INTERN = ["/admin"];
+
 export default function IntroOverlay() {
   const reduced = useReducedMotion();
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const gate = useAuthGate();
   const [open, setOpen] = useState(false);
   const [playing, setPlaying] = useState(false);
@@ -34,10 +41,17 @@ export default function IntroOverlay() {
   const asked = useRef(false);
 
   useEffect(() => {
+    // Auf einer internen Seite gestartet: der Film gilt fuer diese Sitzung als
+    // gesehen. Sonst poppt er beim ersten Klick zurueck auf die Website auf —
+    // mitten in der Arbeit, was noch stoerender waere als am Anfang.
+    if (INTERN.some((p) => pathname.startsWith(p))) {
+      sessionStorage.setItem(SESSION_KEY, "1");
+      return;
+    }
     if (sessionStorage.getItem(SESSION_KEY)) return;
     restoreFocus.current = document.activeElement;
     setOpen(true);
-  }, []);
+  }, [pathname]);
 
   const close = useCallback(() => {
     sessionStorage.setItem(SESSION_KEY, "1");

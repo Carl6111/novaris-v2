@@ -1,0 +1,11 @@
+import { chromium } from 'playwright';
+const b = await chromium.launch({ headless: true });
+const ctx = await b.newContext({ viewport: { width: 1440, height: 900 } });
+await ctx.addInitScript(() => sessionStorage.setItem('lunakris:intro-seen', '1'));
+const p = await ctx.newPage();
+await p.goto('https://lunakris.de/admin', { waitUntil: 'networkidle' });
+await p.waitForTimeout(2500);
+const txt = await p.locator('body').innerText();
+const line = txt.split('\n').find(l => l.includes('gibt es nicht'));
+console.log('gefunden:', line ?? '(nicht gefunden — voller Text unten)');
+if (!line) console.log(txt.slice(0, 500));
