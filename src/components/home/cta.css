@@ -1,6 +1,6 @@
 .cta {
   position: relative;
-  padding: clamp(6rem, 14vh, 10rem) 0;
+  padding: var(--section-climax) 0;
   overflow: hidden;
   text-align: center;
 }

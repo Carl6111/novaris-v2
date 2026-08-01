@@ -1,5 +1,5 @@
 .examples {
-  padding: clamp(4rem, 10vh, 8rem) 0;
+  padding: var(--section-base) 0;
 }
 
 .section-head h2 {

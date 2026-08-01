@@ -17,9 +17,12 @@ export default function Home() {
       <Problems />
       <Payoff />
       <SaveCalculator />
-      <Packages />
+      {/* Beweis und Kostenanker stehen vor dem Preis: "Die Rechnung" setzt die
+          Vollzeitkraft (3.500-4.500 EUR/Monat) als Vergleichsgroesse, erst danach
+          nennen die Pakete eine Zahl. Umgekehrt trifft der Preis ungeankert. */}
       <Stats />
       <Compare />
+      <Packages />
       <Pilot />
       <NotForYou />
       <Integrations />

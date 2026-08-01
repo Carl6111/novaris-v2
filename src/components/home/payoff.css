@@ -1,6 +1,6 @@
 .platform {
   position: relative;
-  padding: clamp(5rem, 12vh, 9rem) 0;
+  padding: var(--section-major) 0;
   /* Das Orbit-Doodle darf breiter sein als die Spalte, aber nicht breiter
      als der Viewport. clip statt hidden, damit vertikal nichts abgeschnitten wird. */
   overflow-x: clip;

@@ -1,6 +1,6 @@
 .pkg {
   position: relative;
-  padding: clamp(5rem, 12vh, 9rem) 0;
+  padding: var(--section-major) 0;
   overflow: hidden;
   border-block: 1px solid var(--border);
   background: color-mix(in oklab, var(--background) 88%, black);

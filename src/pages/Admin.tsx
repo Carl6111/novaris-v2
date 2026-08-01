@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth, useUser } from "@clerk/react";
 import PageHero from "../components/ui/PageHero";
+import AdminNav from "../components/admin/AdminNav";
 import LeadTable from "../components/admin/LeadTable";
 import LeadDetail from "../components/admin/LeadDetail";
 import { AUTH_READY } from "../lib/auth";
@@ -19,6 +20,7 @@ import {
   type Status,
 } from "../lib/admin";
 import "../components/admin/admin.css";
+import "../components/admin/prospects.css";
 
 /**
  * Der Posteingang für Anfragen.
@@ -104,6 +106,8 @@ function AdminInhalt() {
   return (
     <section className="adm">
       <div className="wrap">
+        <AdminNav />
+
         <div className="adm-zahlen">
           <p>
             <span className="adm-zahl adm-num">{zahlen.neu}</span>

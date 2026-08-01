@@ -1,5 +1,5 @@
 .pricing {
-  padding: clamp(2rem, 6vh, 4rem) 0 clamp(4rem, 9vh, 7rem);
+  padding: clamp(2rem, 6vh, 4rem) 0 var(--section-base);
 }
 
 .pricing-head {

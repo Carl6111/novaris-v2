@@ -1,5 +1,5 @@
 .portal {
-  padding: 0 0 clamp(4rem, 9vh, 7rem);
+  padding: 0 0 var(--section-base);
 }
 
 .portal-inner {

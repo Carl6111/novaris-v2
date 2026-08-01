@@ -1,0 +1,230 @@
+/**
+ * Ergänzungen für /admin/prospects.
+ *
+ * Baut auf admin.css auf und übernimmt dessen Token — hier stehen nur die
+ * Dinge, die es bei den Anfragen nicht gibt: der Budget-Score, die Wählkarte
+ * und die eigene Statusfarbe.
+ */
+
+/* --- Umschalter zwischen Anfragen und Zielkunden --- */
+
+.adm-nav {
+  display: flex;
+  gap: 0.25rem;
+  margin-bottom: 1.5rem;
+  padding: 0.25rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  width: fit-content;
+}
+
+.adm-nav a {
+  padding: 0.4rem 1.1rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--muted-foreground);
+  text-decoration: none;
+  transition: color 150ms, background-color 150ms;
+}
+
+.adm-nav a:hover {
+  color: var(--foreground);
+}
+
+.adm-nav a.is-on {
+  color: var(--background);
+  background: var(--foreground);
+}
+
+/* --- Status: eigene Werte, weil ein Kaltkontakt andere Stufen hat --- */
+
+.pro-chip--offen::before,
+.pro-chip--angerufen::before,
+.pro-chip--termin::before,
+.pro-chip--kunde::before,
+.pro-chip--kein_interesse::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--st, var(--muted-foreground));
+}
+
+.pro-chip--offen { --st: var(--st-neu); }
+.pro-chip--angerufen { --st: var(--st-kontaktiert); }
+.pro-chip--termin { --st: var(--st-gespraech); }
+.pro-chip--kunde { --st: var(--st-kunde); }
+.pro-chip--kein_interesse { --st: var(--st-abgesagt); }
+
+/* --- Budget-Score --- */
+
+.pro-score {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.4rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--radius);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  /* Farbe trägt hier keine Information allein: die Zahl steht daneben und die
+     Begründung im Detail. Wer Farben nicht unterscheiden kann, verliert nichts. */
+  color: var(--foreground);
+  background: color-mix(in oklab, var(--st, var(--muted-foreground)) 18%, transparent);
+  border: 1px solid color-mix(in oklab, var(--st, var(--border)) 45%, transparent);
+}
+
+.pro-score--hoch { --st: var(--st-kunde); }
+.pro-score--mittel { --st: var(--st-gespraech); }
+.pro-score--niedrig { --st: var(--muted-foreground); }
+
+.pro-stellen {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--primary);
+}
+
+/* --- Tabelle --- */
+
+.pro-table td {
+  vertical-align: top;
+}
+
+.pro-sub {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.75rem;
+  color: var(--muted-foreground);
+}
+
+.pro-leer {
+  color: var(--muted-foreground);
+  font-style: italic;
+}
+
+/* --- Wählkarte im Detail --- */
+
+.pro-anruf {
+  margin-bottom: 1.5rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--card);
+}
+
+.pro-anruf-label {
+  margin: 0;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+.pro-nummer {
+  display: inline-block;
+  margin: 0.2rem 0 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--foreground);
+  text-decoration: none;
+  letter-spacing: -0.01em;
+}
+
+.pro-nummer:hover,
+.pro-nummer:focus-visible {
+  color: var(--primary);
+}
+
+.pro-anruf-person {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--muted-foreground);
+}
+
+.pro-anruf-person strong {
+  color: var(--foreground);
+}
+
+/* --- Begründung des Scores --- */
+
+.pro-gruende {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.4rem;
+}
+
+.pro-gruende li {
+  position: relative;
+  padding-left: 1.1rem;
+  font-size: 0.87rem;
+  color: var(--muted-foreground);
+}
+
+.pro-gruende li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: var(--primary);
+}
+
+.pro-links {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+}
+
+.pro-links a {
+  font-size: 0.87rem;
+  color: var(--primary);
+}
+
+/* --- Import --- */
+
+.pro-upload {
+  cursor: pointer;
+}
+
+.pro-import {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin: 0 0 1rem;
+  padding: 0.7rem 1rem;
+  border: 1px solid color-mix(in oklab, var(--st-kunde) 40%, var(--border));
+  border-radius: var(--radius);
+  font-size: 0.87rem;
+  color: var(--muted-foreground);
+}
+
+.pro-import strong {
+  color: var(--foreground);
+}
+
+.pro-import button {
+  margin-left: auto;
+  padding: 0.2rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font: inherit;
+  font-size: 0.8rem;
+  color: var(--muted-foreground);
+  background: none;
+  cursor: pointer;
+}
+
+@media (max-width: 720px) {
+  .pro-table {
+    display: none;
+  }
+}

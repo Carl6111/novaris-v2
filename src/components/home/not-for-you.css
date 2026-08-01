@@ -1,5 +1,5 @@
 .nfy {
-  padding: clamp(4rem, 9vh, 7rem) 0;
+  padding: var(--section-base) 0;
 }
 
 .nfy .section-head h2 {

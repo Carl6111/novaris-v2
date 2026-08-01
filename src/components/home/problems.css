@@ -72,7 +72,7 @@
 /* reduced-motion list */
 .problems--static {
   height: auto;
-  padding-block: clamp(4rem, 10vh, 8rem);
+  padding-block: var(--section-base);
 }
 .problems--static .eyebrow {
   display: block;

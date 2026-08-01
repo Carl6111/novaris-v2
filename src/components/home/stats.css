@@ -1,5 +1,5 @@
 .stats {
-  padding: clamp(4.5rem, 10vh, 8rem) 0;
+  padding: var(--section-base) 0;
   border-block: 1px solid var(--border);
   background: color-mix(in oklab, var(--background) 90%, black);
 }

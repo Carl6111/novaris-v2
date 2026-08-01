@@ -136,3 +136,150 @@ Die Admin-Rolle hängt an deinem Clerk-Konto unter *Public Metadata*:
 Ohne diesen Eintrag antwortet `/api/leads` mit **404** — bewusst nicht 403:
 eine Route, deren Existenz man nicht bestätigt bekommt, wird auch nicht
 abgeklopft.
+
+---
+
+# Zielkunden-Tabelle (`/admin/prospects`)
+
+Die zweite Richtung: nicht wer sich gemeldet hat, sondern wen wir uns
+ausgesucht haben. Die Daten kommen aus LeadScout (`~/Downloads/leadscout`).
+
+Eigene Tabelle statt einer Spalte in `leads` — die Felder überschneiden sich
+kaum, und ein Statuswechsel bedeutet hier etwas anderes.
+
+## Tabelle anlegen
+
+Supabase → **SQL Editor** → **New query** → einfügen → **Run**:
+
+```sql
+create table public.prospects (
+  id                  uuid primary key default gen_random_uuid(),
+  created_at          timestamptz not null default now(),
+
+  -- Kennung aus LeadScout ("linkedin/<slug>" oder die Google-Place-Id).
+  -- Eindeutig, damit ein zweiter Import aktualisiert statt verdoppelt.
+  extern_id           text        not null unique,
+  segment             text,
+
+  firma               text        not null,
+  rechtsform          text,
+  strasse             text,
+  plz                 text,
+  ort                 text,
+
+  telefon             text,
+  telefon_e164        text,
+  email               text,
+  website             text,
+
+  entscheider         text,
+  entscheider_rolle   text,
+  entscheider_telefon text,
+  entscheider_email   text,
+  entscheider_quelle  text,
+
+  mitarbeiter         text,
+  linkedin_mitglieder integer,
+  offene_stellen      integer,
+  karriereseite       text,
+  hrb                 text,
+  linkedin            text,
+  maps_url            text,
+  branche             text,
+
+  lead_score          integer     not null default 0,
+  budget_score        integer     not null default 0,
+  budget_begruendung  text,
+  score_begruendung   text,
+  quellen             text,
+  erhoben_am          text,
+
+  status              text        not null default 'offen',
+  notiz               text
+);
+
+create index prospects_budget_idx  on public.prospects (budget_score desc);
+create index prospects_status_idx  on public.prospects (status);
+create index prospects_segment_idx on public.prospects (segment);
+
+-- Gleiche Regel wie bei leads: RLS an, keine Policies. Der öffentliche
+-- anon-Key kommt an gar nichts, jeder Zugriff läuft über /api/prospects
+-- mit dem Service-Key.
+alter table public.prospects enable row level security;
+```
+
+## Leads einspielen
+
+1. LeadScout laufen lassen, z. B.
+   `leadscout run --segment b2b-software --limit 200 --budget 3.00`
+2. `lunakris.de/admin/prospects` öffnen
+3. Oben rechts die gewünschte Schwelle wählen (**Budget belegt** = 50)
+4. **LeadScout-JSON** klicken und die `.json` aus `leadscout/leads/` hochladen
+
+Alles unterhalb der Schwelle wird **gar nicht erst gespeichert**. Die Meldung
+nach dem Import nennt, wie viele übernommen und wie viele aussortiert wurden.
+
+Ein erneuter Import derselben Datei aktualisiert die Datensätze. **Status und
+Notiz bleiben dabei stehen** — die hast du von Hand gesetzt, die überschreibt
+kein Import.
+
+## Statuswerte
+
+`offen` → `angerufen` → `termin` → `kunde`, oder `kein_interesse`.
+
+---
+
+# Zugang auf ein einziges Konto begrenzen
+
+Ab jetzt reicht die Admin-Rolle **nicht mehr allein**. Der Server prüft
+zusätzlich, ob die Clerk-Nutzer-Id auf einer Liste steht, die nur über die
+Vercel-Umgebungsvariablen zu ändern ist.
+
+Warum zwei Freigaben:
+
+| Freigabe | wer sie ändern kann |
+|---|---|
+| `publicMetadata.role` | jeder mit Clerk-Dashboard-Zugang oder dem Secret Key |
+| `ADMIN_USER_IDS` | nur wer Zugriff auf das Vercel-Projekt hat |
+
+Wer nur eine der beiden Stellen kontrolliert, kommt nicht rein.
+
+## Einrichten
+
+**1. Deine Clerk-Nutzer-Id holen**
+
+Clerk-Dashboard → **Users** → dein Konto anklicken → oben steht die Id in der
+Form `user_2abcDEF...`. Kopieren.
+
+**2. In Vercel hinterlegen**
+
+Vercel-Projekt → **Settings** → **Environment Variables** → neu:
+
+```
+ADMIN_USER_IDS = user_2abcDEF...
+```
+
+Für alle Umgebungen setzen (Production, Preview, Development). Mehrere Konten
+später: durch Komma trennen, `user_aaa,user_bbb`.
+
+**3. Neu deployen**
+
+Umgebungsvariablen greifen erst beim nächsten Deploy.
+
+## Wichtig
+
+Ist `ADMIN_USER_IDS` **nicht gesetzt, kommt niemand rein** — auch du nicht.
+Das ist Absicht: eine vergessene Konfiguration darf nie zu offenem Zugang
+werden. Im Vercel-Log steht dann in Klartext, was fehlt.
+
+## Lokal entwickeln
+
+In der `.env.local` dieselbe Zeile ergänzen, sonst antwortet `/api/prospects`
+auch auf dem eigenen Rechner mit 404.
+
+## Zugang wieder entziehen
+
+Zwei Wege, beide wirken sofort:
+
+- **Schnell, ohne Deploy:** in Clerk die `role` aus den Public Metadata löschen
+- **Endgültig:** die Id aus `ADMIN_USER_IDS` streichen und neu deployen

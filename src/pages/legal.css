@@ -1,5 +1,5 @@
 .legal {
-  padding: clamp(8rem, 16vh, 11rem) 0 clamp(4rem, 9vh, 7rem);
+  padding: clamp(8rem, 16vh, 11rem) 0 var(--section-base);
 }
 
 .legal-inner {

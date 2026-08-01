@@ -1,5 +1,5 @@
 .pilot {
-  padding: clamp(3rem, 8vh, 6rem) 0;
+  padding: var(--section-tight) 0;
 }
 
 /* .pilot-card sitzt auf dem TiltCard-Wrapper, das Layout auf der inneren Card */

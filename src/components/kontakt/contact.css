@@ -1,5 +1,5 @@
 .contact {
-  padding: clamp(2rem, 6vh, 4rem) 0 clamp(5rem, 11vh, 9rem);
+  padding: clamp(2rem, 6vh, 4rem) 0 var(--section-major);
 }
 
 .contact-grid {

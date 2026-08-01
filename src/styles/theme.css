@@ -21,7 +21,7 @@
   --font-sans: "Inter Variable", ui-sans-serif, sans-serif, system-ui;
   --secondary: oklch(0.97 0 0);
   --background: oklch(0.985 0 0);
-  --font-serif: "Noto Serif Georgian", ui-serif, serif;
+  --font-serif: ui-serif, serif;
   --foreground: oklch(0.145 0 0);
   --destructive: oklch(0.577 0.245 27.325);
   --shadow-blur: 4px;
@@ -68,7 +68,7 @@
   --font-sans: "Inter Variable", ui-sans-serif, sans-serif, system-ui;
   --secondary: oklch(0.269 0 0);
   --background: oklch(0.145 0 0);
-  --font-serif: "Noto Serif Georgian", ui-serif, serif;
+  --font-serif: ui-serif, serif;
   --foreground: oklch(0.985 0 0);
   --destructive: oklch(0.704 0.191 22.216);
   --shadow-blur: 4px;
@@ -83,7 +83,10 @@
   --shadow-offset-x: 0;
   --shadow-offset-y: 1px;
   --sidebar-primary: oklch(0.704 0.191 22.216);
-  --muted-foreground: oklch(0.923 0.003 48.717);
+  /* War 0.923 — praktisch identisch mit --foreground (0.985). Sekundaertext
+     sah dadurch aus wie Primaertext, die Hierarchie war flach. 0.74 haelt
+     immer noch ~8:1 gegen den Hintergrund. */
+  --muted-foreground: oklch(0.74 0.008 48.717);
   --accent-foreground: oklch(0.985 0 0);
   --popover-foreground: oklch(0.985 0 0);
   --primary-foreground: oklch(0.985 0 0);
@@ -144,12 +147,25 @@
 @theme {
   --font-sans: "Inter Variable", ui-sans-serif, sans-serif, system-ui;
   --font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
-  --font-serif: "Noto Serif Georgian", ui-serif, serif;
+  --font-serif: ui-serif, serif;
   --font-display: "Space Grotesk Variable", "Inter Variable", ui-sans-serif, sans-serif;
 }
 
 :root {
   --font-display: "Space Grotesk Variable", "Inter Variable", ui-sans-serif, sans-serif;
+
+  /* Vertikaler Rhythmus: vier Stufen statt frei gewaehlter clamp()-Werte.
+     Die Stufe traegt die Hierarchie — eine Sektion, die wichtiger ist,
+     bekommt mehr Luft, nicht nur groessere Schrift. */
+  --section-tight: clamp(3rem, 8vh, 6rem);
+  --section-base: clamp(4rem, 10vh, 8rem);
+  --section-major: clamp(5rem, 12vh, 9rem);
+  --section-climax: clamp(6rem, 14vh, 10rem);
+
+  /* Typoskala fuer Sektionsueberschriften. */
+  --text-section: clamp(2.2rem, 1.2rem + 4vw, 4.2rem);
+  --text-section-sm: clamp(1.8rem, 1.1rem + 2.6vw, 2.8rem);
+  --text-lead: clamp(1rem, 0.9rem + 0.6vw, 1.35rem);
 }
 
 @custom-variant dark (&:where(.dark, .dark *));

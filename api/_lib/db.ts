@@ -37,3 +37,6 @@ export function db(): SupabaseClient {
 }
 
 export const LEADS = "leads";
+
+/** Recherchierte Zielkunden aus LeadScout — die Gegenrichtung zu `leads`. */
+export const PROSPECTS = "prospects";
