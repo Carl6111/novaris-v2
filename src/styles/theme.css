@@ -3,6 +3,8 @@
 :root {
   --card: oklch(99.5% 0 0);
   --ring: oklch(0.637 0.237 25.331);
+  --information: oklch(0.52 0.13 225);
+  --information-surface: oklch(0.94 0.025 225);
   --input: oklch(0.929 0.013 255.508);
   --muted: oklch(0.968 0.007 247.896);
   --accent: oklch(0.637 0.237 25.331);
@@ -49,7 +51,9 @@
 
 .dark {
   --card: oklch(0.21 0.006 285.885);
-  --ring: oklch(0.637 0.237 25.331);
+  --ring: oklch(0.76 0.13 210);
+  --information: oklch(0.76 0.13 210);
+  --information-surface: oklch(0.25 0.035 225);
   --input: oklch(0.371 0 0);
   --muted: oklch(0.274 0.006 286.033);
   --accent: oklch(0.637 0.237 25.331);
@@ -166,6 +170,19 @@
   --text-section: clamp(2.2rem, 1.2rem + 4vw, 4.2rem);
   --text-section-sm: clamp(1.8rem, 1.1rem + 2.6vw, 2.8rem);
   --text-lead: clamp(1rem, 0.9rem + 0.6vw, 1.35rem);
+
+  /* Rollen statt lokaler clamp()-Varianten auf der Startseite. */
+  --text-display: clamp(2.6rem, 1.2rem + 5.4vw, 5.4rem);
+  --text-heading: var(--text-section-sm);
+
+  /* Controls, normale Karten und grosse Feature-Surfaces. */
+  --radius-control: 0.5rem;
+  --radius-card: 0.875rem;
+  --radius-feature: 1.25rem;
+
+  /* Kleine Skala: normale Karte und hervorgehobene Beweis-Surface. */
+  --elevation-1: 0 0.5rem 1.5rem rgb(0 0 0 / 0.14);
+  --elevation-2: 0 1rem 3rem rgb(0 0 0 / 0.24);
 }
 
 @custom-variant dark (&:where(.dark, .dark *));

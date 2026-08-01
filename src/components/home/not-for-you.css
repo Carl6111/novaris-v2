@@ -4,7 +4,7 @@
 
 .nfy .section-head h2 {
   margin-top: 0.8rem;
-  font-size: clamp(1.8rem, 1.1rem + 2.6vw, 2.8rem);
+  font-size: var(--text-heading);
   font-weight: 740;
   letter-spacing: -0.02em;
 }

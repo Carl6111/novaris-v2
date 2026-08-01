@@ -1,0 +1,95 @@
+/* Zahlen beantworten "wirkt es?", der breitere Vergleich "rechnet es sich?".
+   Die asymmetrischen Spalten bilden diese unterschiedliche Beweislast ab. */
+.home-proof-bento {
+  width: min(1320px, calc(100% - 2 * clamp(1.25rem, 4vw, 3rem)));
+  margin: var(--section-base) auto;
+  display: grid;
+  grid-template-areas: "signals comparison comparison";
+  grid-template-columns: minmax(16rem, 0.8fr) repeat(2, minmax(0, 1fr));
+  gap: clamp(1rem, 2vw, 1.5rem);
+  align-items: stretch;
+}
+
+.home-proof-bento > .stats {
+  grid-area: signals;
+}
+
+.home-proof-bento > .compare {
+  grid-area: comparison;
+}
+
+.home-proof-bento > .stats,
+.home-proof-bento > .compare {
+  padding: clamp(2rem, 4vw, 3.5rem);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-feature);
+  box-shadow: var(--elevation-2);
+  overflow: hidden;
+}
+
+.home-proof-bento > .stats {
+  background: var(--information-surface);
+}
+
+.home-proof-bento > .compare {
+  background: color-mix(in oklab, var(--card) 78%, transparent);
+}
+
+.home-proof-bento .wrap {
+  width: 100%;
+}
+
+.home-proof-bento .stats-grid {
+  grid-template-columns: 1fr;
+  gap: 0;
+}
+
+.home-proof-bento .stat {
+  padding-block: 1.35rem;
+  border-top: 1px solid color-mix(in oklab, var(--information) 35%, var(--border));
+}
+
+.home-proof-bento .stat-value,
+.home-proof-bento .stat-suffix {
+  color: var(--information);
+}
+
+.home-proof-bento .compare-col--nova,
+.home-proof-bento .compare-nova .tilt-card {
+  background: color-mix(in oklab, var(--information) 10%, transparent);
+}
+
+.home-proof-bento .compare-col--nova h3,
+.home-proof-bento .compare-check {
+  color: var(--information);
+}
+
+@media (max-width: 980px) {
+  .home-proof-bento {
+    grid-template-areas:
+      "signals"
+      "comparison";
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .home-proof-bento .stats-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .home-proof-bento {
+    margin-block: var(--section-tight);
+  }
+
+  .home-proof-bento > .stats,
+  .home-proof-bento > .compare {
+    padding: clamp(1.25rem, 5vw, 2rem);
+    border-radius: var(--radius-card);
+  }
+
+  .home-proof-bento .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}

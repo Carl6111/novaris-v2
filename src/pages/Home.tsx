@@ -9,6 +9,7 @@ import Pilot from "../components/home/Pilot";
 import NotForYou from "../components/home/NotForYou";
 import Integrations from "../components/home/Integrations";
 import Cta from "../components/home/Cta";
+import "../components/home/proof-bento.css";
 
 export default function Home() {
   return (
@@ -20,8 +21,10 @@ export default function Home() {
       {/* Beweis und Kostenanker stehen vor dem Preis: "Die Rechnung" setzt die
           Vollzeitkraft (3.500-4.500 EUR/Monat) als Vergleichsgroesse, erst danach
           nennen die Pakete eine Zahl. Umgekehrt trifft der Preis ungeankert. */}
-      <Stats />
-      <Compare />
+      <div className="home-proof-bento">
+        <Stats />
+        <Compare />
+      </div>
       <Packages />
       <Pilot />
       <NotForYou />

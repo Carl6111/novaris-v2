@@ -5,7 +5,7 @@
 
 .compare .section-head h2 {
   margin-top: 0.8rem;
-  font-size: clamp(1.8rem, 1.1rem + 2.6vw, 2.8rem);
+  font-size: var(--text-heading);
   font-weight: 740;
   letter-spacing: -0.02em;
 }
@@ -25,7 +25,8 @@
   display: grid;
   grid-template-columns: 8rem 1fr 1fr;
   border: 1px solid var(--border);
-  border-radius: calc(var(--radius) * 2);
+  border-radius: var(--radius-card);
+  box-shadow: var(--elevation-1);
   overflow: hidden;
 }
 

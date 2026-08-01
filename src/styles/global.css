@@ -102,7 +102,8 @@ body {
   position: relative;
   background: var(--card);
   border: 1px solid var(--border);
-  border-radius: calc(var(--radius) * 2);
+  border-radius: var(--radius-card);
+  box-shadow: var(--elevation-1);
   overflow: hidden;
   transition: border-color 0.35s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -148,8 +149,19 @@ body {
   *,
   *::before,
   *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+    animation: none !important;
+    scroll-behavior: auto !important;
+  }
+
+  a,
+  button,
+  input,
+  .starlit-card {
+    transition-property: color, background-color, border-color, opacity;
+    transition-duration: 120ms;
+  }
+
+  .starlit-card:hover {
+    transform: none !important;
   }
 }

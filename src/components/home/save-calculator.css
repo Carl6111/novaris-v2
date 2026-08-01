@@ -4,7 +4,7 @@
 
 .calc .section-head h2 {
   margin-top: 0.8rem;
-  font-size: clamp(1.8rem, 1.1rem + 2.6vw, 2.8rem);
+  font-size: var(--text-heading);
   font-weight: 740;
   letter-spacing: -0.02em;
 }
@@ -19,6 +19,7 @@
   grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
   gap: clamp(2rem, 5vw, 4rem);
   padding: clamp(2rem, 5vw, 3rem);
+  border-radius: var(--radius-feature);
 }
 
 .calc-inputs {
@@ -84,7 +85,7 @@
   align-content: center;
   text-align: center;
   padding: 1.8rem;
-  border-radius: calc(var(--radius) * 2);
+  border-radius: var(--radius-card);
   border: 1px solid color-mix(in oklab, var(--primary) 35%, var(--border));
   background: color-mix(in oklab, var(--primary) 8%, transparent);
 }
