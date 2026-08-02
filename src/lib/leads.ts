@@ -1,4 +1,5 @@
 import type { TierId } from "../data/setups";
+import { BUSINESS } from "./business";
 
 /**
  * Der einzige Weg, auf dem ein Lead das Haus verlässt.
@@ -20,9 +21,10 @@ const WEB3_KEY = import.meta.env.VITE_WEB3FORMS_KEY as string | undefined;
 
 export const CALENDLY_URL = import.meta.env.VITE_CALENDLY_URL as string | undefined;
 
-// TODO(Carl): durch die echte Geschäftsadresse ersetzen. Das hier ist die
-// Adresse, die im Fehlerfall im Formular steht.
-export const FALLBACK_EMAIL = "tafkac@icloud.com";
+// Die Adresse, die im Fehlerfall im Formular steht. Sobald in business.ts
+// eine Geschäftsadresse steht, gewinnt sie; der iCloud-Fallback bleibt,
+// bis das so weit ist.
+export const FALLBACK_EMAIL = BUSINESS.email || "tafkac@icloud.com";
 
 export type LeadResult = "ok" | "error";
 

@@ -3,18 +3,19 @@
  * denselben Daten entstehen wie die sichtbaren Texte (src/data/*) und nicht
  * daneben herlaufen.
  *
+ * NAP-Daten und Social-Profile kommen aus src/lib/business.ts — die einzige
+ * Stelle, die gepflegt wird. Solange dort nichts steht, lässt das Schema die
+ * Felder weg: erfundene NAP-Daten wären schlimmer als keine, weil Entity-
+ * Konsistenz genau daran hängt. Leere `sameAs` wären ein wertloses Feld.
+ *
  * Bewusst weggelassen:
- * - `address` und `telephone` in der Organization: das Impressum enthält bisher
- *   nur Platzhalter. Erfundene NAP-Daten wären schlimmer als keine, weil
- *   Entity-Konsistenz genau daran hängt. Nachtragen, sobald das Impressum steht.
- * - `sameAs`: es gibt noch keine verlinkten Profile. Leeres Array wäre ein
- *   wertloses Feld.
  * - `price` / `priceSpecification` an den Offers: "Auf Anfrage" ist kein
  *   gültiger Preiswert und riskiert eine Abwertung der Rich Results.
  */
 
 import { MODULES } from "../data/modules";
 import { FAQS } from "../data/faq";
+import { BUSINESS, HAT_ADRESSE } from "./business";
 import { ROUTES, SITE, canonicalFor, seoFor } from "./seo";
 
 export type JsonLdNode = Record<string, unknown>;
@@ -50,6 +51,23 @@ export function organizationSchema(): JsonLdNode {
       "Prozessautomatisierung",
       "Anruf-Agent",
     ],
+    // NAP + Social nur, sobald business.ts gepflegt ist — siehe Dateikopf.
+    ...(HAT_ADRESSE
+      ? {
+          address: {
+            "@type": "PostalAddress",
+            streetAddress: BUSINESS.strasse,
+            postalCode: BUSINESS.plz,
+            addressLocality: BUSINESS.ort,
+            addressCountry: "DE",
+          },
+        }
+      : {}),
+    ...(BUSINESS.telefon ? { telephone: BUSINESS.telefon } : {}),
+    ...(BUSINESS.email ? { email: BUSINESS.email } : {}),
+    ...(BUSINESS.social.length > 0
+      ? { sameAs: BUSINESS.social.map((s) => s.href) }
+      : {}),
   };
 }
 

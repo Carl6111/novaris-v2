@@ -8,6 +8,14 @@
       Title, Description, Canonical und OG-Tags kommen aus src/components/seo/Seo.tsx.
       React 19 hebt sie selbst in den Head. Hier duerfen sie nicht zusaetzlich
       stehen, sonst stehen sie nach dem Render doppelt im Dokument.
+
+      TODO(Carl): Suchmaschinen-Verifizierung — Token aus der Konsole eintragen,
+      dann neu deployen:
+      Google Search Console (Property lunakris.de → Einstellungen → Inhaberschaft → HTML-Tag):
+      <meta name="google-site-verification" content="TOKEN_HIER" />
+      Bing Webmaster Tools:
+      <meta name="msvalidate.01" content="TOKEN_HIER" />
+      Danach in der Search Console https://lunakris.de/sitemap.xml einreichen.
     -->
   </head>
   <body>

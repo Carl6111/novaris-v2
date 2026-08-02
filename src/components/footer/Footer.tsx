@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
+import { BUSINESS } from "../../lib/business";
 import "./footer.css";
 
-// TODO(Carl): echte Profil-URLs eintragen. Bis dahin bleibt die Zeile leer —
+// Solange business.ts keine Profile enthält, bleibt die Zeile leer —
 // tote Links auf "#" sind schlimmer als gar keine Social-Leiste.
-const SOCIAL: { label: string; href: string }[] = [];
+const SOCIAL = BUSINESS.social;
 
 export default function Footer() {
   return (
