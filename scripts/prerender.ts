@@ -19,6 +19,7 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import sparticuz from "@sparticuz/chromium";
 import { chromium } from "playwright";
 import { preview } from "vite";
 import { ROUTES } from "../src/lib/seo";
@@ -95,7 +96,15 @@ async function main() {
   const origin = server.resolvedUrls?.local[0]?.replace(/\/$/, "");
   if (!origin) throw new Error("Preview-Server hat keine lokale URL gemeldet.");
 
-  const browser = await chromium.launch();
+  // Auf Vercel fehlen die Systembibliotheken fuer das Playwright-Chromium
+  // (libnspr4 & Co.). @sparticuz/chromium bringt einen Build mit, der die
+  // Bibliotheken mitliefert — dafuer ist er gemacht.
+  const browser = process.env.VERCEL
+    ? await chromium.launch({
+        args: sparticuz.args,
+        executablePath: await sparticuz.executablePath(),
+      })
+    : await chromium.launch();
   const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.route(SKIP_ASSET, (route) => route.abort());
