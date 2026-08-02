@@ -1,3 +1,4 @@
+import { BUSINESS } from "../lib/business";
 import "./legal.css";
 
 export default function Datenschutz() {
@@ -6,14 +7,21 @@ export default function Datenschutz() {
       <div className="wrap legal-inner">
         <h1>Datenschutzerklärung</h1>
         <p className="legal-note">
-          Platzhalter-Gerüst — vor Live-Gang durch eine geprüfte, vollständige
-          DSGVO-Datenschutzerklärung ersetzen (z. B. per Generator + anwaltlicher
-          Prüfung).
+          Der Verantwortliche steht. Die übrigen Abschnitte sind noch ein
+          Gerüst — vor Live-Gang durch eine geprüfte, vollständige
+          DSGVO-Datenschutzerklärung ersetzen (z. B. per Generator +
+          anwaltlicher Prüfung).
         </p>
 
         <h2>1. Verantwortlicher</h2>
         <p>
-          <span className="placeholder">[PLATZHALTER: Name / Firma, Anschrift, E-Mail]</span>
+          {BUSINESS.inhaber}
+          <br />
+          {BUSINESS.strasse}
+          <br />
+          {BUSINESS.plz} {BUSINESS.ort}
+          <br />
+          <a href={`mailto:${BUSINESS.email}`}>{BUSINESS.email}</a>
         </p>
 
         <h2>2. Erhebung und Verarbeitung von Daten</h2>
