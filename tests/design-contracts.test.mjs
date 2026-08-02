@@ -43,3 +43,31 @@ test("reduced motion stops spatial effects without deleting all state feedback",
   assert.match(reducedBlock, /transform:\s*none\s*!important/);
   assert.match(reducedBlock, /transition-property:\s*(?:color|opacity|background-color|border-color)/);
 });
+
+test("jede räumliche Scroll-Animation fragt reduced motion ab", async () => {
+  // CSS allein reicht nicht: Motion setzt transform und opacity per
+  // Inline-Style, an `animation: none` vorbei. Wer räumlich einfährt, muss
+  // den Nutzerwunsch im JavaScript auswerten.
+  const { readdir } = await import("node:fs/promises");
+  const wurzel = new URL("../src/", import.meta.url);
+
+  const dateien = [];
+  async function sammle(ordner) {
+    for (const eintrag of await readdir(ordner, { withFileTypes: true })) {
+      const pfad = new URL(`${eintrag.name}${eintrag.isDirectory() ? "/" : ""}`, ordner);
+      if (eintrag.isDirectory()) await sammle(pfad);
+      else if (eintrag.name.endsWith(".tsx")) dateien.push(pfad);
+    }
+  }
+  await sammle(wurzel);
+
+  for (const datei of dateien) {
+    const quelle = await readFile(datei, "utf8");
+    if (!/whileInView|initial=\{\{[^}]*\by:/.test(quelle)) continue;
+    assert.match(
+      quelle,
+      /useReducedMotion/,
+      `${datei.pathname.split("/src/")[1]} fährt räumlich ein, ohne reduced motion zu prüfen`,
+    );
+  }
+});

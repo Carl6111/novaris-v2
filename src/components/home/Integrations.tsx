@@ -1,4 +1,4 @@
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import Marquee from "../ui/Marquee";
 import "./integrations.css";
 
@@ -10,20 +10,30 @@ const LOGOS = [
 ];
 const WORDS = ["Next.js", "HubSpot"];
 
+const LABEL = "Gebaut auf der Technik, mit der auch die Anbieter selbst arbeiten.";
+
 export default function Integrations() {
+  // Motion steuert transform per Inline-Style, an der CSS-Regel für Reduced
+  // Motion vorbei — der Wunsch wird deshalb hier gelesen.
+  const reduce = useReducedMotion();
+
   return (
     <section className="integrations">
       <span className="shooting-star" aria-hidden="true" />
       <div className="wrap">
-        <motion.p
-          className="integrations-label"
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        >
-          Gebaut auf der Technik, mit der auch die Anbieter selbst arbeiten.
-        </motion.p>
+        {reduce ? (
+          <p className="integrations-label">{LABEL}</p>
+        ) : (
+          <motion.p
+            className="integrations-label"
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          >
+            {LABEL}
+          </motion.p>
+        )}
         {/* Endlos-Loop statt statischer Reihe. Marquee rendert die Kopie
             für den Loop selbst (aria-hidden) und fällt bei Reduced Motion
             auf ein Umbruch-Grid zurück — daher hier nur einmal übergeben. */}

@@ -1,6 +1,6 @@
 import { useRef, useState, type ReactNode } from "react";
 import { Link } from "react-router-dom";
-import { motion, useMotionValue, useSpring } from "motion/react";
+import { motion, useMotionValue, useReducedMotion, useSpring } from "motion/react";
 import "./magnetic-button.css";
 
 type Particle = { id: number; x: number; y: number; size: number };
@@ -20,6 +20,9 @@ const MAGNET_STRENGTH = 0.32;
 export default function MagneticButton({ to, type, children, className = "", onClick, disabled }: Props) {
   const ref = useRef<HTMLSpanElement>(null);
   const [particles, setParticles] = useState<Particle[]>([]);
+  // Magnet und Partikel sind rein dekorative Bewegung und laufen über
+  // Inline-Transforms — die CSS-Regel für Reduced Motion erreicht sie nicht.
+  const reduce = useReducedMotion();
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const sx = useSpring(x, { stiffness: 180, damping: 14, mass: 0.4 });
@@ -27,7 +30,7 @@ export default function MagneticButton({ to, type, children, className = "", onC
 
   const handleMove = (e: React.PointerEvent) => {
     const el = ref.current;
-    if (!el) return;
+    if (!el || reduce) return;
     const r = el.getBoundingClientRect();
     const dx = e.clientX - (r.left + r.width / 2);
     const dy = e.clientY - (r.top + r.height / 2);
@@ -44,6 +47,7 @@ export default function MagneticButton({ to, type, children, className = "", onC
   };
 
   const burst = () => {
+    if (reduce) return;
     const now = Date.now();
     const next = Array.from({ length: 12 }, (_, i) => ({
       id: now + i,

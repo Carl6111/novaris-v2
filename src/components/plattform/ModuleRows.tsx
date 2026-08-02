@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import { HandArrow } from "../doodles/Doodles";
 import { MODULES, type Module } from "../../data/modules";
 import "./module-rows.css";
@@ -27,16 +27,26 @@ function TiltFrame({ children }: { children: React.ReactNode }) {
   );
 }
 
+const EASE = [0.16, 1, 0.3, 1] as const;
+
 function ModuleRow({ m, index }: { m: Module; index: number }) {
   const flipped = index % 2 === 1;
+  // Motion setzt transform per Inline-Style, an der CSS-Regel für Reduced
+  // Motion vorbei. Ohne Bewegung bleiben die Reihen einfach stehen.
+  const reduce = useReducedMotion();
+
   return (
     <div className={`mrow ${flipped ? "mrow--flip" : ""}`}>
       <motion.div
         className="mrow-copy"
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        {...(reduce
+          ? {}
+          : {
+              initial: { opacity: 0, y: 30 },
+              whileInView: { opacity: 1, y: 0 },
+              viewport: { once: true, margin: "-100px" },
+              transition: { duration: 0.7, ease: EASE },
+            })}
       >
         <span className="mrow-num">{String(index + 1).padStart(2, "0")}</span>
         <p className="mrow-tag">{m.tag}</p>
@@ -53,10 +63,14 @@ function ModuleRow({ m, index }: { m: Module; index: number }) {
 
       <motion.div
         className="mrow-visual"
-        initial={{ opacity: 0, y: 40, scale: 0.97 }}
-        whileInView={{ opacity: 1, y: 0, scale: 1 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.8, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
+        {...(reduce
+          ? {}
+          : {
+              initial: { opacity: 0, y: 40, scale: 0.97 },
+              whileInView: { opacity: 1, y: 0, scale: 1 },
+              viewport: { once: true, margin: "-100px" },
+              transition: { duration: 0.8, delay: 0.08, ease: EASE },
+            })}
       >
         <TiltFrame>
           <div className="mrow-bar">

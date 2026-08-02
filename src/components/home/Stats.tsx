@@ -35,6 +35,10 @@ function Counter({ value, suffix }: { value: number; suffix: string }) {
 }
 
 export default function Stats() {
+  // Motion setzt transform und opacity per Inline-Style — die CSS-Regel für
+  // Reduced Motion greift dort nicht. Der Wunsch wird deshalb hier gelesen.
+  const reduce = useReducedMotion();
+
   return (
     <section className="stats">
       <div className="wrap">
@@ -42,20 +46,36 @@ export default function Stats() {
           <p className="eyebrow">// Was sich ändert</p>
         </Reveal>
         <div className="stats-grid">
-          {STATS.map((s, i) => (
-            <motion.div
-              key={s.label}
-              className="stat"
-              initial={{ opacity: 0, y: 28 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.7, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-            >
-              <Counter value={s.value} suffix={s.suffix} />
-              <ScribbleUnderline delay={0.4 + i * 0.15} />
-              <p className="stat-label">{s.label}</p>
-            </motion.div>
-          ))}
+          {STATS.map((s, i) => {
+            const inhalt = (
+              <>
+                <Counter value={s.value} suffix={s.suffix} />
+                <ScribbleUnderline delay={0.4 + i * 0.15} />
+                <p className="stat-label">{s.label}</p>
+              </>
+            );
+
+            if (reduce) {
+              return (
+                <div key={s.label} className="stat">
+                  {inhalt}
+                </div>
+              );
+            }
+
+            return (
+              <motion.div
+                key={s.label}
+                className="stat"
+                initial={{ opacity: 0, y: 28 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={{ duration: 0.7, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+              >
+                {inhalt}
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>
