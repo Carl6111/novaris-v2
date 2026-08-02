@@ -1,4 +1,5 @@
 {
+  "buildCommand": "PLAYWRIGHT_BROWSERS_PATH=0 npx playwright install chromium-headless-shell && PLAYWRIGHT_BROWSERS_PATH=0 npm run build",
   "rewrites": [
     { "source": "/plattform", "destination": "/plattform/index.html" },
     { "source": "/preise", "destination": "/preise/index.html" },
